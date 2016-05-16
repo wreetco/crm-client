@@ -5,7 +5,7 @@
     "Jon <jonnmb@Gmail.com>"
   ],
   "description": "Client Manager for wreetco CRM",
-  "main": "app.js",
+  "main": "gulpfile.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
