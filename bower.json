@@ -1,0 +1,20 @@
+{
+  "name": "crm-client",
+  "homepage": "https://github.com/wreetco/crm-client",
+  "authors": [
+    "Jon <jonnmb@Gmail.com>"
+  ],
+  "description": "Client Manager for wreetco CRM",
+  "main": "app.js",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-materialize": "^0.1.7"
+  }
+}
