@@ -34,3 +34,11 @@ configured.
 npm install
 bower install
 ```
+
+## Run the app
+
+Now run the client
+
+```bash
+gulp start
+```
