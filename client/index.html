@@ -18,17 +18,56 @@
 		<script type="text/javascript" src="bower_components/angular-mocks/angular-mocks.js"></script>
 		<script type="text/javascript" src="bower_components/angular-animate/angular-animate.min.js"></script>
 		<script type="text/javascript" src="bower_components/angular-materialize/src/angular-materialize.js"></script>
-		<script type="text/javascript" src="assets/materialize/js/materialize.min.js"></script>
+		<script type="text/javascript" src="assets/js/materialize.min.js"></script>
 		<script type="text/javascript" src="assets/js/app.js"></script>
 		<script type="text/javascript" src="assets/js/controllers.js"></script>
 		<script type="text/javascript" src="assets/js/services.js"></script>
 	</head>
 
 	<body>
+		<nav>
+			<ul id="slide-out" class="side-nav fixed">
+      				<li><a href="#!/">Contacts</a></li>
+      				<li><a href="#!/settings">Settings</a></li>
+      				<li class="no-padding">
+        				<ul class="collapsible collapsible-accordion">
+          					<li>
+            						<a class="collapsible-header">Dropdown<i class="mdi-navigation-arrow-drop-down"></i></a>
+            						<div class="collapsible-body">
+              							<ul>
+                							<li><a href="#!">First</a></li>
+                							<li><a href="#!">Second</a></li>
+                							<li><a href="#!">Third</a></li>
+                							<li><a href="#!">Fourth</a></li>
+              							</ul>
+            						</div>
+          					</li>
+        				</ul>
+      				</li>
+    			</ul>
+    			<ul class="right hide-on-med-and-down">
+      				<li><a href="#!">First Navbar Link</a></li>
+      				<li><a href="#!">Second Navbar Link</a></li>
+      				<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="mdi-navigation-arrow-drop-down 
+right"></i></a></li>
+      				<ul id='dropdown1' class='dropdown-content'>
+        				<li><a href="#!">First</a></li>
+        				<li><a href="#!">Second</a></li>
+        				<li><a href="#!">Third</a></li>
+        				<li><a href="#!">Fourth</a></li>
+      				</ul>
+    			</ul>
+    			<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+          	</nav>
 		<div class="container">
 			<p>Hey buddy</p>
 			<div ng-view></div>
 		</div>
+		
+		<script>
+			$(".button-collapse").sideNav();
+		</script>
+
 	</body>
 
 </html>
