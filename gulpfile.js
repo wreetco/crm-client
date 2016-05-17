@@ -12,8 +12,10 @@ gulp.task('styles', function() {
 });
 
 gulp.task('start', function () {
+	//Hopefully this would watch those sass files and recompile if they changed
 	gulp.watch('./client/assets/materialize-src/sass/*.scss',['styles']);
 	gulp.watch('./client/assets/sass/*.scss',['styles']);
+	//and also start the server.
 	start.server({
 		root: './client/',
 		port: 1337,
