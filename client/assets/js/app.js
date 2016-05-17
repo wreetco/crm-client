@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module('application', ['ui.materialize', 'ngRoute', 'ngAnimate', 'application.controllers'])
+	angular.module('application', ['ui.materialize', 'ngRoute', 'ngAnimate', 'application.controllers', 'application.services'])
 
 	.config([
 		'$locationProvider',
