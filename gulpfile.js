@@ -8,11 +8,12 @@ var start = require('gulp-connect');
 gulp.task('styles', function() {
 	gulp.src('./client/assets/materialize-src/sass/*.scss')
 		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest('./client/assets/materialize-src/css/'));
+		.pipe(gulp.dest('./client/assets/css/'));
 });
 
 gulp.task('start', function () {
-	gulp.watch('sass/**/*.scss',['styles']);
+	gulp.watch('./client/assets/materialize-src/sass/*.scss',['styles']);
+	gulp.watch('./client/assets/sass/*.scss',['styles']);
 	start.server({
 		root: './client/',
 		port: 1337,
