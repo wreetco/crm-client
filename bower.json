@@ -2,7 +2,7 @@
   "name": "crm-client",
   "homepage": "https://github.com/wreetco/crm-client",
   "authors": [
-    "Jon <jonnmb@Gmail.com>"
+    "wreetco <info@wreet.co>"
   ],
   "description": "Client Manager for wreetco CRM",
   "main": "gulpfile.js",
@@ -15,6 +15,10 @@
     "tests"
   ],
   "dependencies": {
-    "angular-materialize": "^0.1.7"
+    "angular": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-loader": "^1.5.5",
+    "angular-mocks": "^1.5.5",
+    "angular-materialize" : "^0.1.7"
   }
 }

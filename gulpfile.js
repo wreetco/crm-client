@@ -4,8 +4,11 @@
 var gulp = require('gulp');
 
 
-gulp.task('hello-world', function(){
-	console.log('HELLO WORLD');
+var start = require('gulp-connect');
+
+gulp.task('start', function () {
+	start.server({
+		root: 'client/',
+		port: 1337
+	});
 });
-
-
