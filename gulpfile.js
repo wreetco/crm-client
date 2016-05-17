@@ -9,6 +9,7 @@ var start = require('gulp-connect');
 gulp.task('start', function () {
 	start.server({
 		root: 'client/',
-		port: 1337
+		port: 1337,
+		hostname: '0.0.0.0'
 	});
 });
