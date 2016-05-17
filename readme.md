@@ -42,3 +42,17 @@ Now run the client
 ```bash
 gulp start
 ```
+
+## Compile materialize sass and js after changes
+
+Compile sass changes.
+
+```bash
+gulp styles
+```
+
+Compile js changes.
+
+```bash
+gulp scripts
+```
