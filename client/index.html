@@ -7,8 +7,9 @@
 		
 		
 		<!-- css -->
+		<link rel="stylesheet" href="assets/css/materialize.css">
 		<link rel="stylesheet" href="assets/css/main.css">
-		<link rel="stylesheet" href="assets/css/materialize.css">		
+  	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 		<!-- We have a ton of JS we need to bring in -->
 		<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
@@ -26,41 +27,38 @@
 
 	<body>
 		<nav>
+			<!-- This is the sidebar -->
 			<ul id="slide-out" class="side-nav fixed">
-      				<li><a href="#!/">Contacts</a></li>
-      				<li><a href="#!/settings">Settings</a></li>
-      				<li class="no-padding">
-        				<ul class="collapsible collapsible-accordion">
-          					<li>
-            						<a class="collapsible-header">Dropdown<i class="mdi-navigation-arrow-drop-down"></i></a>
-            						<div class="collapsible-body">
-              							<ul>
-                							<li><a href="#!">First</a></li>
-                							<li><a href="#!">Second</a></li>
-                							<li><a href="#!">Third</a></li>
-                							<li><a href="#!">Fourth</a></li>
-              							</ul>
-            						</div>
-          					</li>
-        				</ul>
-      				</li>
-    			</ul>
-    			<ul class="right hide-on-med-and-down">
-      				<li><a href="#!">First Navbar Link</a></li>
-      				<li><a href="#!">Second Navbar Link</a></li>
-      				<li><a class="dropdown-button" href="#!" data-activates="dropdown1">Dropdown<i class="mdi-navigation-arrow-drop-down 
-right"></i></a></li>
-      				<ul id='dropdown1' class='dropdown-content'>
-        				<li><a href="#!">First</a></li>
-        				<li><a href="#!">Second</a></li>
-        				<li><a href="#!">Third</a></li>
-        				<li><a href="#!">Fourth</a></li>
-      				</ul>
-    			</ul>
-    			<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-          	</nav>
+				<li class="center blue-grey darken-2"><a href="#!/"></a></li>
+				<li class="no-padding">
+					<ul class="collapsible collapsible-accordion">
+							<li>
+									<a class="collapsible-header">Contacts</a>
+									<div class="collapsible-body">
+											<ul>
+				  							<li><a href="#!/contact">New</a></li>
+				  							<li><a href="#!/contact">Label 2</a></li>
+				  							<li><a href="#!/contact">Label 3</a></li>
+				  							<li><a href="#!/contact">Label 4</a></li>
+											</ul>
+									</div>
+							</li>
+					</ul>
+				</li>
+				<li><a href="#!/settings">Settings</a></li>
+			</ul>
+
+			<!-- this is the top navbar -->
+			<ul class="right hide-on-med-and-down">
+  				<li><a href="#!">Login</a></li>
+  				<li><a href="#!">Logout</a></li>
+			</ul>
+
+    	<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    </nav>
+
+    <!-- This is where the views get served up in this ng view div -->
 		<div class="container">
-			<p>Hey buddy</p>
 			<div ng-view></div>
 		</div>
 		
