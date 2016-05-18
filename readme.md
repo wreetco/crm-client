@@ -40,7 +40,7 @@ bower install
 Now run the client
 
 ```bash
-gulp start
+gulp run
 ```
 
 ## Compile materialize sass and js after changes
