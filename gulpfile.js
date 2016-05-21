@@ -15,7 +15,7 @@ var runSequence = require('run-sequence');
 //This compiles the sass files in the materialize folder
 // then dumps the compiled sass in the css folder
 gulp.task('styles', function() {
-	var css_src = './client/assets/materialize-src/sass/*.scss';
+	var css_src = './client/assets/materialize-src/sass/\*.scss';
 	var css_dest = './client/assets/css';
 
 	gulp.src(css_src)
@@ -28,8 +28,8 @@ gulp.task('styles', function() {
 
 //This grabs all the javascript files from materialize
 // and minifies them
-gulp.task('scripts', function() {
-	var js_src = './client/assets/materialize-src/js/*.js';
+gulp.task('materialize-scripts', function() {
+	var js_src = './client/assets/materialize-src/js/\*.js';
 	var js_dest = './client/assets/js';
 
 	gulp.src(js_src)
@@ -44,13 +44,13 @@ gulp.task('scripts', function() {
 });
 
 //This should catch *most* project changes and automagically reload your browser, neato
-gulp.task('watch', ['browserSync', 'styles', 'scripts'], function(){
+gulp.task('watch', ['browserSync', 'styles', 'scripts',], function(){
 	var js_src = './client/assets/materialize-src/js/*.js';
 	var css_src = './client/assets/materialize-src/sass/**/*.scss';
 	var index_src ="./client/index.html";
 	var views_src ="./client/views/*.html";
 
-  	gulp.watch(js_src, ['scripts']); 
+    gulp.watch(js_src, ['scripts']); 
   	gulp.watch(css_src, ['styles']);
   	gulp.watch(index_src, browserSync.reload);
   	gulp.watch(views_src, browserSync.reload);

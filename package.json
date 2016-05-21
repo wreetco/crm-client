@@ -2,7 +2,8 @@
   "name": "crm-client",
   "version": "1.0.0",
   "description": "Client Manager for wreetco CRM",
-  "dependencies": {},
+  "dependencies": {
+  },
   "devDependencies": {
     "browser-sync": "^2.12.8",
     "gulp": "^3.9.1",
