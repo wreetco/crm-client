@@ -9,7 +9,10 @@ angular.module('application.controllers', ['nvd3'])
   }])
 
   .controller('StatisticsController', ['$scope', function($scope) {
+    //This test variable is output on the page with interpolateion {{}}
     $scope.test = "Test Output Statistics Page";
+
+    //this defines the graph on the stats page
     $scope.options = {
         chart: {
             type: 'lineChart',
