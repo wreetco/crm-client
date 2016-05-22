@@ -12,7 +12,12 @@
 	  	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
 		<link rel="stylesheet" href="bower_components/nvd3/build/nv.d3.css">
 
-		<!-- We have a ton of JS we need to bring in -->
+		<!-- 
+
+			We have a ton of JS we need to bring in eventually we will make 
+			a gulp task to minify and concat these all into a single file
+
+		-->
 
         <script type="text/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 
@@ -65,10 +70,10 @@
   				<li><a href="#!/">Logout</a></li>
 			</ul>
 
-    	<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-    </nav>
+    		<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    	</nav>
 
-    <!-- This is where the views get served up in this ng view div -->
+    	<!-- This is where the views get served up in this ng view div -->
 		<div class="container">
 			<div ng-view></div>
 		</div>
