@@ -2,6 +2,8 @@ angular.module('application.controllers', ['nvd3'])
 	
 	.controller('LandingController', ['$scope', function($scope) {
 		$('#login').openModal();
+		
+		
 	}])
 
   	.controller('ContactController', ['$scope', function($scope) {
