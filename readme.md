@@ -56,3 +56,9 @@ Compile js changes.
 ```bash
 gulp scripts
 ```
+
+## Resources and Docs for stuff used
+
+Angular NVD3 - https://krispo.github.io/angular-nvd3/#/quickstart
+
+Materialize - http://materializecss.com/
