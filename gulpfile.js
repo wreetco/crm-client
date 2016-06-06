@@ -1,6 +1,3 @@
-// We will want to look into using gulp
-// Checkout Chases gulpfile.js and this website brandonclapp.com/what-is-gulp-js-and-why-use-it/
-
 var gulp = require('gulp');
 var sass = require('gulp-sass');
 var start = require('gulp-connect');
@@ -10,62 +7,92 @@ var striplog = require('gulp-strip-debug');
 var gutil = require('gulp-util');
 var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
+var minify = require('gulp-minify-css');
+var merge = require('merge-stream');
 
 
+//we will add the app/controllers/services to this when it goes production
+var js_paths = [
+    'client/bower_components/jquery/dist/jquery.js',
+		'client/bower_components/angular/angular.js',
+		'client/bower_components/angular-route/angular-route.js',
+		'client/bower_components/angular-loader/angular-loader.js',
+		'client/bower_components/angular-animate/angular-animate.js',
+		'client/assets/materialize-src/js/**/*.js',
+		'client/bower_components/angular-materialize/src/angular-materialize.js',
+		'client/bower_components/d3/d3.js',
+		'client/bower_components/nvd3/build/nv.d3.js',
+		'client/bower_components/angular-nvd3/dist/angular-nvd3.js',
+];
+
+var css_paths = [
+  './client/assets/css/main/css',
+  './client/bower_components/nvd3/build/nv.d3.css',
+];
+var sass_paths = [
+  './client/assets/materialize-src/sass/*.scss',
+];
+
+
+// STYLES
 //This compiles the sass files in the materialize folder
 // then dumps the compiled sass in the css folder
 gulp.task('styles', function() {
-	var css_src = './client/assets/materialize-src/sass/\*.scss';
-	var css_dest = './client/assets/css';
+  var scssStream = gulp.src(sass_paths)
+    .pipe(sass())
+    .pipe(concat('scss-files.scss'))
+  ;
+  var cssStream = gulp.src(css_paths)
+    .pipe(concat('css-files.css'))
+  ;
+  var mergedStream = merge(scssStream, cssStream)
+    .pipe(concat('styles.css'))
+    .pipe(minify())
+    .pipe(gulp.dest('./client/assets/css'))
+    .pipe(browserSync.stream());
+  ;
 
-	gulp.src(css_src)
-		.pipe(sass().on('error', sass.logError))
-		.pipe(gulp.dest(css_dest))
-		.pipe(browserSync.reload({
-      		stream: true
-    	}));
+  return mergedStream;
+
 });
 
+
+// SCRIPTS
 //This grabs all the javascript files from materialize
 // and minifies them
-gulp.task('materialize-scripts', function() {
-	var js_src = './client/assets/materialize-src/js/\*.js';
-	var js_dest = './client/assets/js';
-
-	gulp.src(js_src)
-		.pipe(concat('materialize.min.js'))
+gulp.task('scripts', function() {
+	//all the jquery we need for the front end
+	//put them in order in src() to preserve load order
+	return gulp.src(js_paths)
+		.pipe(concat('assets.min.js'))
 		.pipe(striplog())
 		.pipe(uglify())
-		.pipe(gulp.dest(js_dest))
+		.pipe(gulp.dest('./client/assets/js'))
 		.on('error', gutil.log)
-		.pipe(browserSync.reload({
-      		stream: true
-    	}));
+    .pipe(browserSync.stream());
 });
 
-//This should catch *most* project changes and automagically reload your browser, neato
-gulp.task('watch', ['browserSync', 'styles', 'scripts',], function(){
-	var js_src = './client/assets/materialize-src/js/*.js';
-	var css_src = './client/assets/materialize-src/sass/**/*.scss';
+
+// WATCH
+//This should catch html changes and reload the browser
+gulp.task('watch', function(){
 	var index_src ="./client/index.html";
 	var views_src ="./client/views/*.html";
 
-    gulp.watch(js_src, ['scripts']); 
-  	gulp.watch(css_src, ['styles']);
-  	gulp.watch(index_src, browserSync.reload);
-  	gulp.watch(views_src, browserSync.reload);
-  
-})
 
-//Reload browser when you make a change to sass or js
-gulp.task('browserSync', function() {
   browserSync.init({
     server: {
       baseDir: './client'
     },
   })
+
+  gulp.watch(js_paths, ['scripts']);
+  gulp.watch(css_paths, ['styles']);
+
 })
 
+
+// START
 //Starts the server on the localhost:1337
 gulp.task('start', function () {
 	start.server({
@@ -75,9 +102,11 @@ gulp.task('start', function () {
 	});
 });
 
+
+// RUN
 //Start the server and watch for changes to do live reload
 gulp.task('run', function (callback) {
-  runSequence(['start', 'watch'], 
+  runSequence(['start', 'watch'],
     callback
   )
 })
