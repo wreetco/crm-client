@@ -1,12 +1,16 @@
 angular.module('application.controllers', ['nvd3'])
+	
+	.controller('LandingController', ['$scope', function($scope) {
+		$('#login').openModal();
+	}])
 
-  .controller('ContactController', ['$scope', function($scope) {
-    $scope.test = "Test Output Contact page";
-  }])
+  	.controller('ContactController', ['$scope', function($scope) {
+    	$scope.test = "Test Output Contact page";
+  	}])
 
-  .controller('SettingsController', ['$scope',   function($scope) {
-    $scope.test = "Test Output Settings Page";
-  }])
+	.controller('SettingsController', ['$scope',   function($scope) {
+		$scope.test = "Test Output Settings Page";
+	}])
 
   .controller('StatisticsController', ['$scope', function($scope) {
     //This defines the graph on the stats page
