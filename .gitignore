@@ -4,3 +4,5 @@ build
 bower_components
 node_modules
 npm-debug.log
+/client/assets/js/assets.min.js
+/client/assets/css/styles.css

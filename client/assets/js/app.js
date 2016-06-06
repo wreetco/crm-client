@@ -11,6 +11,10 @@
 		//routes
 		$routeProvider
 			.when("/", {
+				templateUrl: "./views/landing.html",
+				controller: "LandingController"
+			})
+            .when("/contact", {
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"
 			})
@@ -27,6 +31,8 @@
 			});
 		}
 	])
+    
+    
 }());
 
 
