@@ -25,12 +25,18 @@ var js_paths = [
 		'client/bower_components/angular-nvd3/dist/angular-nvd3.js',
 ];
 
+var js_paths_main = [
+    'client/assets/js/app.js',
+    'client/assets/js/controllers.js',
+    'client/assets/js/services.js'
+];
+
 var css_paths = [
-  './client/assets/css/main/css',
-  './client/bower_components/nvd3/build/nv.d3.css',
+  'client/assets/css/main.css',
+  'client/bower_components/nvd3/build/nv.d3.css',
 ];
 var sass_paths = [
-  './client/assets/materialize-src/sass/*.scss',
+  'client/assets/materialize-src/sass/*.scss',
 ];
 
 
@@ -76,9 +82,8 @@ gulp.task('scripts', function() {
 // WATCH
 //This should catch html changes and reload the browser
 gulp.task('watch', function(){
-	var index_src ="./client/index.html";
-	var views_src ="./client/views/*.html";
-
+	var index_src ="client/index.html";
+	var views_src ="client/views/*.html";
 
   browserSync.init({
     server: {
@@ -86,10 +91,13 @@ gulp.task('watch', function(){
     },
   })
 
-  gulp.watch(js_paths, ['scripts']);
+  //gulp.watch(js_paths, ['scripts']);
+  gulp.watch(index_src).on('change', browserSync.reload);
+  gulp.watch(views_src).on('change', browserSync.reload);
+  gulp.watch(js_paths_main).on('change', browserSync.reload);
   gulp.watch(css_paths, ['styles']);
 
-})
+});
 
 
 // START
@@ -109,4 +117,4 @@ gulp.task('run', function (callback) {
   runSequence(['start', 'watch'],
     callback
   )
-})
+});
