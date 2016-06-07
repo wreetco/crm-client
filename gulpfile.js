@@ -9,7 +9,9 @@ var browserSync = require('browser-sync').create();
 var runSequence = require('run-sequence');
 var minify = require('gulp-minify-css');
 var merge = require('merge-stream');
-
+var htmlhint = require("gulp-htmlhint");
+var csslint = require('gulp-csslint');
+var jshint = require('gulp-jshint');
 
 //we will add the app/controllers/services to this when it goes production
 var js_paths = [
@@ -35,10 +37,15 @@ var css_paths = [
   'client/assets/css/main.css',
   'client/bower_components/nvd3/build/nv.d3.css',
 ];
+
 var sass_paths = [
   'client/assets/materialize-src/sass/*.scss',
 ];
 
+var html_paths = [
+  'client/index.html',
+  'client/views/*.html',
+];
 
 // STYLES
 //This compiles the sass files in the materialize folder
@@ -82,9 +89,6 @@ gulp.task('scripts', function() {
 // WATCH
 //This should catch html changes and reload the browser
 gulp.task('watch', function(){
-	var index_src ="client/index.html";
-	var views_src ="client/views/*.html";
-
   browserSync.init({
     server: {
       baseDir: './client'
@@ -92,10 +96,9 @@ gulp.task('watch', function(){
   })
 
   //gulp.watch(js_paths, ['scripts']);
-  gulp.watch(index_src).on('change', browserSync.reload);
-  gulp.watch(views_src).on('change', browserSync.reload);
-  gulp.watch(js_paths_main).on('change', browserSync.reload);
-  gulp.watch(css_paths, ['styles']);
+  gulp.watch(html_paths, ['htmlhint']).on('change', browserSync.reload);
+  gulp.watch(js_paths_main, ['jslint']).on('change', browserSync.reload);
+  gulp.watch(css_paths, ['csslint', 'styles']);
 
 });
 
@@ -105,7 +108,7 @@ gulp.task('watch', function(){
 gulp.task('start', function () {
 	start.server({
 		root: './client/',
-		port: 1337,
+		port: '1337',
 		hostname: '0.0.0.0'
 	});
 });
@@ -117,4 +120,25 @@ gulp.task('run', function (callback) {
   runSequence(['start', 'watch'],
     callback
   )
+});
+
+//check html for errors
+gulp.task('htmlhint', function () {
+  gulp.src(html_paths)
+	  .pipe(htmlhint())
+	  .pipe(htmlhint.reporter())
+});
+
+//Lints our main.css file
+gulp.task('csslint', function() {
+  gulp.src('client/assets/css/main.css')
+    .pipe(csslint())
+    .pipe(csslint.reporter());
+});
+
+//js lint
+gulp.task('jslint', function() {
+  return gulp.src(js_paths_main)
+    .pipe(jshint())
+    .pipe(jshint.reporter());
 });
