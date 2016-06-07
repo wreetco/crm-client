@@ -58,7 +58,7 @@ gulp.task('styles', function() {
   var cssStream = gulp.src(css_paths)
     .pipe(concat('css-files.css'))
   ;
-  var mergedStream = merge(scssStream, cssStream)
+  var mergedStream = merge(cssStream, scssStream)
     .pipe(concat('styles.css'))
     .pipe(minify())
     .pipe(gulp.dest('./client/assets/css'))

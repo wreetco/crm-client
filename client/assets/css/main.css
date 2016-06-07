@@ -1,6 +1,5 @@
 .slideout-icon {
-  position: absolute;
-  top: 50%; transform: translateY(-50%);
+  font-size: 4em !important;
 }
 
 /*
