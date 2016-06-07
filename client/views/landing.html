@@ -3,10 +3,10 @@
 	<div class="modal-content">
 		<h4>Login</h4>
 		<p>You must login.</p>
-		<form class="row">
+		<form class="row" id="login-form">
 			<div class="input-field col s6">
-				<input placeholder="" id="username" type="text" class="validtate" />
-				<label for="username">Username</label>
+				<input placeholder="" id="email" type="text" class="validtate" />
+				<label for="email">Email</label>
 			</div>
 
 			<div class="input-field col s6">
@@ -22,7 +22,6 @@
 				-create a 'loading' thingy that waits for success
 			and open a 'success' modal when done
 		-->
-
-		<a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Login</a>
+		<a href="#!" ng-click="login()" class="modal-action waves-effect waves-green btn-flat">Login</a>
 	</div>
 </div>
