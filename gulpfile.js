@@ -96,9 +96,9 @@ gulp.task('watch', function(){
   })
 
   //gulp.watch(js_paths, ['scripts']);
-  gulp.watch(html_paths).on('change', browserSync.reload);
-  gulp.watch(js_paths_main).on('change', browserSync.reload);
-  gulp.watch(css_paths, ['styles']);
+  gulp.watch(html_paths, ['htmlhint']).on('change', browserSync.reload);
+  gulp.watch(js_paths_main, ['jslint']).on('change', browserSync.reload);
+  gulp.watch(css_paths, ['csslint', 'styles']);
 
 });
 
@@ -108,7 +108,7 @@ gulp.task('watch', function(){
 gulp.task('start', function () {
 	start.server({
 		root: './client/',
-		port: 1337,
+		port: '1337',
 		hostname: '0.0.0.0'
 	});
 });
