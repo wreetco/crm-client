@@ -14,7 +14,7 @@
 				templateUrl: "./views/landing.html",
 				controller: "LandingController"
 			})
-            .when("/contact", {
+      .when("/contact", {
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"
 			})

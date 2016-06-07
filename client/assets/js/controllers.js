@@ -1,22 +1,27 @@
 angular.module('application.controllers', ['nvd3'])
-.controller('AccountController', function($scope, Accounts) {
-  $scope.login = function() {
-    var email = $('#email').val();
-    var passwd = $('#password').val();
-    console.log("Test")
-    Accounts.login(email, passwd);
-  }
-})
 
-.controller('LandingController', function($scope, Accounts) {
-  $('#login').openModal();
+.controller('LandingController', function($scope, $window, $location, Accounts) {
+  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
     var email = $('#email').val();
     var passwd = $('#password').val();
-    console.log("Test")
-    Accounts.login(email, passwd);
-  }
+    console.log("Test");
+    Accounts.login(email, passwd).then(function(sess) {
+      // store it
+      var session = {
+        token: sess._id,
+        user: sess.user
+      };
+      $window.sessionStorage.session = JSON.stringify(session);
+      $("#login").closeModal();
+      $location.path('/contact');
+      $scope.$apply();
+    }).catch(function(err) {
+      // fucked it up bradley
+      console.log("Login failed with error: " + err);
+    });
+  };
 })
 
 
