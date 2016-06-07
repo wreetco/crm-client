@@ -10,7 +10,7 @@ You'll need the following software installed to get started.
   - [Git](http://git-scm.com/downloads): Use the installer for your OS.
     - Windows users can also try [Git for Windows](http://git-for-windows.github.io/).
   - [Gulp](http://gulpjs.com/) and [Bower](http://bower.io): Run `npm install -g gulp bower`
-    - Depending on how Node is configured on your machine, you may need to run `sudo npm install -g gulp bower` instead, if you get an error with the 
+    - Depending on how Node is configured on your machine, you may need to run `sudo npm install -g gulp bower` instead, if you get an error with the
 first command.
 
 ## Get Started
@@ -27,7 +27,7 @@ Change into the directory.
 cd app
 ```
 
-Install the dependencies. If you're running Mac OS or Linux, you may need to run `sudo npm install` instead, depending on how your machine is 
+Install the dependencies. If you're running Mac OS or Linux, you may need to run `sudo npm install` instead, depending on how your machine is
 configured.
 
 ```bash
@@ -43,7 +43,7 @@ Now run the client (*Before the first time you run this you should run 'gulp sty
 gulp run
 ```
 
-## Compile materialize sass and js after changes
+## Gulp Tasks
 
 Compile sass changes.
 
@@ -55,6 +55,36 @@ Compile js changes.
 
 ```bash
 gulp scripts
+```
+
+Start serving the app with watch script.
+
+```bash
+gulp run
+```
+
+Start serving the app without watch script.
+
+```bash
+gulp start
+```
+
+Run JS lint
+
+```bash
+gulp jslint
+```
+
+Run CSS lint
+
+```bash
+gulp csslint
+```
+
+Run Html lint
+
+```bash
+gulp htmlhint
 ```
 
 ## Resources and Docs for stuff used
