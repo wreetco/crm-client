@@ -1,4 +1,17 @@
 angular.module('application.services', [])
+
+  .factory('httpRequestInterceptor', function($window) {
+    return {
+      request: function($config) {
+        if(JSON.parse(window.sessionStorage.session).token) {
+          $config.headers.Authorization = JSON.parse(window.sessionStorage.session).token;
+        }
+        return $config;
+      }
+    };
+  })
+
+
 	.factory('Accounts', function($http) {
 		return {
 			login: function(email, passwd) {
@@ -7,6 +20,7 @@ angular.module('application.services', [])
 
 					$http.post("http://burnsy.wreet.xyz/auth", req)
 						.success(function(data, status) {
+              // future reqs will want the token
 							resolve(data);
 					})
 						.error(function(data, status) {
@@ -18,7 +32,22 @@ angular.module('application.services', [])
 		};
 	}) // end accounts service
 
-
+  .factory('Manager', function($http) {
+    return {
+      getInterface: function(manager_id) {
+        return new Promise(function(resolve, reject) {
+          $http.get("http://burnsy.wreet.xyz/manager/"+manager_id+"/interface").success(function(data) {
+            resolve(data);
+          }).error(function(data, status) {
+            reject({
+              data: data,
+              status: status
+            });
+          });
+        });
+      } // end getInterface method
+    }; // end ret
+  }) // end Manager service
 
 
 ;

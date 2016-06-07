@@ -21,7 +21,14 @@ angular.module('application.controllers', ['nvd3'])
       // fucked it up bradley
       console.log("Login failed with error: " + err);
     });
+  }; // end login method
+
+  $scope.getInterface = function() {
+    // for now we only can handle the one interace, though the backend is ready
+    // to support more when we want to add that capability
+
   };
+
 })
 
 
