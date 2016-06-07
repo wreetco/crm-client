@@ -1,7 +1,7 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('LandingController', function($scope, $window, Accounts) {
-  $('#login').openModal();
+.controller('LandingController', function($scope, $window, $location, Accounts) {
+  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
     var email = $('#email').val();
@@ -14,6 +14,9 @@ angular.module('application.controllers', ['nvd3'])
         user: sess.user
       };
       $window.sessionStorage.session = JSON.stringify(session);
+      $("#login").closeModal();
+      $location.path('/contact');
+      $scope.$apply();
     }).catch(function(err) {
       // fucked it up bradley
       console.log("Login failed with error: " + err);

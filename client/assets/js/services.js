@@ -11,9 +11,6 @@ angular.module('application.services', [])
 					})
 						.error(function(data, status) {
 							reject({data,status});
-							console.log("FAIL");
-							console.log(data);
-							console.log(status);
 				   	});
 				}); // end promise
 
