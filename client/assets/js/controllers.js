@@ -1,10 +1,24 @@
 angular.module('application.controllers', ['nvd3'])
-	
-	.controller('LandingController', ['$scope', function($scope) {
+	.controller('AccountController', function($scope, Accounts) {
+		$scope.login = function() {
+			var email = $('#email').val();
+			var passwd = $('#password').val();
+			console.log("Test")
+			Accounts.login(email, passwd);
+		}
+	})
+
+	.controller('LandingController', function($scope, Accounts) {
 		$('#login').openModal();
+	
+		$scope.login = function() {
+			var email = $('#email').val();
+			var passwd = $('#password').val();
+			console.log("Test")
+			Accounts.login(email, passwd);
+		}
+	})
 		
-		
-	}])
 
   	.controller('ContactController', ['$scope', function($scope) {
     	$scope.test = "Test Output Contact page";
