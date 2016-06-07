@@ -1,9 +1,9 @@
 <!doctype html>
 <html ng-app="application">
-	<head>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>CRM | CLIENT</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CRM | CLIENT</title>
 
     <!--
       CSS
@@ -12,63 +12,67 @@
     <link rel="stylesheet" href="assets/css/styles.css" />
 
 
-	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <!--
       JS
       All of our required JS has been concat'd and minified.
     -->
-		<script type="text/javascript" src="assets/js/assets.min.js"></script>
+    <script type="text/javascript" src="assets/js/assets.min.js"></script>
 
 
     <script type="text/javascript" src="assets/js/app.js"></script>
     <script type="text/javascript" src="assets/js/controllers.js"></script>
     <script type="text/javascript" src="assets/js/services.js"></script>
 
-	</head>
+  </head>
 
-	<body>
-		<nav>
-			<!-- This is the sidebar -->
-			<ul id="slide-out" class="side-nav fixed">
-				<li class="center blue-grey darken-1"><a href="#!/"></a></li>
-				<li class="no-padding">
-					<ul class="collapsible collapsible-accordion">
-							<li>
-									<a class="collapsible-header">Contacts</a>
-									<div class="collapsible-body">
-											<ul>
-				  							<li><a href="#!/contact">New</a></li>
-				  							<li><a href="#!/contact">Label 2</a></li>
-				  							<li><a href="#!/contact">Label 3</a></li>
-				  							<li><a href="#!/contact">Label 4</a></li>
-											</ul>
-									</div>
-							</li>
-					</ul>
-				</li>
-				<li><a href="#!/statistics">Statistics</a></li>
-				<li><a href="#!/settings">Settings</a></li>
-				
-				<!-- TBD: Float this button to the bottom of the left area -->
-				<li id="logoutButton" class="grey darken-3">
-					<a class="white-text" href="#!/logout">Logout</a>
-				</li>
-				
-			</ul>
+  <body>
+    <nav>
+      <!-- This is the sidebar -->
+      <ul id="slide-out" class="side-nav fixed">
+        <li class="center blue-grey darken-1"><a href="#!/"></a></li>
+        <li class="no-padding">
+          <ul class="collapsible collapsible-accordion">
+            <li>
+              <a class="collapsible-header">Contacts</a>
+              <div class="collapsible-body">
+                <ul>
+                  <li><a href="#!/contact">New</a></li>
+                  <li><a href="#!/contact">Label 2</a></li>
+                  <li><a href="#!/contact">Label 3</a></li>
+                  <li><a href="#!/contact">Label 4</a></li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li><a href="#!/statistics">Statistics</a></li>
+        <li><a href="#!/settings">Settings</a></li>
 
+        <!-- TBD: Float this button to the bottom of the left area -->
+        <li id="logoutButton" class="grey darken-3">
+          <a class="white-text" href="#!/logout">Logout</a>
+        </li>
 
-    		<a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
-    	</nav>
+      </ul>
+    </nav>
 
-    	<!-- This is where the views get served up in this ng view div -->
-		<div class="container">
-			<div ng-view></div>
-		</div>
+    <!-- The button that shows up when it collapstes -->
+    <a href="#" data-activates="slide-out" class="button-collapse show-on-large" ><i class="material-icons">keyboard_arrow_right</i></a>
+    <!-- This is where the views get served up in this ng view div -->
+    <div class="container">
+      <div ng-view></div>
+    </div>
 
-		<script>
-			$(".button-collapse").sideNav();
-		</script>
+    <script>
+      $(".button-collapse").sideNav({
+          menuWidth: 180,
+          edge: 'left',
+        }
+      );
+      $('.collapsible').collapsible();
+    </script>
 
-	</body>
+  </body>
 
 </html>
