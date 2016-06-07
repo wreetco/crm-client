@@ -14,23 +14,32 @@ header, main, footer {
 }
 
 /* Settings Page - work-collections */
-#settings-page-cards .collection-header {
-  font-size: 1.64rem;
-  font-weight: 500;
-}
-#settings-page-cards .collection-item {
+.row {
   border-style: hidden;
 }
-#settings-page-cards .collection-item.avatar {
+ 
+#settings-page-collection .collection {
+   border: hidden;
+}
+ 
+#settings-page-collection .collection-header {
+  font-size: 1.64rem;
+  font-weight: 500;
+  
+}
+#settings-page-collection .collection-item {
+  border-style: hidden;
+}
+#settings-page-collection .collection-item.avatar {
   height: auto;
 }
-#settings-page-cards p.collections-title {
+#settings-page-collection p.collections-title {
   font-size: 1.0rem;
   padding: 0;
   margin: 0;
   font-weight: 500;
 }
-#settings-page-cards p.collections-content {
+#settings-page-collection p.collections-content {
   font-size: 0.9rem;
   padding: 0;
   margin: 0;
