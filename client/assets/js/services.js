@@ -1,16 +1,18 @@
 angular.module('application.services', [])
-.factory('httpRequestInterceptor', function($window) {
+// some interceptrons
+.factory('httpAddAuthHeaderIntercept', ['Session', function(Session) {
   return {
     request: function($config) {
-      if(JSON.parse(window.sessionStorage.session).token) {
+      if(Session.isLoggedIn()) {
         $config.headers.Authorization = JSON.parse(window.sessionStorage.session).token;
       }
       return $config;
     }
   };
-})
+}])
 
-.factory('Accounts', function($http) {
+// actual factories
+.factory('Accounts', ['$http', function($http) {
   return {
     login: function(email, passwd) {
       return new Promise(function(resolve, reject) {
@@ -25,9 +27,24 @@ angular.module('application.services', [])
         });
       }); // end promise
 
-    }, // end login method
+    } // end login method
   };
-}) // end accounts service
+}]) // end accounts service
+
+.factory('Session', ['$window', function($window) {
+  return {
+    isLoggedIn: function() {
+      if ($window.sessionStorage.session)
+        return true;
+      else
+        return false;
+    }, // end isLoggedIn method
+
+    getSession: function() {
+      return JSON.parse($window.sessionStorage.session);
+    } // end getSession method
+  };
+}])
 
 .factory('Manager', function($http) {
   return {
@@ -42,10 +59,8 @@ angular.module('application.services', [])
           });
         });
       }); // end promise
-    } // end getInterface method
+    } // end getManagerItem method
   }; // end ret
 }) // end Manager service
-
-
 ;
 
