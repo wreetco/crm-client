@@ -1,6 +1,6 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('LandingController', function($scope, $window, $location, Accounts) {
+.controller('AccountController', function($scope, $window, $location, Accounts) {
   ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
@@ -21,9 +21,26 @@ angular.module('application.controllers', ['nvd3'])
       // fucked it up bradley
       console.log("Login failed with error: " + err);
     });
-  };
+  }; // end login method
 })
 
+.controller('ManagerController', ['$scope, Manager', function($scope, Manager) {
+  $scope.getInterface = function() {
+    // for now we only can handle the one manager interace, though the
+    // backend is ready to support more when we want to add that capability
+    // to that end, grab the first manager from the user array
+    var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
+    Manager.getManagerItem(m_id, 'interface').then(function(interface) {
+      console.log(interace);
+    }).catch(function(err) {
+      console.log(JSON.stringify(err));
+    });
+  };
+}])
+
+.controller('HomeController', ['$scope', function($scope) {
+  $scope.test = "bradhadi thunderfuck kush";
+}])
 
 .controller('ContactController', ['$scope', function($scope) {
   $scope.test = "Test Output Contact page";

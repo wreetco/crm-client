@@ -11,9 +11,13 @@
 		//routes
 		$routeProvider
 			.when("/", {
-				templateUrl: "./views/landing.html",
-				controller: "LandingController"
+				templateUrl: "./views/home.html",
+				controller: "HomeController"
 			})
+      .when("/login", {
+        templateUrl: "./views/_login_modal.html",
+        controller: "AccountController"
+      })
       .when("/contact", {
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"
@@ -30,9 +34,22 @@
 				redirectTo: '/'
 			});
 		}
-	]);
+	])
 
+  .config(['$httpProvider', function($httpProvider) {
+    $httpProvider.interceptors.push('httpAddAuthHeaderIntercept');
+  }])
 
+  .run(['$rootScope', '$location', 'Session', function ($rootScope, $location, Session) {
+    $rootScope.$on('$routeChangeStart', function (event) {
+      if (!Session.isLoggedIn()) {
+        //event.preventDefault();
+        $location.path('/login');
+      }
+    });
+  }])
+
+  ;
 }());
 
 
