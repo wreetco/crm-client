@@ -31,9 +31,9 @@ angular.module('application.services', [])
 
 .factory('Manager', function($http) {
   return {
-    getInterface: function(manager_id) {
+    getManagerItem: function(manager_id, item) {
       return new Promise(function(resolve, reject) {
-        $http.get("http://burnsy.wreet.xyz/manager/"+manager_id+"/interface").success(function(data) {
+        $http.get("http://burnsy.wreet.xyz/manager/"+manager_id+"/"+item).success(function(data) {
           resolve(data);
         }).error(function(data, status) {
           reject({
