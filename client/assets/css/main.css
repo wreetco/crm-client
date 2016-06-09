@@ -6,7 +6,6 @@
 If you are planning on using the sidenav you will have to offset your content by the width of the side menu.
 Place the padding on where the offset content will be, which in our case is in header, main and footer. - Materialize Docs
 */
-
 header, main, footer {
   padding-left: 240px;
 }
@@ -21,15 +20,15 @@ header, main, footer {
 #settings-page-collection .row {
   border-style: hidden;
 }
- 
+
 #settings-page-collection .collection {
    border: hidden;
 }
- 
+
 #settings-page-collection .collection-header {
   font-size: 1.64rem;
   font-weight: 500;
-  
+
 }
 #settings-page-collection .collection-item {
   border-style: hidden;
