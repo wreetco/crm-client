@@ -8,7 +8,7 @@ Place the padding on where the offset content will be, which in our case is in h
 */
 
 header, body, footer {
-  padding-left: 240px;
+  padding-left: 220px;
 }
 
 @media only screen and (max-width : 992px) {
@@ -22,15 +22,15 @@ header, body, footer {
 #settings-page-collection .row {
   border-style: hidden;
 }
- 
+
 #settings-page-collection .collection {
    border: hidden;
 }
- 
+
 #settings-page-collection .collection-header {
   font-size: 1.64rem;
   font-weight: 500;
-  
+
 }
 #settings-page-collection .collection-item {
   border-style: hidden;
@@ -50,6 +50,10 @@ header, body, footer {
   margin: 0;
   font-weight: 400;
 }
+<<<<<<< HEAD
 #settings-color-theme {
   
 }
+=======
+
+>>>>>>> b61d9531b2b3d8aa1faea68ddd4d1ef1c2668a82
