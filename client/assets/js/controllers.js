@@ -3,12 +3,12 @@ angular.module('application.controllers', ['nvd3'])
 .controller('AccountController', 
 			['$scope', '$window', '$location', 'Accounts',
 			function($scope, $window, $location, Accounts) {
-  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
-
+  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
+  
   $scope.login = function() {
     var email = $('#email').val();
     var passwd = $('#password').val();
-    console.log("Test");
+    
     Accounts.login(email, passwd).then(function(sess) {
       // store it
       var session = {
@@ -42,6 +42,19 @@ angular.module('application.controllers', ['nvd3'])
 
 .controller('HomeController', ['$scope', function($scope) {
   $scope.test = "bradhadi thunderfuck kush";
+  
+  // alert("test");
+  function setActive(event) {
+    $(".activeTab").remove();
+    
+    var activeTab = $("<span></span>");
+    //activeTab.addClass("material-icons");
+    activeTab.addClass("right");
+    activeTab.addClass("activeTab");
+    activeTab.text(">");
+    $(event.target).append(activeTab);
+  }
+  $("a.activatable").click(setActive);
 }])
 
 .controller('ContactController', ['$scope', function($scope) {
