@@ -7,17 +7,17 @@ If you are planning on using the sidenav you will have to offset your content by
 Place the padding on where the offset content will be, which in our case is in header, main and footer. - Materialize Docs
 */
 
-header, main, footer {
+header, body, footer {
   padding-left: 240px;
 }
 
 @media only screen and (max-width : 992px) {
-  header, main, footer {
+  header, body, footer {
     padding-left: 0;
   }
 }
 
-/* Settings Page - work-collections */
+/* Settings Page - collections */
 #settings-page-collection .row {
   border-style: hidden;
 }
