@@ -62,5 +62,40 @@ angular.module('application.services', [])
     } // end getManagerItem method
   }; // end ret
 }]) // end Manager service
+
+.factory('Interface', ['$window', 'Manager', function($window, Manager) {
+  // less do ah
+  return {
+    getInterface: function(m_id) {
+      // grabdad that interface
+      return new Promise(function(resolve, reject) {
+        Manager.getManagerItem(m_id, 'interface').then(function(ifaz) {
+          resolve(ifaz);
+        }).catch(function(e) {
+          reject(e);
+        });
+      }); // end promiseus
+    } // end getInterface method
+  }; // end ret
+}]) // end interface factory
+
+.factory('Record', ['$http', function($http) {
+  return {
+    getRecords: function(m_id, type, opts) {
+      opts = opts || {};
+      return new Promise(function(resolve, reject) {
+        $http.get("http://burnsy.wreet.xyz/manager/"+m_id+"/"+type)
+        .success(function(records) {
+          resolve(records);
+        }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    } // end getRecords method
+  };
+}])  // end record service
+
+
 ;
+
 
