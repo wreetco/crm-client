@@ -1,1 +1,36 @@
-// sassy sass
+//sassy sass
+
+@mixin theme($name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider){
+  .#{$name} {
+    body {
+      background-color: $primary-color-light;
+      text: $primary-text;
+    }
+    i {
+      color: $accent;
+    }
+    li {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    ul {
+      background-color: $primary-color-dark;
+    }
+    .collapsible {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+    .row {
+      background-color: $primary-color-dark;
+    }
+    .col {
+      background-color: $primary-color;
+    }
+    form {
+      background-color: $primary-color;
+    }
+  }
+}
+
+@include theme(dark-theme, #000000, #212121, #303030, #FF5252, #FFF, #727272, #b6b6b6);
+@include theme(light-theme, #FF5252, #212121, #727272, #b6b6b6, #303F9F, #3F51B5, #C5CAE9);

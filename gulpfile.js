@@ -39,6 +39,7 @@ var css_paths = [
 ];
 
 var sass_paths = [
+  'client/assets/sass/*.scss',
   'client/assets/materialize-src/sass/*.scss',
 ];
 
@@ -99,6 +100,7 @@ gulp.task('watch', function(){
   gulp.watch(html_paths, ['htmlhint']).on('change', browserSync.reload);
   gulp.watch(js_paths_main, ['jslint']).on('change', browserSync.reload);
   gulp.watch(css_paths, ['csslint', 'styles']);
+  gulp.watch('client/assets/sass/*.scss', ['styles', 'csslint']);
 
 });
 

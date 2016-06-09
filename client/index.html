@@ -23,11 +23,11 @@
 
   </head>
 
-  <body>
+  <body class="dark-theme">
     <div>
       <!-- This is the sidebar -->
       <ul id="slide-out" class="side-nav fixed">
-        <li class="center blue-grey darken-1">
+        <li class="center">
           <i class="large material-icons">account_circle</i>
           <p>Account Name</p>
         </li>
@@ -50,14 +50,14 @@
         <li><a href="#!/settings" class="activatable collapsible-header"><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->
-        <li id="logoutButton" class="grey darken-3">
-          <a class="collapsible-header white-text" href="#!/logout"><i class="material-icons">exit_to_app</i>Logout</a>
+        <li id="logoutButton">
+          <a class="collapsible-header" href="#!/logout"><i class="material-icons">exit_to_app</i>Logout</a>
         </li>
 
       </ul>
     </div>
     <!-- The button that shows up when it collapstes -->
-    <a href="#" data-activates="slide-out" class="button-collapse show-on-large" ><i class="material-icons white-text blue-grey darken-3 slideout-icon">keyboard_arrow_down</i></a>
+    <a href="#" data-activates="slide-out" class="button-collapse show-on-large" ><i class="material-icons slideout-icon">keyboard_arrow_down</i></a>
 
     <!-- This is where the views get served up in this ng view div -->
     <div class="container">
