@@ -24,22 +24,35 @@ angular.module('application.controllers', ['nvd3'])
   }; // end login method
 })
 
-.controller('ManagerController', ['$scope, Manager', function($scope, Manager) {
+.controller('ManagerController', ['$scope', 'Manager', function($scope, Manager) {
+
+}])
+
+.controller('HomeController', ['$scope', 'Interface', function($scope, Interface) {
+  $scope.test = "bradhadi thunderfuck kush";
   $scope.getInterface = function() {
-    // for now we only can handle the one manager interace, though the
+    // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
     // to that end, grab the first manager from the user array
     var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
-    Manager.getManagerItem(m_id, 'interface').then(function(interface) {
-      console.log(interace);
-    }).catch(function(err) {
+    Interface.getInterface(m_id).then(function(interface) {
+      console.log(interface);
+      // store the thing
+      window.localStorage.interface = JSON.stringify(interface);
+    }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
   };
+
+  (function(){ // sup
+    if (!localStorage.interface)
+      $scope.getInterface();
+  })();
 }])
 
-.controller('HomeController', ['$scope', function($scope) {
-  $scope.test = "bradhadi thunderfuck kush";
+.controller('RecordController', ['$scope', function($scope) {
+  // roch's
+
 }])
 
 .controller('ContactController', ['$scope', function($scope) {

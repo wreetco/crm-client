@@ -62,5 +62,25 @@ angular.module('application.services', [])
     } // end getManagerItem method
   }; // end ret
 }) // end Manager service
+
+.factory('Interface', ['$window', 'Manager', function($window, Manager) {
+  // less do ah
+  return {
+    getInterface: function(m_id) {
+      // grabdad that interface
+      return new Promise(function(resolve, reject) {
+        Manager.getManagerItem(m_id, 'interface').then(function(ifaz) {
+          resolve(ifaz);
+        }).catch(function(e) {
+          reject(e);
+        });
+      }); // end promiseus
+    } // end getInterface method
+  }; // end ret
+}]) // end interface factory
+
+
+
 ;
+
 
