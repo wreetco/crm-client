@@ -1,24 +1,46 @@
 angular.module('application.controllers', ['nvd3'])
-.controller('AccountController', function($scope, Accounts) {
-  $scope.login = function() {
-    var email = $('#email').val();
-    var passwd = $('#password').val();
-    console.log("Test")
-    Accounts.login(email, passwd);
-  }
-})
 
-.controller('LandingController', function($scope, Accounts) {
-  $('#login').openModal();
+.controller('AccountController', function($scope, $window, $location, Accounts) {
+  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
     var email = $('#email').val();
     var passwd = $('#password').val();
-    console.log("Test")
-    Accounts.login(email, passwd);
-  }
+    console.log("Test");
+    Accounts.login(email, passwd).then(function(sess) {
+      // store it
+      var session = {
+        token: sess._id,
+        user: sess.user
+      };
+      $window.sessionStorage.session = JSON.stringify(session);
+      $("#login").closeModal();
+      $location.path('/contact');
+      $scope.$apply();
+    }).catch(function(err) {
+      // fucked it up bradley
+      console.log("Login failed with error: " + err);
+    });
+  }; // end login method
 })
 
+.controller('ManagerController', ['$scope, Manager', function($scope, Manager) {
+  $scope.getInterface = function() {
+    // for now we only can handle the one manager interace, though the
+    // backend is ready to support more when we want to add that capability
+    // to that end, grab the first manager from the user array
+    var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
+    Manager.getManagerItem(m_id, 'interface').then(function(interface) {
+      console.log(interace);
+    }).catch(function(err) {
+      console.log(JSON.stringify(err));
+    });
+  };
+}])
+
+.controller('HomeController', ['$scope', function($scope) {
+  $scope.test = "bradhadi thunderfuck kush";
+}])
 
 .controller('ContactController', ['$scope', function($scope) {
   $scope.test = "Test Output Contact page";

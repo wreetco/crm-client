@@ -37,7 +37,7 @@ bower install
 
 ## Run the app
 
-Now run the client (*Before the first time you run this you should run 'gulp styles' and 'gulp scripts')
+Now run the client (*Before the first time you run this you should run `gulp styles` and `gulp scripts`)
 
 ```bash
 gulp run

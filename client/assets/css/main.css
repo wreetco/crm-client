@@ -1,3 +1,7 @@
+.slideout-icon {
+  font-size: 4em !important;
+}
+
 /*
 If you are planning on using the sidenav you will have to offset your content by the width of the side menu.
 Place the padding on where the offset content will be, which in our case is in header, main and footer. - Materialize Docs
