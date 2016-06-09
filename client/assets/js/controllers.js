@@ -1,14 +1,14 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('AccountController', 
+.controller('AccountController',
 			['$scope', '$window', '$location', 'Accounts',
 			function($scope, $window, $location, Accounts) {
   ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
-  
+
   $scope.login = function() {
     var email = $('#email').val();
     var passwd = $('#password').val();
-    
+
     Accounts.login(email, passwd).then(function(sess) {
       // store it
       var session = {
@@ -27,26 +27,29 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 .controller('ManagerController', ['$scope', 'Manager', function($scope, Manager) {
+
+}])
+
+.controller('HomeController', ['$scope', 'Interface', function($scope, Interface) {
+  $scope.test = "bradhadi thunderfuck kush";
   $scope.getInterface = function() {
-    // for now we only can handle the one manager interace, though the
+    // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
     // to that end, grab the first manager from the user array
     var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
-    Manager.getManagerItem(m_id, 'interface').then(function(interface) {
-      console.log(interace);
-    }).catch(function(err) {
+    Interface.getInterface(m_id).then(function(interface) {
+      console.log(interface);
+      // store the thing
+      window.localStorage.interface = JSON.stringify(interface);
+    }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
   };
-}])
 
-.controller('HomeController', ['$scope', function($scope) {
-  $scope.test = "bradhadi thunderfuck kush";
-  
   // alert("test");
   function setActive(event) {
     $(".activeTab").remove();
-    
+
     var activeTab = $("<span></span>");
     //activeTab.addClass("material-icons");
     activeTab.addClass("right");
@@ -55,11 +58,52 @@ angular.module('application.controllers', ['nvd3'])
     $(event.target).append(activeTab);
   }
   $("a.activatable").click(setActive);
+
+  (function(){ // sup
+    if (!localStorage.interface)
+      $scope.getInterface();
+  })();
 }])
 
-.controller('ContactController', ['$scope', function($scope) {
-  $scope.test = "Test Output Contact page";
+// record controller is god
+.controller('RecordController', ['$scope', 'Record', function($scope, Record) {
+  // roch's
+  $scope.getRecords = function(m_id, type, opts) {
+    // get a manager's record of type
+    return new Promise(function(resolve, reject) {
+      Record.getRecords(m_id, type).then(function(records) {
+        resolve(records);
+        // store the thing
+      }).catch(function(err) {
+        reject(err);
+      });
+    });
+  };
 }])
+
+// and the various types of records are but loyal subjects
+.controller('ContactController', ['$scope', '$controller', 'Session', function($scope, $controller, Session) {
+  $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
+
+  (function() {
+    // make sure we have contacts
+    if (!localStorage.contacts) {
+      var sess = Session.getSession();
+      $scope.getRecords(sess.user.managers[0], 'records', null)
+      .then(function(contacts) {
+        $scope.contacts = contacts;
+        // store it
+        localStorage.contacts = JSON.stringify(contacts);
+      }).catch(function(err) {
+        console.log(err);
+      });
+    }
+    else if (!$scope.contacts)
+      $scope.contacts = JSON.parse(localStorage.contacts);
+  })();
+}]) // end ContactController
+
+// end of record descendants
 
 .controller('SettingsController', ['$scope',   function($scope) {
   $scope.test = "Test Output Settings Page";
