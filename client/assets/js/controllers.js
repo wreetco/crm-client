@@ -1,6 +1,8 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('AccountController', function($scope, $window, $location, Accounts) {
+.controller('AccountController',
+			['$scope', '$window', '$location', 'Accounts',
+			function($scope, $window, $location, Accounts) {
   ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
@@ -22,7 +24,7 @@ angular.module('application.controllers', ['nvd3'])
       console.log("Login failed with error: " + err);
     });
   }; // end login method
-})
+}])
 
 .controller('ManagerController', ['$scope', 'Manager', function($scope, Manager) {
 
