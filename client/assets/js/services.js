@@ -46,7 +46,7 @@ angular.module('application.services', [])
   };
 }])
 
-.factory('Manager', function($http) {
+.factory('Manager', ['$http', function($http) {
   return {
     getManagerItem: function(manager_id, item) {
       return new Promise(function(resolve, reject) {
@@ -61,6 +61,6 @@ angular.module('application.services', [])
       }); // end promise
     } // end getManagerItem method
   }; // end ret
-}) // end Manager service
+}]) // end Manager service
 ;
 

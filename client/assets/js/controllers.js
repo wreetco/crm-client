@@ -1,6 +1,8 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('AccountController', function($scope, $window, $location, Accounts) {
+.controller('AccountController', 
+			['$scope', '$window', '$location', 'Accounts',
+			function($scope, $window, $location, Accounts) {
   ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/contact'));
 
   $scope.login = function() {
@@ -22,9 +24,9 @@ angular.module('application.controllers', ['nvd3'])
       console.log("Login failed with error: " + err);
     });
   }; // end login method
-})
+}])
 
-.controller('ManagerController', ['$scope, Manager', function($scope, Manager) {
+.controller('ManagerController', ['$scope', 'Manager', function($scope, Manager) {
   $scope.getInterface = function() {
     // for now we only can handle the one manager interace, though the
     // backend is ready to support more when we want to add that capability
