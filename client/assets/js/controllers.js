@@ -52,14 +52,45 @@ angular.module('application.controllers', ['nvd3'])
   })();
 }])
 
-.controller('RecordController', ['$scope', function($scope) {
+// record controller is god
+.controller('RecordController', ['$scope', 'Record', function($scope, Record) {
   // roch's
-
+  $scope.getRecords = function(m_id, type, opts) {
+    // get a manager's record of type
+    return new Promise(function(resolve, reject) {
+      Record.getRecords(m_id, type).then(function(records) {
+        resolve(records);
+        // store the thing
+      }).catch(function(err) {
+        reject(err);
+      });
+    });
+  };
 }])
 
-.controller('ContactController', ['$scope', function($scope) {
-  $scope.test = "Test Output Contact page";
-}])
+// and the various types of records are but loyal subjects
+.controller('ContactController', ['$scope', '$controller', 'Session', function($scope, $controller, Session) {
+  $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
+
+  (function() {
+    // make sure we have contacts
+    if (!localStorage.contacts) {
+      var sess = Session.getSession();
+      $scope.getRecords(sess.user.managers[0], 'records', null)
+      .then(function(contacts) {
+        $scope.contacts = contacts;
+        // store it
+        localStorage.contacts = JSON.stringify(contacts);
+      }).catch(function(err) {
+        console.log(err);
+      });
+    }
+    else if (!$scope.contacts)
+      $scope.contacts = JSON.parse(localStorage.contacts);
+  })();
+}]) // end ContactController
+
+// end of record descendants
 
 .controller('SettingsController', ['$scope',   function($scope) {
   $scope.test = "Test Output Settings Page";

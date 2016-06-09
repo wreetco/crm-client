@@ -79,6 +79,21 @@ angular.module('application.services', [])
   }; // end ret
 }]) // end interface factory
 
+.factory('Record', ['$http', function($http) {
+  return {
+    getRecords: function(m_id, type, opts) {
+      opts = opts || {};
+      return new Promise(function(resolve, reject) {
+        $http.get("http://burnsy.wreet.xyz/manager/"+m_id+"/"+type)
+        .success(function(records) {
+          resolve(records);
+        }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    } // end getRecords method
+  };
+}])  // end record service
 
 
 ;

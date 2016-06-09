@@ -21,15 +21,15 @@ header, main, footer {
 .row {
   border-style: hidden;
 }
- 
+
 #settings-page-collection .collection {
    border: hidden;
 }
- 
+
 #settings-page-collection .collection-header {
   font-size: 1.64rem;
   font-weight: 500;
-  
+
 }
 #settings-page-collection .collection-item {
   border-style: hidden;
@@ -49,3 +49,4 @@ header, main, footer {
   margin: 0;
   font-weight: 400;
 }
+
