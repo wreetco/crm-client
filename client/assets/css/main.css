@@ -18,7 +18,7 @@ header, main, footer {
 }
 
 /* Settings Page - work-collections */
-.row {
+#settings-page-collection .row {
   border-style: hidden;
 }
  
