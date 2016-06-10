@@ -125,6 +125,9 @@
     .collection .collection-item label {
       color: $secondary-text;
     }
+    [type=radio]:not(:checked)+label:before {
+      border: 2px solid $accent
+    }
     // End Form and Inputs
 
     .btn {
@@ -204,8 +207,8 @@
   }
 }
 
-//$name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider
-@include theme(red-theme, #323232, #f44336, #b71c1c, #eee, #000, #212121, #b6b6b6);
-@include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, #000, #fff, #b6b6b6);
-@include theme(dark-theme, #17181C, #1F242A, #182939, #b72C2C, #D8F2F0, #255063, #b6b6b6);
-@include theme(light-theme, #bdbdbd, #eee, #fafafa, #ff5252, #111, #222, #b6b6b6);
+//name|primary-color-dark|primary-color|primary-color-light|accent|primary-text|secondary-text|divider
+@include theme(red-theme, #323232, #f44336, #b71c1c, #eee, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), #b6b6b6);
+@include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, rgba(0, 0, 0, .87), rgba(0, 0, 0, .87), #b6b6b6);
+@include theme(dark-theme, #17181C, #1F242A, #182939, #b72C2C, rgba(255, 255, 255, 1), rgba(255, 255, 255, .7), #b6b6b6);
+@include theme(light-theme, #bdbdbd, #eee, #fafafa, #ff5252, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), #b6b6b6);
