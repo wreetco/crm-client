@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="application">
+<html ng-app="application" class="dark-theme">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,14 +27,14 @@
     <div>
       <!-- This is the sidebar -->
       <ul id="slide-out" class="side-nav fixed">
-        <li class="center blue-grey darken-1">
+        <li class="center">
           <i class="large material-icons">account_circle</i>
           <p>Account Name</p>
         </li>
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li>
-              <a class="collapsible-header right-align"><i class="material-icons">person_pin</i>Contacts</a>
+              <a class="collapsible-header"><i class="material-icons">person_pin</i>Contacts</a>
               <div class="collapsible-body">
                 <ul>
                   <li><a class="activatable" href="#!/contact">New</a></li>
@@ -46,27 +46,27 @@
             </li>
           </ul>
         </li>
-        <li><a href="#!/statistics" class="activatable collapsible-header right-align"><i class="material-icons">insert_chart</i>Statistics</a></li>
-        <li><a href="#!/settings" class="activatable collapsible-header right-align"><i class="material-icons">settings_applications</i>Settings</a></li>
+        <li><a href="#!/statistics" class="activatable collapsible-header"><i class="material-icons">insert_chart</i>Statistics</a></li>
+        <li><a href="#!/settings" class="activatable collapsible-header"><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->
-        <li id="logoutButton" class="grey darken-3">
-          <a class="collapsible-header white-text right-align" href="#!/logout"><i class="material-icons">exit_to_app</i>Logout</a>
+        <li id="logoutButton">
+          <a class="collapsible-header" href="#!/logout"><i class="material-icons">exit_to_app</i>Logout</a>
         </li>
 
       </ul>
     </div>
     <!-- The button that shows up when it collapstes -->
-    <a href="#" data-activates="slide-out" class="button-collapse show-on-large" ><i class="material-icons white-text blue-grey darken-3 slideout-icon">keyboard_arrow_down</i></a>
+    <a href="#" data-activates="slide-out" class="button-collapse" ><i class="material-icons slideout-icon">keyboard_arrow_down</i></a>
 
     <!-- This is where the views get served up in this ng view div -->
-    <div>
+    <div class="main">
       <div ng-view></div>
     </div>
 
     <script>
       $(".button-collapse").sideNav({
-          menuWidth: 185,
+          menuWidth: 200,
           edge: 'left',
         }
       );

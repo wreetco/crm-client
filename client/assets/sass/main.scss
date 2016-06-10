@@ -1,1 +1,88 @@
-// sassy sass
+//sassy sass
+
+@mixin theme($name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider){
+  .#{$name} {
+    body {
+      background-color: $primary-color;
+      text: $primary-text;
+    }
+    main {
+      background-color: $primary-color;
+    }
+    i {
+      color: $accent;
+    }
+    li {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    ul {
+      background-color: $primary-color-dark;
+    }
+    .collapsible {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+    .row {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    .col {
+      background-color: $primary-color-dark;
+      color: $primary-text;
+    }
+    .side-nav.fixed a {
+      color: $primary-text;
+    }
+    form {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    input[type=text] {
+      color: $secondary-text;
+      border-bottom: $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+    input[type=text]:focus:not([readonly]){
+      color: $accent;
+      border-bottom: $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+    .input-field .prefix.active {
+      color: $accent;
+    }
+    .input-field label {
+      color: $secondary-text;
+    }
+    input[type=text]:focus:not([readonly])+label{
+      color: $accent;
+      border-bottom: $accent;
+    }
+    svg {
+      background-color: $primary-color-light;
+    }
+    ul .collection {
+      background-color: $primary-color;
+    }
+    .collection .collection-item {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    .collection .collection-item label {
+      color: $secondary-text;
+    }
+    .btn {
+      background-color: $primary-color-light;
+    }
+    .btn:hover {
+      background-color: $secondary-text;
+    }
+    blockquote {
+      border-left: 5px solid $divider;
+    }
+  }
+}
+
+@include theme(dark-red-theme, #111, #212121, #303030, red, #FFF, #AAA, #b6b6b6);
+@include theme(dark-theme, #17181C, #1F242A, #182939, #b71C1C, #D8F2F0, #255063, #b6b6b6);
+@include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ff5252, #212121, #727272, #b6b6b6);
