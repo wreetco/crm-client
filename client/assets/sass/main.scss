@@ -24,6 +24,7 @@
     .col {
       background-color: $primary-color-dark;
       color: $primary-text;
+      padding: .5em !important;
     }
 
     li {
@@ -202,13 +203,22 @@
     }
     .select-wrapper input.select-dropdown {
       background-color: $primary-color;
+      margin: 0;
     }
     // end Option and Select
   }
 }
+//White text on dark background -> primary 100% opacity, secondary 70%
+//Dark text on light backgrounds -> primary 87% opacity, secondary 54%
+//Light icons 100% opacity
+//Dark icons 54% opacity
+
 
 //name|primary-color-dark|primary-color|primary-color-light|accent|primary-text|secondary-text|divider
-@include theme(red-theme, #323232, #f44336, #b71c1c, #eee, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), #b6b6b6);
-@include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, rgba(0, 0, 0, .87), rgba(0, 0, 0, .87), #b6b6b6);
-@include theme(dark-theme, #17181C, #1F242A, #182939, #b72C2C, rgba(255, 255, 255, 1), rgba(255, 255, 255, .7), #b6b6b6);
-@include theme(light-theme, #bdbdbd, #eee, #fafafa, #ff5252, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), #b6b6b6);
+@include theme(red-theme, #323232, #B71C1C, #b71c1c, #eee, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
+
+@include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, rgba(0, 0, 0, .87), rgba(0, 0, 0, .87), rgba(182, 182, 182, .54));
+
+@include theme(dark-theme, #17181C, #1F242A, #182939, rgba(183, 44, 44, .74), rgba(255, 255, 255, 1), rgba(255, 255, 255, .7), rgba(182, 182, 182, .54));
+
+@include theme(light-theme, #bcbcbc, #eee, #fafafa, rgba(255, 82, 82, .84), rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
