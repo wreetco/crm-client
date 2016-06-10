@@ -68,20 +68,20 @@
         </li>
 
         <li class="collection-item">
-          <input name="group1" type="radio" id="color1" />
-          <label for="test1">Dark</label>
+          <input class="with-gap" name="group1" type="radio" id="dark-theme" value="dark-theme" onchange="themeChange(this.value)"/>
+          <label for="dark-theme">Dark</label>
         </li>
         <li class="collection-item">
-          <input name="group1" type="radio" id="color2" />
-          <label for="test2">Light</label>
+          <input class="with-gap" name="group1" type="radio" id="light-theme" value="light-theme" onchange="themeChange(this.value)"/>
+          <label for="light-theme">Light</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="color3"  />
-          <label for="test3">Red</label>
+          <input class="with-gap" name="group1" type="radio" id="red-theme"  value="red-theme" onchange="themeChange(this.value)"/>
+          <label for="red-theme">Red</label>
         </li>
         <li class="collection-item">
-          <input name="group1" type="radio" id="color4" />
-          <label for="test4">Blue</label>
+          <input class="with-gap" name="group1" type="radio" id="blue-theme" value="blue-theme" onchange="themeChange(this.value)"/>
+          <label for="blue-theme">Blue</label>
         </li>
         <li class="collection-item right-align">
           <button class="btn waves-effect waves-light" type="submit" name="action" onclick="Materialize.toast('Theme Saved', 2000)">
@@ -90,6 +90,12 @@
         </li>
       </ul>
     </form> <!-- End color theme form -->
+<script>
+  function themeChange(value){
+    document.getElementById("theme").className = value;
+  }
+</script>
+
 
   </div> <!-- End row 1 -->
 

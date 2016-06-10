@@ -107,6 +107,9 @@ angular.module('application.controllers', ['nvd3'])
 
 .controller('SettingsController', ['$scope',   function($scope) {
   $scope.test = "Test Output Settings Page";
+
+  $scope.theme = 'dark-theme';
+
 }])
 
 .controller('StatisticsController', ['$scope', function($scope) {
