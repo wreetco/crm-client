@@ -3,7 +3,7 @@
 @mixin theme($name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider){
   .#{$name} {
     body {
-      background-color: $primary-color;
+      background-color: $primary-color-dark;
       text: $primary-text;
     }
 
@@ -17,12 +17,12 @@
     }
 
     .row {
-      background-color: $primary-color;
+      background-color: transparent;
       color: $primary-text;
     }
 
     .col {
-      background-color: $primary-color-dark;
+      background-color: transparent;
       color: $primary-text;
       padding: .5em !important;
     }
@@ -33,7 +33,7 @@
     }
 
     ul {
-      background-color: $primary-color-dark;
+      background-color: $primary-color;
     }
     //Contact page, bottom right buttons
     .fixed-action-btn ul {
