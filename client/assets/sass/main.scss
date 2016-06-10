@@ -6,43 +6,58 @@
       background-color: $primary-color;
       text: $primary-text;
     }
+
     main {
       background-color: $primary-color;
+      text: $primary-text;
     }
+
     i {
       color: $accent;
     }
-    li {
-      background-color: $primary-color;
-      color: $primary-text;
-    }
-    ul {
-      background-color: $primary-color-dark;
-    }
-    .collapsible {
-      background-color: $primary-color-light;
-      color: $primary-text;
-    }
+
     .row {
       background-color: $primary-color;
       color: $primary-text;
     }
+
     .col {
       background-color: $primary-color-dark;
       color: $primary-text;
     }
+
+    li {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+
+    ul {
+      background-color: $primary-color-dark;
+    }
+
+    //collapsible lists
+    .collapsible {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+    //the links in our sidebar
     .side-nav.fixed a {
       color: $primary-text;
     }
+
+
+    // Form and Inputs
     form {
       background-color: $primary-color;
       color: $primary-text;
     }
+
     input[type=text] {
       color: $secondary-text;
       border-bottom: $accent;
       box-shadow:0 1px 0 0 $accent;
     }
+
     input[type=text]:focus:not([readonly]){
       color: $accent;
       border-bottom: $accent;
@@ -58,9 +73,6 @@
       color: $accent;
       border-bottom: $accent;
     }
-    svg {
-      background-color: $primary-color-light;
-    }
     ul .collection {
       background-color: $primary-color;
     }
@@ -71,15 +83,25 @@
     .collection .collection-item label {
       color: $secondary-text;
     }
+    // End Form and Inputs
+
     .btn {
       background-color: $primary-color-light;
     }
+
     .btn:hover {
       background-color: $secondary-text;
     }
+
     blockquote {
       border-left: 5px solid $divider;
     }
+
+    // charts on stats page
+    svg {
+      background-color: $primary-color-light;
+    }
+    // end charts
   }
 }
 
