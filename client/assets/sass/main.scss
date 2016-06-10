@@ -34,12 +34,20 @@
     ul {
       background-color: $primary-color-dark;
     }
+    //Contact page, bottom right buttons
+    .fixed-action-btn ul {
+      background-color: transparent;
+    }
+    .fixed-action-btn li {
+      background-color: transparent;
+    }
 
     //collapsible lists
     .collapsible {
       background-color: $primary-color-light;
       color: $primary-text;
     }
+
     //the links in our sidebar
     .side-nav.fixed a {
       color: $primary-text;
@@ -47,8 +55,6 @@
 
 
     // Form and Inputs
-
-
     input[type=text] {
       color: $secondary-text;
       border-bottom: $accent;
@@ -103,8 +109,8 @@
       color: $primary-text;
     }
     .file-field .btn:hover {
-      background-color: darken($accent, 20%);
-      color: lighten($primary-text, 20%);
+      background-color: darken($accent, 10%);
+      color: lighten($primary-text, 10%);
     }
 
     ul .collection {
@@ -131,12 +137,12 @@
     }
 
     .btn:hover {
-      background-color: darken($accent, 20%);
-      color: lighten($primary-text, 20%);
+      background-color: darken($accent, 10%);
+      color: lighten($primary-text, 10%);
     }
 
     .btn:hover i {
-      color: lighten($secondary-text, 20%);
+      color: lighten($secondary-text, 10%);
     }
 
     blockquote {
@@ -199,7 +205,7 @@
 }
 
 //$name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider
-@include theme(red-theme, #212121, #f44336, #b71c1c, #111, #FFF, #EEE, #b6b6b6);
+@include theme(red-theme, #323232, #f44336, #b71c1c, #eee, #000, #212121, #b6b6b6);
 @include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, #000, #fff, #b6b6b6);
 @include theme(dark-theme, #17181C, #1F242A, #182939, #b72C2C, #D8F2F0, #255063, #b6b6b6);
 @include theme(light-theme, #bdbdbd, #eee, #fafafa, #ff5252, #111, #222, #b6b6b6);
