@@ -47,12 +47,15 @@
 
 
     // Form and Inputs
-    form {
-      background-color: $primary-color;
-      color: $primary-text;
-    }
+
 
     input[type=text] {
+      color: $secondary-text;
+      border-bottom: $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+
+    input[type=password] {
       color: $secondary-text;
       border-bottom: $accent;
       box-shadow:0 1px 0 0 $accent;
@@ -63,38 +66,74 @@
       border-bottom: $accent;
       box-shadow:0 1px 0 0 $accent;
     }
+
+    input[type=password]:focus:not([readonly]){
+      color: $accent;
+      border-bottom: $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+
     .input-field .prefix.active {
       color: $accent;
     }
+
     .input-field label {
       color: $secondary-text;
     }
-    input[type=text]:focus:not([readonly])+label{
+
+    input[type=text]:focus:not([readonly]) + label {
       color: $accent;
       border-bottom: $accent;
     }
+
+    input[type=password]:focus:not([readonly]) + label {
+      color: $accent;
+      border-bottom: $accent;
+    }
+
+    .file-field input[type=file] {
+      background-color: $primary-color-dark;
+      color: $secondary-text;
+      border-bottom: $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+
+    .file-field .btn {
+      background-color: $accent;
+    }
+    .file-field .btn:hover {
+      background-color: $primary-color-dark;
+    }
+
     ul .collection {
       background-color: $primary-color;
     }
+
     .collection .collection-item {
       background-color: $primary-color;
       color: $primary-text;
     }
+
     .collection .collection-item label {
       color: $secondary-text;
     }
     // End Form and Inputs
 
     .btn {
-      background-color: $primary-color-light;
+      background-color: $accent;
+      color: $primary-text;
+    }
+    .btn i {
+      color: $secondary-text;
     }
 
     .btn:hover {
-      background-color: $secondary-text;
+      background-color: $primary-color-dark;
     }
 
     blockquote {
       border-left: 5px solid $divider;
+      color: $secondary-text;
     }
 
     // charts on stats page
@@ -102,9 +141,57 @@
       background-color: $primary-color-light;
     }
     // end charts
+
+    // Modals
+    .modal {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    .modal .modal-content {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+    .modal .modal-footer {
+      background-color: $primary-color-dark;
+      color: $primary-text;
+    }
+    // end Modals
+
+    // Tables
+    table {
+      color: $secondary-text;
+    }
+
+    thead {
+      border-bottom: 1px solid $accent;
+    }
+    // end Tables
+
+    // Option And Select
+    .select-wrapper input.select-dropdown {
+      border-bottom: 1px solid $accent;
+    }
+    .select-wrapper .dropdown-content li>span {
+      color: $primary-text;
+    }
+    .select-wrapper .dropdown-content li:hover {
+      background-color: $primary-color-light;
+    }
+    .select-wrapper .dropdown-content li.active.selected {
+      background-color: $primary-color-light;
+    }
+    .select-wrapper .dropdown-content + select {
+      background-color: $primary-color;
+    }
+    .select-wrapper input.select-dropdown {
+      background-color: $primary-color;
+    }
+    // end Option and Select
   }
 }
 
-@include theme(dark-red-theme, #111, #212121, #303030, red, #FFF, #AAA, #b6b6b6);
-@include theme(dark-theme, #17181C, #1F242A, #182939, #b71C1C, #D8F2F0, #255063, #b6b6b6);
+@include theme(red-theme, #111, #212121, #303030, red, #FFF, #AAA, #b6b6b6);
+@include theme(dark-theme, #17181C, #1F242A, #182939, #b72C2C, #D8F2F0, #255063, #b6b6b6);
 @include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ff5252, #212121, #727272, #b6b6b6);
+
+@include theme(light-theme, #bdbdbd, #eee, #fafafa, #ff5252, #111, #222, #b6b6b6);
