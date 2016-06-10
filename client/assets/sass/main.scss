@@ -48,10 +48,12 @@
       background-color: $primary-color-light;
       color: $primary-text;
     }
-
     //the links in our sidebar
     .side-nav.fixed a {
       color: $primary-text;
+    }
+    .side-nav.fixed a:active {
+      background-color: darken($primary-color, 10%);
     }
 
 
@@ -193,16 +195,16 @@
       color: $primary-text;
     }
     .select-wrapper .dropdown-content li:hover {
-      background-color: $primary-color-light;
+      background-color: $primary-color;
     }
     .select-wrapper .dropdown-content li.active.selected {
-      background-color: $primary-color-light;
+      background-color: $primary-color;
     }
     .select-wrapper .dropdown-content + select {
       background-color: $primary-color;
     }
     .select-wrapper input.select-dropdown {
-      background-color: $primary-color;
+      background-color: $primary-color-dark;
       margin: 0;
     }
     // end Option and Select
