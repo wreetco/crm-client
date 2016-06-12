@@ -65,17 +65,30 @@ angular.module('application.services', [])
 
 .factory('Interface', ['$window', 'Manager', function($window, Manager) {
   // less do ah
+  var interfaz = {};
   return {
     getInterface: function(m_id) {
       // grabdad that interface
       return new Promise(function(resolve, reject) {
         Manager.getManagerItem(m_id, 'interface').then(function(ifaz) {
+          interfaz = ifaz;
           resolve(ifaz);
         }).catch(function(e) {
           reject(e);
         });
       }); // end promiseus
-    } // end getInterface method
+    }, // end getInterface method
+
+    getTags: function(contacts) {
+      var tags = [];
+      for (var i = 0; i < contacts.length; i++) {
+        contacts[i].tags.map(function(tag) {
+          tags.push(tag);
+        });
+      }
+      interfaz.tags = tags;
+      return tags;
+    } // end getTags
   }; // end ret
 }]) // end interface factory
 

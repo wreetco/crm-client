@@ -36,11 +36,13 @@
             <li>
               <a class="collapsible-header"><i class="material-icons">person_pin</i>Contacts</a>
               <div class="collapsible-body">
-                <ul>
-                  <li><a class="activatable" href="#!/contact">New</a></li>
-                  <li><a class="activatable" href="#!/contact">Label 2</a></li>
-                  <li><a class="activatable" href="#!/contact">Label 3</a></li>
-                  <li><a class="activatable" href="#!/contact">Label 4</a></li>
+                <ul ng-controller="ContactController">
+                  <li><a class="activatable" href="#!/contact">All</a></li>
+                  <li ng-repeat="tag in tags">
+                    <a href="#/" class="activatable">
+                      {{ tag.name }}
+                    </a>
+                  </li>
                 </ul>
               </div>
             </li>
