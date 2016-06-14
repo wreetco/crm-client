@@ -3,34 +3,40 @@ angular.module('application.controllers', ['nvd3'])
 .controller('AccountController',
 			['$scope', '$window', '$location', 'Accounts',
 			function($scope, $window, $location, Accounts) {
-  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
+	((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
 
-  $scope.login = function() {
-    var email = $('#email').val();
-    var passwd = $('#password').val();
+	$scope.login = function() {
+		var email = $('#email').val();
+		var passwd = $('#password').val();
 
-    Accounts.login(email, passwd).then(function(sess) {
-      // store it
-      var session = {
-        token: sess._id,
-        user: sess.user
-      };
-      $window.sessionStorage.session = JSON.stringify(session);
-      $("#login").closeModal();
-      $location.path('/contact');
-      $scope.$apply();
-    }).catch(function(err) {
-      // fucked it up bradley
-      console.log("Login failed with error: " + err);
-    });
-  }; // end login method
+    	Accounts.login(email, passwd).then(function(sess) {
+			// store it
+			var session = {
+				token: sess._id,
+				user: sess.user
+			};
+			//console.log(session);
+			$window.sessionStorage.session = JSON.stringify(session);
+			
+			$("#login").closeModal();
+			$location.path('/contact');
+			$scope.$apply();
+    	}).catch(function(err) {
+			// fucked it up bradley
+			console.log("Login failed with error: " + err);
+    	});
+	}; // end login method
 }])
 
-.controller('ManagerController', ['$scope', 'Manager', function($scope, Manager) {
+.controller('ManagerController', 
+			['$scope', '$window', 'Manager',
+			function($scope, $window, Manager) {
 
 }])
 
-.controller('HomeController', ['$scope', 'Interface', function($scope, Interface) {
+.controller('HomeController', 
+			['$scope', '$window', 'Interface', 
+			function($scope, $window, Interface) {
   $scope.test = "bradhadi thunderfuck kush";
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
@@ -66,7 +72,9 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // record controller is god
-.controller('RecordController', ['$scope', 'Record', function($scope, Record) {
+.controller('RecordController', 
+			['$scope', 'Record', 
+			function($scope, Record) {
   // roch's
   $scope.getRecords = function(m_id, type, opts) {
     // get a manager's record of type
@@ -82,7 +90,9 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$controller', 'Session', function($scope, $controller, Session) {
+.controller('ContactController', 
+			['$scope', '$controller', 'Session', 
+			function($scope, $controller, Session) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
 
   (function() {
@@ -105,14 +115,18 @@ angular.module('application.controllers', ['nvd3'])
 
 // end of record descendants
 
-.controller('SettingsController', ['$scope',   function($scope) {
+.controller('SettingsController', 
+			['$scope',   
+			function($scope) {
   $scope.test = "Test Output Settings Page";
 
   $scope.theme = 'dark-theme';
 
 }])
 
-.controller('StatisticsController', ['$scope', function($scope) {
+.controller('StatisticsController', 
+			['$scope', 
+			function($scope) {
   //This defines the graph on the stats page
   $scope.options = {
     chart: {
