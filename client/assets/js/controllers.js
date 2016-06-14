@@ -82,7 +82,7 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$controller', 'Session', function($scope, $controller, Session) {
+.controller('ContactController', ['$scope', '$controller', '$location', 'Session', function($scope, $controller, $location, Session) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
 
   (function() {
@@ -101,6 +101,11 @@ angular.module('application.controllers', ['nvd3'])
     else if (!$scope.contacts)
       $scope.contacts = JSON.parse(localStorage.contacts);
   })();
+
+  $scope.contactEdit = function() {
+    $location.path('/contact/:id');
+  };
+
 }]) // end ContactController
 
 // end of record descendants

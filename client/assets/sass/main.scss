@@ -1,5 +1,4 @@
 //sassy sass
-
 @mixin theme($name, $primary-color-dark, $primary-color, $primary-color-light, $accent, $primary-text, $secondary-text, $divider){
   .#{$name} {
     body {
@@ -215,6 +214,12 @@
       margin: 0;
     }
     // end Option and Select
+
+    //cards
+    .card {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%
