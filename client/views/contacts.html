@@ -6,7 +6,11 @@
     <label for="icon_prefix">Search</label>
   </div>
   <div class="col input-field s3 offset-s3 right-align">
-    <select ng-model="filterGroup" ng-options="option for option in filter_options">
+    <select ng-model="filterGroup">
+      <option value="">-- Select --</option>
+      <option value="x.first_name">First Name</option>
+      <option value="x.last_name">Last Name</option>
+      <option value="+created_date">Date</option>
     </select>
     <label>Sort</label>
   </div>
@@ -26,9 +30,10 @@
 
       <tbody>
         <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
-          <td>{{ c.x.first_name + " " + c.x.last_name }}</td>
+          <td>{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td>{{ c.x.email_address }}</td>
           <td>{{ c.x.phone_num }}</td>
+          <td>{{ c.created_date }}</td>
         </tr>
       </tbody>
     </table>
