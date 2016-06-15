@@ -110,13 +110,6 @@ angular.module('application.controllers', ['nvd3'])
       $scope.contacts = JSON.parse(localStorage.contacts);
   })();
 
-  console.log($scope.contacts);
-
-  $scope.filter_options = {
-    first_name: "First Name",
-    created_date: "Created Date",
-  };
-
 }]) // end ContactController
 
 // end of record descendants
