@@ -220,6 +220,12 @@
       background-color: $primary-color;
       color: $primary-text;
     }
+
+    //table rows
+    table.striped>tbody>tr:nth-child(odd) {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%
