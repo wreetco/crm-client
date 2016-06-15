@@ -24,6 +24,10 @@
     <table class="striped responsive-table">
       <thead>
         <tr>
+          <th data-field="selector">
+            <input type="checkbox" id="checkAll"/>
+            <label for="checkAll"></label>
+          </th>
           <th data-field="name">Name</th>
           <th data-field="email">Email</th>
           <th data-field="phone">Phone</th>
@@ -33,6 +37,10 @@
 
       <tbody>
         <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
+          <td>
+            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" />
+            <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
+          </td>
           <td>{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td>{{ c.x.email_address }}</td>
           <td>{{ c.x.phone_num | tel }}</td>
@@ -86,5 +94,10 @@
       document.getElementById(value).style.display = "block";
       document.getElementById("contact-form-card").style.display = "none";
     }
-  }
+  };
+
+  $("#checkAll").change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+  });
+
 </script>
