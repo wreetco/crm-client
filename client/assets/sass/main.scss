@@ -226,6 +226,9 @@
       background-color: $primary-color;
       color: $primary-text;
     }
+    table.striped>tbody>tr:nth-child(even) {
+      color: $primary-text;
+    }
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%

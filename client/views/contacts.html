@@ -33,7 +33,7 @@
           <td>{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td>{{ c.x.email_address }}</td>
           <td>{{ c.x.phone_num }}</td>
-          <td>{{ c.created_date }}</td>
+          <td>{{ c.created_date | date:'medium' }}</td>
         </tr>
       </tbody>
     </table>
