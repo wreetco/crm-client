@@ -17,7 +17,7 @@ angular.module('application.controllers', ['nvd3'])
 			};
 			//console.log(session);
 			$window.sessionStorage.session = JSON.stringify(session);
-			
+
 			$("#login").closeModal();
 			$location.path('/contact');
 			$scope.$apply();
@@ -28,14 +28,14 @@ angular.module('application.controllers', ['nvd3'])
 	}; // end login method
 }])
 
-.controller('ManagerController', 
+.controller('ManagerController',
 			['$scope', '$window', 'Manager',
 			function($scope, $window, Manager) {
 
 }])
 
-.controller('HomeController', 
-			['$scope', '$window', 'Interface', 
+.controller('HomeController',
+			['$scope', '$window', 'Interface',
 			function($scope, $window, Interface) {
   $scope.test = "bradhadi thunderfuck kush";
   $scope.getInterface = function() {
@@ -72,8 +72,8 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // record controller is god
-.controller('RecordController', 
-			['$scope', 'Record', 
+.controller('RecordController',
+			['$scope', 'Record',
 			function($scope, Record) {
   // roch's
   $scope.getRecords = function(m_id, type, opts) {
@@ -90,9 +90,7 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', 
-			['$scope', '$controller', 'Session', 
-			function($scope, $controller, Session) {
+.controller('ContactController', ['$scope', '$controller', '$location', 'Session', function($scope, $controller, $location, Session) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
 
   (function() {
@@ -111,12 +109,13 @@ angular.module('application.controllers', ['nvd3'])
     else if (!$scope.contacts)
       $scope.contacts = JSON.parse(localStorage.contacts);
   })();
+
 }]) // end ContactController
 
 // end of record descendants
 
-.controller('SettingsController', 
-			['$scope',   
+.controller('SettingsController',
+			['$scope',
 			function($scope) {
   $scope.test = "Test Output Settings Page";
 
@@ -124,8 +123,8 @@ angular.module('application.controllers', ['nvd3'])
 
 }])
 
-.controller('StatisticsController', 
-			['$scope', 
+.controller('StatisticsController',
+			['$scope',
 			function($scope) {
   //This defines the graph on the stats page
   $scope.options = {
