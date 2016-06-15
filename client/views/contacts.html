@@ -25,7 +25,7 @@
       <thead>
         <tr>
           <th data-field="selector">
-            <input type="checkbox" id="checkAll"/>
+            <input type="checkbox" id="allSelect"/>
             <label for="checkAll"></label>
           </th>
           <th data-field="name">Name</th>
@@ -84,6 +84,7 @@
     }
   })();
 
+  //this hides a partial and shows the other based on what was clicked
   function contactAction(value) {
     //contact-form-card
     if(value == "contact-form-card"){
@@ -96,7 +97,7 @@
     }
   };
 
-  $("#checkAll").change(function () {
+  $("#allSelect").change(function () {
     $("input:checkbox").prop('checked', $(this).prop("checked"));
   });
 
