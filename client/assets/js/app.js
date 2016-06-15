@@ -22,12 +22,6 @@
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"
 			})
-      .when("/contact/:id", {
-				templateUrl: "./views/contacts.html",
-			})
-      .when("/contact/edit", {
-				templateUrl: "./views/contacts.html",
-			})
 			.when("/settings", {
 				templateUrl: "./views/settings.html",
 				controller: "SettingsController"
