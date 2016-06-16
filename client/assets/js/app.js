@@ -18,7 +18,7 @@
         templateUrl: "./views/_login_modal.html",
         controller: "AccountController"
       })
-      .when("/contact", {
+      .when("/contacts", {
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"
 			})
