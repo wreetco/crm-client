@@ -2,13 +2,15 @@
 <div class="row">
   <div class="col s6 input-field">
     <i class="material-icons prefix">search</i>
-    <input id="icon_prefix" type="text" class="validate">
+    <input id="icon_prefix" ng-model="query" type="text" class="validate" autofocus>
     <label for="icon_prefix">Search</label>
   </div>
   <div class="col input-field s3 offset-s3 right-align">
-    <select>
-      <option value="1" selected>Name</option>
-      <option value="2">Date</option>
+    <select ng-model="filterGroup">
+      <option value="">-- Select --</option>
+      <option value="x.first_name">First Name</option>
+      <option value="x.last_name">Last Name</option>
+      <option value="+created_date">Date</option>
     </select>
     <label>Sort</label>
   </div>
@@ -23,14 +25,16 @@
           <th data-field="name">Name</th>
           <th data-field="email">Email</th>
           <th data-field="phone">Phone</th>
+          <th data-field="date">Date</th>
         </tr>
       </thead>
 
       <tbody>
-        <tr ng-repeat="c in contacts">
-          <td>{{ c.x.first_name + " " + c.x.last_name }}</td>
+        <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
+          <td>{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td>{{ c.x.email_address }}</td>
           <td>{{ c.x.phone_num }}</td>
+          <td>{{ c.created_date | date:'medium' }}</td>
         </tr>
       </tbody>
     </table>
@@ -38,22 +42,47 @@
 </div>
 
 <div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
-  <a class="btn-floating btn-large red">
-    <i class="large material-icons">mode_edit</i>
+  <a class="btn-floating btn-large green slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" onclick="contactAction('contact-form-card')">
+    <i class="large material-icons">note_add</i>
   </a>
   <ul>
-    <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
-    <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
-    <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
-    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+    <li><a class="btn-floating red slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" onclick="contactAction('contact-form-card')"><i class="material-icons">mode_edit</i></a></li>
+    <li><a class="btn-floating blue slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" onclick="contactAction('contact-info-card')"><i class="material-icons">info</i></a></li>
   </ul>
 </div>
 
-<!--This was in index.html but doesn't fire off unless you manually refresh the /contacts page -->
+<ul id="slide-out2" class="side-nav" style="z-index: 999; float: right;">
+  <div class="col s12">
+    <div ng-include="'views/_contact_info.html'"></div>
+    <div ng-include="'views/_contact_form.html'"></div>
+  </div>
+</ul>
+
+
 <script>
+  //This was in index.html but doesn't fire off unless you manually refresh the /contacts page
   $('select').ready(function() {
     setTimeout(function() {
       $('select').material_select();
     }, 100);
   });
+
+  (function(){
+    var slide_triggers = document.getElementsByClassName("slideout-trigger");
+    for (var i=0; i < slide_triggers.length; i++) {
+      slide_triggers[i].setAttribute("data-menuwidth", (window.innerWidth <= 992) ? (window.innerWidth * .80) : ((window.innerWidth - 100) * .75));
+    }
+  })();
+
+  function contactAction(value) {
+    //contact-form-card
+    if(value == "contact-form-card"){
+      document.getElementById(value).style.display = "block";
+      document.getElementById("contact-info-card").style.display = "none";
+    }
+    else if(value == "contact-info-card"){
+      document.getElementById(value).style.display = "block";
+      document.getElementById("contact-form-card").style.display = "none";
+    }
+  }
 </script>
