@@ -101,6 +101,7 @@ angular.module('application.controllers', ['nvd3'])
     // make sure we have contacts
     if (!localStorage.contacts) {
       var sess = Session.getSession();
+      if (!sess) return 0;
       $scope.getRecords(sess.user.managers[0], 'records', null)
       .then(function(contacts) {
         $scope.contacts = contacts;

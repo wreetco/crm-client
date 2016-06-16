@@ -41,7 +41,7 @@ angular.module('application.services', [])
     }, // end isLoggedIn method
 
     getSession: function() {
-      return JSON.parse($window.sessionStorage.session);
+      return ($window.sessionStorage.session) ? JSON.parse($window.sessionStorage.session) : false;
     } // end getSession method
   };
 }])
