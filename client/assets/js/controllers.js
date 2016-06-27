@@ -38,6 +38,7 @@ angular.module('application.controllers', ['nvd3'])
 			['$scope', '$window', 'Interface',
 			function($scope, $window, Interface) {
   $scope.test = "bradhadi thunderfuck kush";
+
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
@@ -47,6 +48,7 @@ angular.module('application.controllers', ['nvd3'])
       console.log(interface);
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
+      $scope.interface = interface;
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
@@ -65,9 +67,11 @@ angular.module('application.controllers', ['nvd3'])
   }
   $("a.activatable").click(setActive);
 
-  (function(){ // sup
+  (function() { // sup
     if (!localStorage.interface)
       $scope.getInterface();
+    if (!$scope.interface)
+      $scope.interface = JSON.parse(localStorage.interface);
   })();
 }])
 
@@ -90,13 +94,14 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$controller', '$location', 'Session', function($scope, $controller, $location, Session) {
+.controller('ContactController', ['$scope', '$controller', 'Session', 'Interface', function($scope, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
 
   (function() {
     // make sure we have contacts
     if (!localStorage.contacts) {
       var sess = Session.getSession();
+      if (!sess) return 0;
       $scope.getRecords(sess.user.managers[0], 'records', null)
       .then(function(contacts) {
         $scope.contacts = contacts;
@@ -108,6 +113,8 @@ angular.module('application.controllers', ['nvd3'])
     }
     else if (!$scope.contacts)
       $scope.contacts = JSON.parse(localStorage.contacts);
+    if (!$scope.tags)
+      $scope.tags = Interface.getTags($scope.contacts);
   })();
 
 }]) // end ContactController
