@@ -1,16 +1,17 @@
 <!doctype html>
 
-<div class="card" id="contact-info-card" style="display:none;">
+<div class="card" id="contact-show-card" style="display:none;">
   <div class="row">
     <div class="col s12">
       <h3>
-        Contact Info
+        Contact Create/Edit
       </h3>
       <div class="row">
         <div ng-repeat="field in current_fields">
           <div class="col s12 m6">
             <input placeholder="{{ current_contact.x[field.db_name] }}" id="{{ field.db_name }}" type="text" class="validate">
             <label for="{{ field.db_name }}">{{ field.name }}</label>
+            <br><br>
           </div>
         </div>
       </div>

@@ -111,12 +111,21 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-show-card').css('display', 'none');
-
-
-    //debug
     console.log($scope.current_contact);
     console.log($scope.current_interface);
-    console.log($scope.current_fields);
+    console.log();
+  };
+  $scope.postBar = function(c){
+    //contact object
+    c = c || null;
+    $scope.current_contact = c;
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    //adjust the display
+    $('#contact-info-card').css('display', 'none');
+    $('#contact-show-card').css('display', 'block');
   };
 
 
