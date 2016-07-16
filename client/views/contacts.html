@@ -10,7 +10,9 @@
       <option value="">-- Select --</option>
       <option value="x.first_name">First Name</option>
       <option value="x.last_name">Last Name</option>
-      <option value="+created_date">Date</option>
+      <option value="+created_date">Date - Oldest</option>
+      <option value="-created_date">Date - Newest</option>
+      <option value="x.phone_num">Phone</option>
     </select>
     <label>Sort</label>
   </div>
@@ -22,6 +24,10 @@
     <table class="striped responsive-table">
       <thead>
         <tr>
+          <th data-field="selector">
+            <input type="checkbox" id="allSelect"/>
+            <label for="checkAll"></label>
+          </th>
           <th data-field="name">Name</th>
           <th data-field="email">Email</th>
           <th data-field="phone">Phone</th>
@@ -30,10 +36,14 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
+        <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar( c );">
+          <td>
+            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" />
+            <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
+          </td>
           <td>{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td>{{ c.x.email_address }}</td>
-          <td>{{ c.x.phone_num }}</td>
+          <td>{{ c.x.phone_num | tel }}</td>
           <td>{{ c.created_date | date:'medium' }}</td>
         </tr>
       </tbody>
@@ -74,7 +84,13 @@
     }
   })();
 
-  function contactAction(value) {
+
+
+  //this hides a partial and shows the other based on what was clicked
+  function contactAction(value, id) {
+    id = id || null;
+    console.log(id);
+    alert(id);
     //contact-form-card
     if(value == "contact-form-card"){
       document.getElementById(value).style.display = "block";
@@ -84,5 +100,10 @@
       document.getElementById(value).style.display = "block";
       document.getElementById("contact-form-card").style.display = "none";
     }
-  }
+  };
+
+  $("#allSelect").change(function () {
+    $("input:checkbox").prop('checked', $(this).prop("checked"));
+  });
+
 </script>
