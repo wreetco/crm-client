@@ -36,7 +36,7 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
+        <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar( c );">
           <td>
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" />
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
@@ -84,8 +84,13 @@
     }
   })();
 
+
+
   //this hides a partial and shows the other based on what was clicked
-  function contactAction(value) {
+  function contactAction(value, id) {
+    id = id || null;
+    console.log(id);
+    alert(id);
     //contact-form-card
     if(value == "contact-form-card"){
       document.getElementById(value).style.display = "block";

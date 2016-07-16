@@ -94,8 +94,31 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$controller', 'Session', 'Interface', function($scope, $controller, Session, Interface) {
+.controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
+
+  //this displays the proper partial in the right hand sidebar
+  //  gives us a contact object to work with
+  //  and an interface object
+  $scope.infoBar = function(c){
+    //contact object
+    c = c || null;
+    $scope.current_contact = c;
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    //adjust the display
+    $('#contact-info-card').css('display', 'block');
+    $('#contact-show-card').css('display', 'none');
+
+
+    //debug
+    console.log($scope.current_contact);
+    console.log($scope.current_interface);
+    console.log($scope.current_fields);
+  };
+
 
   (function() {
     // make sure we have contacts
