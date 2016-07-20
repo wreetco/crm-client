@@ -141,6 +141,9 @@
       border-right: 2px solid $accent;
       border-bottom: 2px solid $accent;
     }
+    [type=checkbox]+label:before, [type=checkbox]:not(.filled-in)+label:after {
+      border: 2px solid $primary-text;
+    }
     // End Form and Inputs
 
     .btn {
