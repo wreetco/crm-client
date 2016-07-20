@@ -106,8 +106,6 @@ angular.module('application.services', [])
       }); // end promise
     } // end getRecords method
   };
-
-
 }])  // end record service
 
 
