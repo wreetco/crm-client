@@ -97,18 +97,29 @@ angular.module('application.services', [])
     getRecords: function(m_id, type, opts) {
       opts = opts || {};
       return new Promise(function(resolve, reject) {
-        $http.get("http://burnsy.wreet.xyz/manager/"+m_id+"/"+type)
+        $http.get("http://burnsy.wreet.xyz/manager/" + m_id + "/" + type)
         .success(function(records) {
           resolve(records);
         }).error(function(mess, status) {
           reject(mess);
         });
       }); // end promise
-    } // end getRecords method
+    },// end getRecords method
+
+    saveRecord: function(url, record) {
+      return new Promise(function(resolve, reject) {
+        $http.post(url, record)
+        .success(function(record) {
+          resolve(record);
+        }).error(function(mess, status) {
+          console.log(mess);
+          console.log(status);
+          reject(mess);
+        });
+      }); // end promise
+    },
   };
 }])  // end record service
-
-
 
 //this will format phone numbers
 //found at https://jsfiddle.net/jorgecas99/S7aSj/
@@ -156,6 +167,3 @@ angular.module('application.services', [])
     return (country + " (" + city + ") " + number).trim();
   };
 });
-;
-
-

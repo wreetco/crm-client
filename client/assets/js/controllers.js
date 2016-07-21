@@ -91,12 +91,20 @@ angular.module('application.controllers', ['nvd3'])
       });
     });
   };
+
+  $scope.saveRec = function(record) {
+    Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
+      console.log(r);
+    }).catch(function(e) {
+      console.log("errlol");
+      console.log(e);
+    });
+  };
 }])
 
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-
   //this displays the proper partial in the right hand sidebar
   //  gives us a contact object to work with
   //  and an interface object
@@ -113,8 +121,8 @@ angular.module('application.controllers', ['nvd3'])
     $('#contact-show-card').css('display', 'none');
     console.log($scope.current_contact);
     console.log($scope.current_interface);
-    console.log();
   };
+
   $scope.postBar = function(c){
     //contact object
     c = c || null;
@@ -126,8 +134,21 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'none');
     $('#contact-show-card').css('display', 'block');
+    console.log($scope.current_contact);
+    console.log($scope.current_interface);
   };
 
+  $scope.new_record = {
+    record: {
+
+    },
+    manager: null,
+  };
+  $scope.saveRecord = function(){
+    console.log($scope.new_record);
+    $scope.new_record.manager = Session.getSession().user.managers[0];
+    $scope.saveRec(JSON.stringify($scope.new_record));
+  };
 
   (function() {
     // make sure we have contacts
