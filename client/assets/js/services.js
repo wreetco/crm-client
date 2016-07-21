@@ -97,63 +97,73 @@ angular.module('application.services', [])
     getRecords: function(m_id, type, opts) {
       opts = opts || {};
       return new Promise(function(resolve, reject) {
-        $http.get("http://burnsy.wreet.xyz/manager/"+m_id+"/"+type)
+        $http.get("http://burnsy.wreet.xyz/manager/" + m_id + "/" + type)
         .success(function(records) {
           resolve(records);
         }).error(function(mess, status) {
           reject(mess);
         });
       }); // end promise
-    } // end getRecords method
+    },// end getRecords method
+
+    saveRecord: function(url, record) {
+      return new Promise(function(resolve, reject) {
+        $http.post(url, record)
+        .success(function(record) {
+          resolve(record);
+        }).error(function(mess, status) {
+          console.log(mess);
+          console.log(status);
+          reject(mess);
+        });
+      }); // end promise
+    },
   };
 }])  // end record service
 
 //this will format phone numbers
 //found at https://jsfiddle.net/jorgecas99/S7aSj/
 .filter('tel', function () {
-    return function (tel) {
-        if (!tel) { return ''; }
+  return function (tel) {
+    if (!tel) { return ''; }
 
-        var value = tel.toString().trim().replace(/^\+/, '');
+    var value = tel.toString().trim().replace(/^\+/, '');
 
-        if (value.match(/[^0-9]/)) {
-            return tel;
-        }
+    if (value.match(/[^0-9]/)) {
+      return tel;
+    }
 
-        var country, city, number;
+    var country, city, number;
 
-        switch (value.length) {
-            case 10: // +1PPP####### -> C (PPP) ###-####
-                country = 1;
-                city = value.slice(0, 3);
-                number = value.slice(3);
-                break;
+    switch (value.length) {
+      case 10: // +1PPP####### -> C (PPP) ###-####
+        country = 1;
+        city = value.slice(0, 3);
+        number = value.slice(3);
+        break;
 
-            case 11: // +CPPP####### -> CCC (PP) ###-####
-                country = value[0];
-                city = value.slice(1, 4);
-                number = value.slice(4);
-                break;
+      case 11: // +CPPP####### -> CCC (PP) ###-####
+        country = value[0];
+        city = value.slice(1, 4);
+        number = value.slice(4);
+        break;
 
-            case 12: // +CCCPP####### -> CCC (PP) ###-####
-                country = value.slice(0, 3);
-                city = value.slice(3, 5);
-                number = value.slice(5);
-                break;
+      case 12: // +CCCPP####### -> CCC (PP) ###-####
+        country = value.slice(0, 3);
+        city = value.slice(3, 5);
+        number = value.slice(5);
+        break;
 
-            default:
-                return tel;
-        }
+      default:
+        return tel;
+    }
 
-        if (country == 1) {
-            country = "";
-        }
+    if (country == 1) {
+      country = "";
+    }
 
-        number = number.slice(0, 3) + '-' + number.slice(3);
+    number = number.slice(0, 3) + '-' + number.slice(3);
 
-        return (country + " (" + city + ") " + number).trim();
-    };
+    return (country + " (" + city + ") " + number).trim();
+  };
 });
-;
-
-
