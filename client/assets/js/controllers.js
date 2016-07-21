@@ -165,6 +165,8 @@ angular.module('application.controllers', ['nvd3'])
             },
             manager: null,
           };
+          //close the slideout
+          $('.button-collapse').sideNav('hide');
         }).catch(function(err) {
           console.log(err);
         });
