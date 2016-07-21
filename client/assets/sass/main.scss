@@ -61,7 +61,7 @@
     // Form and Inputs
     input[type=text] {
       color: $secondary-text;
-      border-bottom: $accent;
+      border-bottom: 1px solid $accent;
       box-shadow:0 1px 0 0 $accent;
     }
 
@@ -91,9 +91,15 @@
       color: $secondary-text;
     }
 
+    input[type=text]:focus:not([readonly]) {
+      color: $secondary-text;
+      border-bottom: 1px solid $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+
     input[type=text]:focus:not([readonly]) + label {
       color: $accent;
-      border-bottom: $accent;
+      border-bottom:$accent;
     }
 
     input[type=password]:focus:not([readonly]) + label {

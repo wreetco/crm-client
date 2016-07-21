@@ -77,8 +77,8 @@ angular.module('application.controllers', ['nvd3'])
 
 // record controller is god
 .controller('RecordController',
-			['$scope', 'Record',
-			function($scope, Record) {
+			['$scope', 'Record', 'Session',
+			function($scope, Record, Session) {
   // roch's
   $scope.getRecords = function(m_id, type, opts) {
     // get a manager's record of type
@@ -92,12 +92,13 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
-  $scope.saveRec = function(record) {
+  $scope.saveRec = function(record, callback) {
     Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
       console.log(r);
+      callback(r);
     }).catch(function(e) {
-      console.log("errlol");
       console.log(e);
+      callback(new Error());
     });
   };
 }])
@@ -105,7 +106,7 @@ angular.module('application.controllers', ['nvd3'])
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-  //this displays the proper partial in the right hand sidebar
+  //this displays the proper partial in the right hand sidebar, c
   //  gives us a contact object to work with
   //  and an interface object
   $scope.infoBar = function(c){
@@ -119,8 +120,6 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-show-card').css('display', 'none');
-    console.log($scope.current_contact);
-    console.log($scope.current_interface);
   };
 
   $scope.postBar = function(c){
@@ -134,20 +133,44 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'none');
     $('#contact-show-card').css('display', 'block');
-    console.log($scope.current_contact);
-    console.log($scope.current_interface);
   };
 
   $scope.new_record = {
     record: {
-
     },
     manager: null,
   };
+
   $scope.saveRecord = function(){
-    console.log($scope.new_record);
     $scope.new_record.manager = Session.getSession().user.managers[0];
-    $scope.saveRec(JSON.stringify($scope.new_record));
+    console.log("> $scope.new_record");
+    console.log($scope.new_record);
+    $scope.saveRec(JSON.stringify($scope.new_record), function(res) {
+      if (res instanceof Error){
+        //we got a posting error, do something
+      }
+      else {
+        var sess = Session.getSession();
+        if (!sess) return 0;
+        $scope.getRecords(sess.user.managers[0], 'records', null)
+        .then(function(contacts) {
+          $scope.contacts = contacts;
+          $scope.$apply();
+          // store it
+          localStorage.contacts = JSON.stringify(contacts);
+          //Now that we have saved, lets clear this out.
+          $scope.new_record = {
+            record: {
+
+            },
+            manager: null,
+          };
+        }).catch(function(err) {
+          console.log(err);
+        });
+        $scope.tags = Interface.getTags($scope.contacts);
+      }
+    });
   };
 
   (function() {
