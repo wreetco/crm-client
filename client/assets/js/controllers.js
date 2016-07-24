@@ -28,6 +28,18 @@ angular.module('application.controllers', ['nvd3'])
 	}; // end login method
 }])
 
+.controller('LogoutController', ['$scope', '$window', '$controller', 'Session', function($scope, $window, $controller, Session) {
+  $controller('AccountController', {$scope: $scope});
+
+  $scope.logout = function(){
+    delete $window.sessionStorage.session;
+    delete $window.localStorage;
+    $location.path('/');
+		$scope.$apply();
+  };
+
+}])
+
 .controller('ManagerController',
 			['$scope', '$window', 'Manager',
 			function($scope, $window, Manager) {

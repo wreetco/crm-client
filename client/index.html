@@ -52,8 +52,8 @@
         <li><a href="#!/settings" class="activatable collapsible-header"><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->
-        <li id="logoutButton">
-          <a class="collapsible-header" href="#!/logout"><i class="material-icons">exit_to_app</i>Logout</a>
+        <li id="logoutButton" ng-controller="LogoutController">
+          <a class="collapsible-header" href="#!/logout" ng-click="logout()"><i class="material-icons">exit_to_app</i>Logout</a>
         </li>
       </ul>
     </div>
