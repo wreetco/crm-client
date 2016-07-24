@@ -101,10 +101,8 @@ angular.module('application.controllers', ['nvd3'])
   $("a.activatable").click(setActive);
 
   (function() { // sup
-    if (!localStorage.interface)
-      $scope.getInterface();
     if (!$scope.interface)
-      $scope.interface = JSON.parse(localStorage.interface);
+      $scope.getInterface();
   })();
 }])
 
@@ -203,29 +201,27 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
-
+  
   (function() {
-    // make sure we have contacts
-    if (!localStorage.contacts) {
-      var sess = Session.getSession();
-      if (!sess) return 0;
-      $scope.getRecords(sess.user.managers[0], 'records', null)
-      .then(function(contacts) {
-        $scope.contacts = contacts;
-        // store it
-        localStorage.contacts = JSON.stringify(contacts);
-      }).catch(function(err) {
-        console.log(err);
-      });
-    }
-    else if (!$scope.contacts)
-      $scope.contacts = JSON.parse(localStorage.contacts);
-    if (!$scope.tags)
-      $scope.tags = Interface.getTags($scope.contacts);
-    if (!$scope.current_interface)
-      $scope.current_interface = JSON.parse(localStorage.interface);
+    if (!$scope.contacts) {
+      if (localStorage.contacts)
+        $scope.contacts = JSON.parse(localStorage.contacts);
+      else {
+        //$scope.contacts = JSON.parse(localStorage.contacts);
+        var sess = Session.getSession();
+        if (!sess) return 0;
+        $scope.getRecords(sess.user.managers[0], 'records', null)
+        .then(function(contacts) {
+          $scope.contacts = contacts;
+          // store it
+          localStorage.contacts = JSON.stringify(contacts);
+        }).catch(function(err) {
+         console.log(err);
+        });
+      }
+    } // end contact check
   })();
-
+  
 }]) // end ContactController
 
 // end of record descendants
