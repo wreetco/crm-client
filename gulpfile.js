@@ -110,7 +110,7 @@ gulp.task('watch', function(){
 gulp.task('start', function () {
 	start.server({
 		root: './client/',
-		port: '1337',
+		port: process.env.PORT,
 		hostname: '0.0.0.0'
 	});
 });
