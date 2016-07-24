@@ -18,6 +18,10 @@
         templateUrl: "./views/_login_modal.html",
         controller: "AccountController"
       })
+      .when("/logout", {
+        templateUrl: "./views/_logout_modal.html",
+        controller: "LogoutController"
+      })
       .when("/contacts", {
 				templateUrl: "./views/contacts.html",
 				controller: "ContactController"

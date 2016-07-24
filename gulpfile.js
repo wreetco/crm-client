@@ -48,6 +48,7 @@ var html_paths = [
   'client/views/*.html',
 ];
 
+
 // STYLES
 //This compiles the sass files in the materialize folder
 // then dumps the compiled sass in the css folder

@@ -19,23 +19,43 @@ angular.module('application.controllers', ['nvd3'])
 			$window.sessionStorage.session = JSON.stringify(session);
 
 			$("#login").closeModal();
+      var target = angular.element('#materialize-lean-overlay-1');
+      target.remove();
+      var target = angular.element('#materialize-lean-overlay-2');
+      target.remove();
 			$location.path('/contact');
 			$scope.$apply();
     	}).catch(function(err) {
 			// fucked it up bradley
-			console.log("Login failed with error: " + err);
+			  console.log("Login failed with error: " + err);
     	});
 	}; // end login method
 }])
 
-.controller('LogoutController', ['$scope', '$window', '$controller', 'Session', function($scope, $window, $controller, Session) {
+.controller('LogoutController', ['$scope', '$window', '$http', '$controller', '$location', '$route', 'Session', function($scope, $window, $http, $controller, $location, $route, Session) {
   $controller('AccountController', {$scope: $scope});
 
+  //logout button calls the check function to open the modal and confirm a logout
+  $scope.check = function(){
+    $('#logout').openModal();
+    console.log("check function breh");
+  };
+
+  //the confirm button in our logout partial will call this to clear
+  // out the current session and localstorage.
   $scope.logout = function(){
-    delete $window.sessionStorage.session;
-    delete $window.localStorage;
-    $location.path('/');
-		$scope.$apply();
+    $http.delete("http://burnsy.wreet.xyz/auth", { 'cron': true }).success(function(result) {
+      console.log(result);
+      $('#logout').closeModal();
+      var target = angular.element('#materialize-lean-overlay-1');
+      target.remove();
+      delete $window.sessionStorage.session;
+      delete $window.localStorage;
+			$location.path('/');
+      $window.location.reload();
+    }).error(function() {
+      console.log("error");
+    });
   };
 
 }])
