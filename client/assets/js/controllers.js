@@ -19,13 +19,45 @@ angular.module('application.controllers', ['nvd3'])
 			$window.sessionStorage.session = JSON.stringify(session);
 
 			$("#login").closeModal();
+      var target = angular.element('#materialize-lean-overlay-1');
+      target.remove();
+      var target = angular.element('#materialize-lean-overlay-2');
+      target.remove();
 			$location.path('/contact');
 			$scope.$apply();
     	}).catch(function(err) {
 			// fucked it up bradley
-			console.log("Login failed with error: " + err);
+			  console.log("Login failed with error: " + err);
     	});
 	}; // end login method
+}])
+
+.controller('LogoutController', ['$scope', '$window', '$http', '$controller', '$location', '$route', 'Session', function($scope, $window, $http, $controller, $location, $route, Session) {
+  $controller('AccountController', {$scope: $scope});
+
+  //logout button calls the check function to open the modal and confirm a logout
+  $scope.check = function(){
+    $('#logout').openModal();
+    console.log("check function breh");
+  };
+
+  //the confirm button in our logout partial will call this to clear
+  // out the current session and localstorage.
+  $scope.logout = function(){
+    $http.delete("http://burnsy.wreet.xyz/auth", { 'cron': true }).success(function(result) {
+      console.log(result);
+      $('#logout').closeModal();
+      var target = angular.element('#materialize-lean-overlay-1');
+      target.remove();
+      delete $window.sessionStorage.session;
+      delete $window.localStorage;
+			$location.path('/');
+      $window.location.reload();
+    }).error(function() {
+      console.log("error");
+    });
+  };
+
 }])
 
 .controller('ManagerController',
@@ -77,8 +109,8 @@ angular.module('application.controllers', ['nvd3'])
 
 // record controller is god
 .controller('RecordController',
-			['$scope', 'Record',
-			function($scope, Record) {
+			['$scope', 'Record', 'Session',
+			function($scope, Record, Session) {
   // roch's
   $scope.getRecords = function(m_id, type, opts) {
     // get a manager's record of type
@@ -91,13 +123,22 @@ angular.module('application.controllers', ['nvd3'])
       });
     });
   };
+
+  $scope.saveRec = function(record, callback) {
+    Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
+      console.log(r);
+      callback(r);
+    }).catch(function(e) {
+      console.log(e);
+      callback(new Error());
+    });
+  };
 }])
 
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-
-  //this displays the proper partial in the right hand sidebar
+  //this displays the proper partial in the right hand sidebar, c
   //  gives us a contact object to work with
   //  and an interface object
   $scope.infoBar = function(c){
@@ -110,7 +151,7 @@ angular.module('application.controllers', ['nvd3'])
     $('#contact-info-card').css('display', 'block');
     $('#contact-show-card').css('display', 'none');
   };
-  
+
   $scope.postBar = function(c){
     //contact object
     c = c || null;
@@ -120,6 +161,46 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'none');
     $('#contact-show-card').css('display', 'block');
+  };
+
+  $scope.new_record = {
+    record: {
+    },
+    manager: null,
+  };
+
+  $scope.saveRecord = function(){
+    $scope.new_record.manager = Session.getSession().user.managers[0];
+    console.log("> $scope.new_record");
+    console.log($scope.new_record);
+    $scope.saveRec(JSON.stringify($scope.new_record), function(res) {
+      if (res instanceof Error){
+        //we got a posting error, do something
+      }
+      else {
+        var sess = Session.getSession();
+        if (!sess) return 0;
+        $scope.getRecords(sess.user.managers[0], 'records', null)
+        .then(function(contacts) {
+          $scope.contacts = contacts;
+          $scope.$apply();
+          // store it
+          localStorage.contacts = JSON.stringify(contacts);
+          //Now that we have saved, lets clear this out.
+          $scope.new_record = {
+            record: {
+
+            },
+            manager: null,
+          };
+          //close the slideout
+          $('.button-collapse').sideNav('hide');
+        }).catch(function(err) {
+          console.log(err);
+        });
+        $scope.tags = Interface.getTags($scope.contacts);
+      }
+    });
   };
 
   (function() {

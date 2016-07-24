@@ -54,12 +54,14 @@
     .side-nav.fixed a:active {
       background-color: darken($primary-color, 10%);
     }
-
-
+    .side-nav a.btn-large:hover, .side-nav a.btn:hover {
+      background-color: darken($accent, 10%);
+      color: lighten($primary-text, 10%);
+    }
     // Form and Inputs
     input[type=text] {
       color: $secondary-text;
-      border-bottom: $accent;
+      border-bottom: 1px solid $accent;
       box-shadow:0 1px 0 0 $accent;
     }
 
@@ -89,9 +91,15 @@
       color: $secondary-text;
     }
 
+    input[type=text]:focus:not([readonly]) {
+      color: $secondary-text;
+      border-bottom: 1px solid $accent;
+      box-shadow:0 1px 0 0 $accent;
+    }
+
     input[type=text]:focus:not([readonly]) + label {
       color: $accent;
-      border-bottom: $accent;
+      border-bottom:$accent;
     }
 
     input[type=password]:focus:not([readonly]) + label {
@@ -140,6 +148,9 @@
     [type="checkbox"]:checked + label::before {
       border-right: 2px solid $accent;
       border-bottom: 2px solid $accent;
+    }
+    [type=checkbox]+label:before, [type=checkbox]:not(.filled-in)+label:after {
+      border: 2px solid $primary-text;
     }
     // End Form and Inputs
 

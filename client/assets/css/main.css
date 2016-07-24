@@ -8,7 +8,7 @@ Place the padding on where the offset content will be, which in our case is in h
 */
 
 header, .main, footer {
-  padding-left: 220px;
+  padding-left: 205px;
   padding-right: 10px;
 }
 
