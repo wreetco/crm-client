@@ -51,12 +51,9 @@
         <li><a href="#!/statistics" class="activatable collapsible-header"><i class="material-icons">insert_chart</i>Statistics</a></li>
         <li><a href="#!/settings" class="activatable collapsible-header"><i class="material-icons">settings_applications</i>Settings</a></li>
 
-
+        <!-- TBD: Float this button to the bottom of the left area -->
         <li id="logoutButton" ng-controller="LogoutController">
-          <a class="collapsible-header" href="#!/logout" ng-click="check();"><i class="material-icons">exit_to_app</i>Logout</a>
-        </li>
-        <li id="logoutButton2" ng-controller="LogoutController">
-          <a class="collapsible-header" href="#!/logout" ng-click="logout();"><i class="material-icons">exit_to_app</i>Logout2</a>
+          <a class="collapsible-header" ng-click="check();"><i class="material-icons">exit_to_app</i>Logout</a>
         </li>
       </ul>
     </div>
@@ -76,6 +73,8 @@
                                    );
       $('.collapsible').collapsible();
     </script>
+
+  <ng-include src="'views/_logout_modal.html'"></ng-include>
 
   </body>
 

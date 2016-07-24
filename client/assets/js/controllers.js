@@ -47,10 +47,11 @@ angular.module('application.controllers', ['nvd3'])
     $http.delete("http://burnsy.wreet.xyz/auth", { 'cron': true }).success(function(result) {
       console.log(result);
       $('#logout').closeModal();
-      var target = angular.element('#materialize-lean-overlay-1');
-      target.remove();
-      delete $window.sessionStorage.session;
-      delete $window.localStorage;
+      //var target = angular.element('#materialize-lean-overlay-1');
+      //target.remove();
+      delete window.sessionStorage.session;
+      delete localStorage.contacts;
+      delete localStorage.interface;
 			$location.path('/');
       $window.location.reload();
     }).error(function() {
