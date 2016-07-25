@@ -201,7 +201,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
-  
+
   (function() {
     if (!$scope.contacts) {
       if (localStorage.contacts)
@@ -215,13 +215,14 @@ angular.module('application.controllers', ['nvd3'])
           $scope.contacts = contacts;
           // store it
           localStorage.contacts = JSON.stringify(contacts);
+          $scope.$apply();
         }).catch(function(err) {
          console.log(err);
         });
       }
     } // end contact check
   })();
-  
+
 }]) // end ContactController
 
 // end of record descendants

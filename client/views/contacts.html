@@ -37,7 +37,7 @@
 
       <tbody>
         <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
-          <td colspan="1" style="z-index: 999;">
+          <td colspan="1">
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
@@ -68,7 +68,6 @@
     <div ng-include="'views/_contact_form.html'"></div>
   </div>
 </ul>
-
 
 <script>
   //This was in index.html but doesn't fire off unless you manually refresh the /contacts page
