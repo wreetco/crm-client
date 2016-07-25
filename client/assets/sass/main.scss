@@ -53,6 +53,42 @@
       color: $primary-text;
     }
 
+    .chips {
+      border-bottom: 1px solid $accent;
+      box-shadow: 0 1px 0 0 $accent;
+    }
+
+    .chips.focus {
+      border-bottom: 1px solid $accent;
+      box-shadow: 0 1px 0 0 $accent;
+    }
+
+    .chips .input {
+      color: $secondary-text !important;
+      margin-left: .6em;
+    }
+
+    input:not([type]):focus:not([readonly]) {
+      color: $accent !important;
+    }
+
+    .chips ::-webkit-input-placeholder {
+      color: $secondary-text;
+    }
+
+    .chips :-moz-placeholder { /* Firefox 18- */
+      color: $secondary-text;
+    }
+
+    .chips ::-moz-placeholder {  /* Firefox 19+ */
+      color: $secondary-text;
+    }
+
+    .chips :-ms-input-placeholder {
+      color: $secondary-text;
+    }
+
+
     //collapsible lists
     .collapsible {
       background-color: $primary-color-light;
@@ -68,6 +104,10 @@
     .side-nav a.btn-large:hover, .side-nav a.btn:hover {
       background-color: darken($accent, 10%);
       color: lighten($primary-text, 10%);
+    }
+    // Icons in sidebar
+    .side-nav li > a > i, .side-nav li > a > i.material-icons {
+      color: $accent;
     }
     // Form and Inputs
     input[type=text] {
@@ -99,6 +139,10 @@
     }
 
     .input-field label {
+      color: $secondary-text;
+    }
+
+    input[type=text].validate+label {
       color: $secondary-text;
     }
 
