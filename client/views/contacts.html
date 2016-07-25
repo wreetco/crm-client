@@ -57,8 +57,7 @@
   </a>
   <ul>
     <!-- on the next button we need to pass the contact that has its checkbox selected -->
-    <li><a class="btn-floating red slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="postBar();"><i class="material-icons">mode_edit</i></a></li>
-    <li><a class="btn-floating blue slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);"><i class="material-icons">info</i></a></li>
+    <li><a class="btn-floating red slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click=""><i class="material-icons">cancel</i></a></li>
   </ul>
 </div>
 
@@ -66,6 +65,7 @@
   <div class="col s12">
     <div ng-include="'views/_contact_info.html'"></div>
     <div ng-include="'views/_contact_form.html'"></div>
+    <div ng-include="'views/_contact_edit.html'"></div>
   </div>
 </ul>
 

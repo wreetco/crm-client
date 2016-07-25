@@ -151,9 +151,11 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-show-card').css('display', 'none');
+    $('#contact-show-card').css('display', 'none');
+    console.log($scope.current_contact);
   };
 
-  $scope.postBar = function(c){
+  $scope.editBar = function(c){
     //contact object
     c = c || null;
     $scope.current_contact = c;
@@ -162,7 +164,22 @@ angular.module('application.controllers', ['nvd3'])
     //fields obj
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
     //adjust the display
+    $scope.new_record.record = $scope.current_contact.x;
+    $scope.new_record._id = $scope.current_contact._id;
+    $('#contact-edit-card').css('display', 'block');
     $('#contact-info-card').css('display', 'none');
+    $('#contact-show-card').css('display', 'none');
+    console.log($scope.current_contact);
+  };
+
+  $scope.postBar = function(){
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    //adjust the display
+    $('#contact-info-card').css('display', 'none');
+    $('#contact-edit-card').css('display', 'none');
     $('#contact-show-card').css('display', 'block');
   };
 
@@ -170,6 +187,7 @@ angular.module('application.controllers', ['nvd3'])
     record: {
     },
     manager: null,
+    _id: null,
   };
 
   $scope.saveRecord = function(){
