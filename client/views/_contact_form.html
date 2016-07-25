@@ -23,8 +23,6 @@
         <h4>
           Tags
         </h4>
-        <div class="chips"></div>
-        <div class="chips chips-initial"></div>
         <div class="chips chips-placeholder"></div>
       </div>
     </div>
@@ -32,18 +30,8 @@
 </div>
 
 <script>
-  $('.chips').material_chip();
-  $('.chips-initial').material_chip({
-    data: [{
-      tag: 'Apple',
-    }, {
-      tag: 'Microsoft',
-    }, {
-      tag: 'Google',
-    }],
-  });
   $('.chips-placeholder').material_chip({
     placeholder: 'Enter a tag',
-    secondaryPlaceholder: '+Tag',
+    secondaryPlaceholder: 'Enter a tag',
   });
 </script>
