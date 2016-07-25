@@ -19,6 +19,31 @@
           <a class="waves-effect waves-light btn" ng-click="saveRecord();"><i class="material-icons right">send</i>Save</a>
         </div>
       </div>
+      <div class="row">
+        <h4>
+          Tags
+        </h4>
+        <div class="chips"></div>
+        <div class="chips chips-initial"></div>
+        <div class="chips chips-placeholder"></div>
+      </div>
     </div>
   </div>
 </div>
+
+<script>
+  $('.chips').material_chip();
+  $('.chips-initial').material_chip({
+    data: [{
+      tag: 'Apple',
+    }, {
+      tag: 'Microsoft',
+    }, {
+      tag: 'Google',
+    }],
+  });
+  $('.chips-placeholder').material_chip({
+    placeholder: 'Enter a tag',
+    secondaryPlaceholder: '+Tag',
+  });
+</script>

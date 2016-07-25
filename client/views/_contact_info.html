@@ -15,14 +15,22 @@
           </div>
         </div>
         <div class="col s12 m6">
-            <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="validate" readonly>
-            <label for="created">Created Date</label>
-            <br><br>
+          <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="validate" readonly>
+          <label for="created">Created Date</label>
+          <br><br>
         </div>
         <div class="col s12 m6">
-            <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="validate" readonly>
-            <label for="updated">Last Modified</label>
-            <br><br>
+          <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="validate" readonly>
+          <label for="updated">Last Modified</label>
+          <br><br>
+        </div>
+      </div>
+      <div class="row">
+        <h4>
+          Tags
+        </h4>
+        <div class="chip" ng-repeat="tag in current_contact.tags">
+          {{ tag }}
         </div>
       </div>
     </div>

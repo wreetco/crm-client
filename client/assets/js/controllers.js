@@ -129,7 +129,7 @@ angular.module('application.controllers', ['nvd3'])
       callback(r);
     }).catch(function(e) {
       console.log(e);
-      callback(new Error());
+      callback(new Error(e));
     });
   };
 }])
@@ -144,6 +144,7 @@ angular.module('application.controllers', ['nvd3'])
     //contact object
     c = c || null;
     $scope.current_contact = c;
+
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
@@ -196,7 +197,7 @@ angular.module('application.controllers', ['nvd3'])
     console.log($scope.new_record);
     $scope.saveRec(JSON.stringify($scope.new_record), function(res) {
       if (res instanceof Error){
-        //we got a posting error, do something
+        console.log(res);
       }
       else {
         var sess = Session.getSession();
@@ -210,9 +211,9 @@ angular.module('application.controllers', ['nvd3'])
           //Now that we have saved, lets clear this out.
           $scope.new_record = {
             record: {
-
             },
             manager: null,
+            _id: null,
           };
           //close the slideout
           $('.button-collapse').sideNav('hide');

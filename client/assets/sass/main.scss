@@ -42,6 +42,17 @@
       background-color: transparent;
     }
 
+    //chips
+    .chip {
+      margin: .1em;
+      background-color: $accent;
+      color: $primary-text;
+    }
+
+    .chip i {
+      color: $primary-text;
+    }
+
     //collapsible lists
     .collapsible {
       background-color: $primary-color-light;

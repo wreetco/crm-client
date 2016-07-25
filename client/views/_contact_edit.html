@@ -19,6 +19,15 @@
           <a class="waves-effect waves-light btn" ng-click="saveRecord();"><i class="material-icons right">send</i>Save</a>
         </div>
       </div>
+      <div class="row">
+        <h4>
+          Tags
+        </h4>
+        <div class="chip" ng-repeat="tag in current_contact.tags">
+          {{ tag }}
+          <i class="close material-icons">close</i>
+        </div>
+      </div>
     </div>
   </div>
 </div>
