@@ -144,6 +144,8 @@ angular.module('application.controllers', ['nvd3'])
     //contact object
     c = c || null;
     $scope.current_contact = c;
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
     //adjust the display
@@ -155,6 +157,8 @@ angular.module('application.controllers', ['nvd3'])
     //contact object
     c = c || null;
     $scope.current_contact = c;
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
     //adjust the display
