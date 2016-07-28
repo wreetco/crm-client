@@ -171,6 +171,14 @@ angular.module('application.controllers', ['nvd3'])
     $('#contact-info-card').css('display', 'none');
     $('#contact-show-card').css('display', 'none');
     console.log($scope.current_contact);
+
+    //Lets get our tags in a format for the materialize chips
+    var thedata = {data: []};
+    for(i = 0; i < $scope.current_contact.tags.length; i++){
+      dataObject = { tag : $scope.current_contact.tags[i] };
+      thedata.data.push(dataObject);
+    }
+    $window.localStorage.setItem("chipData", JSON.stringify(thedata));
   };
 
   $scope.postBar = function(){
@@ -182,24 +190,43 @@ angular.module('application.controllers', ['nvd3'])
     $('#contact-info-card').css('display', 'none');
     $('#contact-edit-card').css('display', 'none');
     $('#contact-show-card').css('display', 'block');
+    //let make sure this is empty
+    $scope.new_record = {
+      record: {
+        tags: [],
+      },
+      manager: null,
+      _id: null,
+    };
   };
 
   $scope.new_record = {
     record: {
+      tags: [],
     },
     manager: null,
     _id: null,
   };
 
   $scope.saveRecord = function(){
+    //assign the manager ID to the new record
     $scope.new_record.manager = Session.getSession().user.managers[0];
-    console.log("> $scope.new_record");
+    //lets see what tags we currently have
+    $scope.tags = Interface.getTags($scope.contacts);
+    //check to see if new tags match previous tag and send ID instead of string
+
+    //add tags to the new record object
+    $scope.tagData = $('.chips').material_chip('data');
+    for (var key in $scope.tagData) {
+      if ($scope.tagData.hasOwnProperty(key)) {
+        $scope.new_record.record.tags.push($scope.tagData[key].tag);
+      }
+    }
+    console.log("NEW RECORD BEING POSTED");
     console.log($scope.new_record);
     $scope.saveRec(JSON.stringify($scope.new_record), function(res) {
-      if (res instanceof Error){
-        console.log(res);
-      }
-      else {
+      if (!(res instanceof Error)){
+        //Success, refresh contacts with the new contact
         var sess = Session.getSession();
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
@@ -211,6 +238,7 @@ angular.module('application.controllers', ['nvd3'])
           //Now that we have saved, lets clear this out.
           $scope.new_record = {
             record: {
+              tags: [],
             },
             manager: null,
             _id: null,
@@ -221,6 +249,9 @@ angular.module('application.controllers', ['nvd3'])
           console.log(err);
         });
         $scope.tags = Interface.getTags($scope.contacts);
+      }
+      else {
+        console.log(res);
       }
     });
   };

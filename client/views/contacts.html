@@ -84,24 +84,6 @@
     }
   })();
 
-
-
-  //this hides a partial and shows the other based on what was clicked
-  function contactAction(value, id) {
-    id = id || null;
-    console.log(id);
-    alert(id);
-    //contact-form-card
-    if(value == "contact-form-card"){
-      document.getElementById(value).style.display = "block";
-      document.getElementById("contact-info-card").style.display = "none";
-    }
-    else if(value == "contact-info-card"){
-      document.getElementById(value).style.display = "block";
-      document.getElementById("contact-form-card").style.display = "none";
-    }
-  };
-
   $("#checkAll").change(function () {
     $("input:checkbox").prop('checked', $(this).prop("checked"));
   });
