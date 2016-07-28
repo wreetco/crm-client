@@ -137,70 +137,11 @@ angular.module('application.controllers', ['nvd3'])
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-  //this displays the proper partial in the right hand sidebar, c
-  //  gives us a contact object to work with
-  //  and an interface object
-  $scope.infoBar = function(c){
-    //contact object
-    c = c || null;
-    $scope.current_contact = c;
-
-    //interface object
-    $scope.current_interface = JSON.parse($window.localStorage.interface);
-    //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
-    //adjust the display
-    $('#contact-info-card').css('display', 'block');
-    $('#contact-show-card').css('display', 'none');
-    $('#contact-show-card').css('display', 'none');
-    console.log($scope.current_contact);
-  };
-
-  $scope.editBar = function(c){
-    //contact object
-    c = c || null;
-    $scope.current_contact = c;
-    //interface object
-    $scope.current_interface = JSON.parse($window.localStorage.interface);
-    //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
-    //adjust the display
-    $scope.new_record.record = $scope.current_contact.x;
-    $scope.new_record._id = $scope.current_contact._id;
-    $('#contact-edit-card').css('display', 'block');
-    $('#contact-info-card').css('display', 'none');
-    $('#contact-show-card').css('display', 'none');
-    console.log($scope.current_contact);
-
-    //Lets get our tags in a format for the materialize chips
-    var thedata = {data: []};
-    for(i = 0; i < $scope.current_contact.tags.length; i++){
-      dataObject = { tag : $scope.current_contact.tags[i] };
-      thedata.data.push(dataObject);
-    }
-    $window.localStorage.setItem("chipData", JSON.stringify(thedata));
-  };
-
-  $scope.postBar = function(){
-    //interface object
-    $scope.current_interface = JSON.parse($window.localStorage.interface);
-    //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
-    //adjust the display
-    $('#contact-info-card').css('display', 'none');
-    $('#contact-edit-card').css('display', 'none');
-    $('#contact-show-card').css('display', 'block');
-    //let make sure this is empty
-    $scope.new_record = {
-      record: {
-        tags: [],
-      },
-      manager: null,
-      _id: null,
-    };
-  };
-
-  $scope.new_record = {
+  ////////////////////////////////////////////////////////////////
+  //contact is a record format used for posting
+  //  to the DB
+  ///////////////////////////////////////////////////////////////
+  $scope.contact = {
     record: {
       tags: [],
     },
@@ -208,23 +149,98 @@ angular.module('application.controllers', ['nvd3'])
     _id: null,
   };
 
-  $scope.saveRecord = function(){
-    //assign the manager ID to the new record
-    $scope.new_record.manager = Session.getSession().user.managers[0];
-    //lets see what tags we currently have
-    $scope.tags = Interface.getTags($scope.contacts);
-    //check to see if new tags match previous tag and send ID instead of string
+  ///////////////////////////////////////////////////////////////
+  //infobar is called when clicking on a contact, it handles
+  //  displaying contact info and the editing features
+  ///////////////////////////////////////////////////////////////
+  $scope.infoBar = function(c){
+    //contact object
+    c = c || null;
+    $scope.current_contact = c;
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    $scope.tag_data = {data: []};
+    for(i = 0; i < $scope.current_contact.tags.length; i++){
+      $scope.tag_obj = { tag : $scope.current_contact.tags[i].name };
+      $scope.tag_data.data.push($scope.tag_obj);
+    }
+    //adjust the display
+    $('#contact-info-card').css('display', 'block');
+    $('#contact-post-card').css('display', 'none');
+  };
 
-    //add tags to the new record object
-    $scope.tagData = $('.chips').material_chip('data');
-    for (var key in $scope.tagData) {
-      if ($scope.tagData.hasOwnProperty(key)) {
-        $scope.new_record.record.tags.push($scope.tagData[key].tag);
+
+  /////////////////////////////////////////////////////////////////
+  //postbar is called when posting a new record
+  /////////////////////////////////////////////////////////////////
+  $scope.postBar = function(){
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    //let make sure this is empty before we do anything.
+    $scope.contact = {
+      record: {
+        tags: [],
+      },
+      manager: null,
+      _id: null,
+
+    };
+    //adjust the display so the partial can be seen
+    $('#contact-info-card').css('display', 'none');
+    $('#contact-post-card').css('display', 'block');
+  };
+
+  //////////////////////////////////////////////////////////////////
+  //
+  //////////////////////////////////////////////////////////////////
+  $scope.postRecord = function () {
+    //lets just fill out the tags
+    //  the model took care of everything else
+    //  on the contact that is being uploaded
+    $scope.tag_data = $('.chips2').material_chip('data');
+    for (var key in $scope.tag_data) {
+      if ($scope.tag_data.hasOwnProperty(key)) {
+        $scope.contact.record.tags.push($scope.tag_data[key].tag);
       }
     }
-    console.log("NEW RECORD BEING POSTED");
-    console.log($scope.new_record);
-    $scope.saveRec(JSON.stringify($scope.new_record), function(res) {
+    //save the record to the db
+    $scope.saveRecord($scope.contact);
+  };
+
+  //////////////////////////////////////////////////////////////////
+  //called from the _contact_info partial, it handles putting
+  //  the edited contact into the proper form for posting to the DB
+  //////////////////////////////////////////////////////////////////
+  $scope.updateRecord = function(r){
+    for (var key in r.x) {
+      $scope.contact.record[key] = r.x[key];
+    }
+    $scope.contact._id = r._id;
+    $scope.contact.manager = r.manager;
+    $scope.tag_data = $('.chips').material_chip('data');
+    for (var dat in $scope.tag_data) {
+      if ($scope.tag_data.hasOwnProperty(dat)) {
+        $scope.contact.record.tags.push($scope.tag_data[dat].tag);
+      }
+    }
+    $scope.saveRecord($scope.contact);
+  };
+
+  ///////////////////////////////////////////////////////////////////
+  //saveRecord is used to save either a new record or one that has
+  //  been edited, requires a contact be passed into it
+  ///////////////////////////////////////////////////////////////////
+  $scope.saveRecord = function(r){
+    //the passed in contact is assigned to post_data
+    $scope.post_data = r;
+    //assign the manager ID to the new record
+    $scope.post_data.manager = Session.getSession().user.managers[0];
+
+    $scope.saveRec(JSON.stringify($scope.post_data), function(res) {
       if (!(res instanceof Error)){
         //Success, refresh contacts with the new contact
         var sess = Session.getSession();
@@ -233,10 +249,10 @@ angular.module('application.controllers', ['nvd3'])
         .then(function(contacts) {
           $scope.contacts = contacts;
           $scope.$apply();
-          // store it
+          // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
           //Now that we have saved, lets clear this out.
-          $scope.new_record = {
+          $scope.contact = {
             record: {
               tags: [],
             },
@@ -256,6 +272,7 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
+  ///////////////////////////////////////////////////////////////
   (function() {
     if (!$scope.contacts) {
       if (localStorage.contacts)

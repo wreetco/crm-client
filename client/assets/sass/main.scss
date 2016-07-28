@@ -34,15 +34,18 @@
     ul {
       background-color: $primary-color;
     }
-    //Contact page, bottom right buttons
+    //////////////////////////////////////////////////////////////////
+    //Contacts/records page, bottom right buttons
+    ////////////////////////////////////////////////////////////////
     .fixed-action-btn ul {
       background-color: transparent;
     }
     .fixed-action-btn li {
       background-color: transparent;
     }
-
+    ////////////////////////////////////////////////
     //chips
+    //////////////////////////////////////////////////
     .chip {
       margin: .1em;
       background-color: $accent;
@@ -88,13 +91,16 @@
       color: $secondary-text;
     }
 
-
+    ////////////////////////////////////////////
     //collapsible lists
+    /////////////////////////////////////////////
     .collapsible {
       background-color: $primary-color-light;
       color: $primary-text;
     }
+    ////////////////////////////////////////////
     //the links in our sidebar
+    ///////////////////////////////////////////
     .side-nav.fixed a {
       color: $primary-text;
     }
@@ -105,25 +111,78 @@
       background-color: darken($accent, 10%);
       color: lighten($primary-text, 10%);
     }
+    /////////////////////////////////////////////
     // Icons in sidebar
+    ////////////////////////////////////////////
     .side-nav li > a > i, .side-nav li > a > i.material-icons {
       color: $accent;
     }
+    ////////////////////////////////////
     // Form and Inputs
-    input[type=text] {
+    ////////////////////////////////////
+    .input-date {
       color: $secondary-text;
+      border: 1px solid transparent;
       border-bottom: 1px solid $accent;
       box-shadow:0 1px 0 0 $accent;
+      padding-left: .3em;
     }
 
-    input[type=password] {
+    .input-date:hover {
+      color: $secondary-text !important;
+      border: 1px solid transparent !important;
+      border-bottom: 1px solid $accent !important;
+      box-shadow:0 1px 0 0 $accent !important;
+      padding-left: .3em;
+    }
+
+    input[type=text] {
       color: $secondary-text;
-      border-bottom: $accent;
+      border: 1px solid transparent;
+      border-bottom: 1px solid $accent;
       box-shadow:0 1px 0 0 $accent;
+      cursor: pointer;
+      padding-left: .3em;
+      -webkit-transition: border 2s; /* Safari */
+      transition: border 2s !important;
+
+      -webkit-transition: border-bottom 2s; /* Safari */
+      transition: border-bottom 2s !important;
+      -webkit-transition: box-shadow 2s; /* Safari */
+      transition: box-shadow 2s;
+    }
+
+    input[type=text]:hover{
+      border: 1px solid lighten($primary-color, 5%);
+      box-shadow: 0 1px 0 0 lighten($primary-color, 10%);
+      -webkit-transition: border 2s; /* Safari */
+      transition: border 2s !important;
+      -webkit-transition: box-shadow 2s; /* Safari */
+      transition: box-shadow 2s;
     }
 
     input[type=text]:focus:not([readonly]){
       color: $accent;
+      border: 1px 1px 1px 1px solid lighten($primary-color, 30%);
+      box-shadow:0 1px 0 0 lighten($primary-color, 20%);
+      -webkit-transition: border 2s; /* Safari */
+      transition: border 2s !important;
+      -webkit-transition: box-shadow 2s; /* Safari */
+      transition: box-shadow 2s;
+      cursor: auto;
+    }
+
+    input[type=text].validate+label {
+      color: $secondary-text;
+    }
+
+    input[type=text]:focus:not([readonly]) + label {
+      color: $accent;
+      border-bottom:$accent;
+    }
+
+    input[type=password] {
+      color: $secondary-text;
       border-bottom: $accent;
       box-shadow:0 1px 0 0 $accent;
     }
@@ -140,21 +199,6 @@
 
     .input-field label {
       color: $secondary-text;
-    }
-
-    input[type=text].validate+label {
-      color: $secondary-text;
-    }
-
-    input[type=text]:focus:not([readonly]) {
-      color: $secondary-text;
-      border-bottom: 1px solid $accent;
-      box-shadow:0 1px 0 0 $accent;
-    }
-
-    input[type=text]:focus:not([readonly]) + label {
-      color: $accent;
-      border-bottom:$accent;
     }
 
     input[type=password]:focus:not([readonly]) + label {
