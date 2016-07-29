@@ -135,7 +135,7 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$window', '$controller', 'Session', 'Interface', function($scope, $window, $controller, Session, Interface) {
+.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', 'Session', 'Interface', function($scope, $window, $controller, $timeout, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
   ////////////////////////////////////////////////////////////////
   //contact is a record format used for posting
@@ -161,14 +161,23 @@ angular.module('application.controllers', ['nvd3'])
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
-    $scope.tag_data = {data: []};
-    for(i = 0; i < $scope.current_contact.tags.length; i++){
-      $scope.tag_obj = { tag : $scope.current_contact.tags[i].name };
-      $scope.tag_data.data.push($scope.tag_obj);
-    }
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-post-card').css('display', 'none');
+
+    $('chips').on('chip.delete', function(e, chip){
+      console.log("deleted");
+      console.log(chip);
+    });
+    //ok this was ridic but is the only way I can keep the tags doing the right thing
+    // forgive me
+    //ensure the tags deal is empty
+    $('#chip-container').empty();
+    //initialize it
+    $('.chips').material_chip();
+    for(i = 0; i < $scope.current_contact.tags.length; i++){
+      $('#chip-container').append("<div class=\"chip\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
+    }
   };
 
 
@@ -192,6 +201,14 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display so the partial can be seen
     $('#contact-info-card').css('display', 'none');
     $('#contact-post-card').css('display', 'block');
+
+    //ensure the tags deal is empty
+    $('.chips-placeholder').empty();
+    //initialize tha damn thing girl
+    $('.chips-placeholder').material_chip({
+      placeholder: 'Enter a tag',
+      secondaryPlaceholder: 'Enter a tag',
+    });
   };
 
   //////////////////////////////////////////////////////////////////
@@ -201,7 +218,7 @@ angular.module('application.controllers', ['nvd3'])
     //lets just fill out the tags
     //  the model took care of everything else
     //  on the contact that is being uploaded
-    $scope.tag_data = $('.chips2').material_chip('data');
+    $scope.tag_data = $('.chips-placeholder').material_chip('data');
     for (var key in $scope.tag_data) {
       if ($scope.tag_data.hasOwnProperty(key)) {
         $scope.contact.record.tags.push($scope.tag_data[key].tag);
@@ -243,11 +260,15 @@ angular.module('application.controllers', ['nvd3'])
     $scope.saveRec(JSON.stringify($scope.post_data), function(res) {
       if (!(res instanceof Error)){
         //Success, refresh contacts with the new contact
+        console.log("Good job!");
         var sess = Session.getSession();
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
+          console.log("even better");
           $scope.contacts = contacts;
+
+        $scope.tags = Interface.getTags($scope.contacts);
           $scope.$apply();
           // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
@@ -264,7 +285,6 @@ angular.module('application.controllers', ['nvd3'])
         }).catch(function(err) {
           console.log(err);
         });
-        $scope.tags = Interface.getTags($scope.contacts);
       }
       else {
         console.log(res);

@@ -29,11 +29,7 @@
         <h4>
           Tags
         </h4>
-        <div class="chips">
-          <div class="chip" ng-repeat="tag in current_contact.tags">
-            {{ tag.name }}
-            <i class="close material-icons">close</i>
-          </div>
+        <div class="chips" id="chip-container">
         </div>
       </div>
 
@@ -54,5 +50,4 @@
   function noneditable(el){
     el.setAttribute("readonly", "");
   };
-
 </script>
