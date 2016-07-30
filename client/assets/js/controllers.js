@@ -144,9 +144,9 @@ angular.module('application.controllers', ['nvd3'])
   $scope.contact = {
     record: {
       tags: [],
+      id: null,
     },
     manager: null,
-    _id: null,
   };
 
   ///////////////////////////////////////////////////////////////
@@ -164,19 +164,16 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-post-card').css('display', 'none');
-
-    $('chips').on('chip.delete', function(e, chip){
-      console.log("deleted");
-      console.log(chip);
-    });
     //ok this was ridic but is the only way I can keep the tags doing the right thing
     // forgive me
     //ensure the tags deal is empty
+    console.log($scope.current_contact);
     $('#chip-container').empty();
     //initialize it
     $('.chips').material_chip();
     for(i = 0; i < $scope.current_contact.tags.length; i++){
       $('#chip-container').append("<div class=\"chip\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
+      console.log("tag: " + $scope.current_contact.tags[i].name);
     }
   };
 
@@ -193,9 +190,9 @@ angular.module('application.controllers', ['nvd3'])
     $scope.contact = {
       record: {
         tags: [],
+        id: null,
       },
       manager: null,
-      _id: null,
 
     };
     //adjust the display so the partial can be seen
@@ -226,6 +223,14 @@ angular.module('application.controllers', ['nvd3'])
     }
     //save the record to the db
     $scope.saveRecord($scope.contact);
+
+    $scope.contact = {
+      record: {
+        tags: [],
+        id: null,
+      },
+      manager: null,
+    };
   };
 
   //////////////////////////////////////////////////////////////////
@@ -236,7 +241,8 @@ angular.module('application.controllers', ['nvd3'])
     for (var key in r.x) {
       $scope.contact.record[key] = r.x[key];
     }
-    $scope.contact._id = r._id;
+    $scope.contact.record.id = r._id;
+    console.log(r);
     $scope.contact.manager = r.manager;
     $scope.tag_data = $('.chips').material_chip('data');
     for (var dat in $scope.tag_data) {
@@ -244,7 +250,25 @@ angular.module('application.controllers', ['nvd3'])
         $scope.contact.record.tags.push($scope.tag_data[dat].tag);
       }
     }
+    for (i = 0; i < r.tags.length; i++){
+      $scope.contact.record.tags.push(r.tags[i].name);
+    }
+    console.log($scope.contact);
     $scope.saveRecord($scope.contact);
+    $scope.contact = {
+      record: {
+        tags: [],
+        id: null,
+      },
+      manager: null,
+    };
+  };
+
+  ///////////////////////////////////////////////////////////////
+  // Post Tag
+  ///////////////////////////////////////////////////////////////
+  $scope.addTag = function(tag_name){
+
   };
 
   ///////////////////////////////////////////////////////////////////
@@ -257,6 +281,7 @@ angular.module('application.controllers', ['nvd3'])
     //assign the manager ID to the new record
     $scope.post_data.manager = Session.getSession().user.managers[0];
 
+    console.log($scope.post_data);
     $scope.saveRec(JSON.stringify($scope.post_data), function(res) {
       if (!(res instanceof Error)){
         //Success, refresh contacts with the new contact
@@ -268,7 +293,7 @@ angular.module('application.controllers', ['nvd3'])
           console.log("even better");
           $scope.contacts = contacts;
 
-        $scope.tags = Interface.getTags($scope.contacts);
+          $scope.tags = Interface.getTags($scope.contacts);
           $scope.$apply();
           // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
@@ -276,9 +301,9 @@ angular.module('application.controllers', ['nvd3'])
           $scope.contact = {
             record: {
               tags: [],
+              id: null,
             },
             manager: null,
-            _id: null,
           };
           //close the slideout
           $('.button-collapse').sideNav('hide');
@@ -291,6 +316,11 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
+
+  ///////////////////////////////////////////////////////////////
+  // Delete Tag
+  ///////////////////////////////////////////////////////////////
+
 
   ///////////////////////////////////////////////////////////////
   (function() {

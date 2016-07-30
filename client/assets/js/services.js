@@ -100,6 +100,7 @@ angular.module('application.services', [])
         $http.get("http://burnsy.wreet.xyz/manager/" + m_id + "/" + type)
         .success(function(records) {
           resolve(records);
+          console.log(records);
         }).error(function(mess, status) {
           reject(mess);
         });

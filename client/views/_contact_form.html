@@ -9,7 +9,7 @@
       <div class="row">
         <div ng-repeat="field in current_fields">
           <div class="col s12 m6">
-            <input placeholder="{{ current_contact.x[field.db_name] }}" id="{{ field.db_name }}" type="text" class="validate" ng-model="contact.record[field.db_name]">
+            <input placeholder="{{ current_contact.x[field.db_name] }}" id="{{ field.db_name }}" type="text" ng-model="contact.record[field.db_name]">
             <label for="{{ field.db_name }}">{{ field.name }}</label>
           </div>
         </div>
@@ -22,7 +22,7 @@
       </div>
       <div class="row">
         <div class="col s6 m4 offset-m4">
-          <a class="waves-effect waves-light btn" ng-click="postRecord();"><i class="material-icons right">send</i>Save</a>
+          <a class="waves-effect btn" ng-click="postRecord();"><i class="material-icons right">send</i>Save</a>
         </div>
       </div>
     </div>
