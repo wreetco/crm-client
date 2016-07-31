@@ -155,8 +155,7 @@ angular.module('application.controllers', ['nvd3'])
     manager: null,
   };
 
-  ///////////////////////////////////////////////////////////////
-  //infobar is called when clicking on a contact, it handles
+  // Information Side Nav Bar is called when clicking on a contact, it handles
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
@@ -182,8 +181,7 @@ angular.module('application.controllers', ['nvd3'])
   };
 
 
-  /////////////////////////////////////////////////////////////////
-  //postbar is called when posting a new record
+  // Post Side Nav Bar is called when posting a new record
   /////////////////////////////////////////////////////////////////
   $scope.postBar = function(){
     //clean up
@@ -206,8 +204,7 @@ angular.module('application.controllers', ['nvd3'])
 
   };
 
-  //////////////////////////////////////////////////////////////////
-  //
+  // Post Record
   //////////////////////////////////////////////////////////////////
   $scope.postRecord = function (r) {
     //lets just fill out the tags
@@ -224,7 +221,6 @@ angular.module('application.controllers', ['nvd3'])
     $scope.saveRecord($scope.contact);
   };
 
-  //////////////////////////////////////////////////////////////////
   //called from the _contact_info partial, it handles putting
   //  the edited contact into the proper form for posting to the DB
   //////////////////////////////////////////////////////////////////
@@ -250,7 +246,6 @@ angular.module('application.controllers', ['nvd3'])
     };
   };
 
-  ///////////////////////////////////////////////////////////////////
   //saveRecord is used to save either a new record or one that has
   //  been edited, requires a contact be passed into it
   ///////////////////////////////////////////////////////////////////
@@ -293,8 +288,52 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
-
+  // Add Tag
   ///////////////////////////////////////////////////////////////
+
+  // Add Tag Box
+  ///////////////////////////////////////////////////////////////
+  $scope.tagBox = function(c){
+    $scope.box_id = "#box-" + c._id;
+    var box_clone = $( $scope.box_id ).clone();
+    $( $scope.box_id ).hide(0, function() {
+      $( $scope.box_id ).replaceWith("<input id=\"tag-box-input\" style=\"width: 10em; height: 1em; position: absolute; right: 3em; margin: 0;\" type=\"text\">");
+      $( '#tag-box-input' ).focus();
+
+      $( "#tag-box-input" ).keypress(function(e) {
+        if(e.keyCode === 13 || e.keyCode === 44){
+          console.log("brad");
+
+          var tag_name = $('#tag-box-input').val();
+          console.log(c);
+          for(i = 0; i < c.tags.length; i++){
+            if(c.tags[i].name === tag_name){
+              console.log("already has this tag");
+              Materialize.toast('That tag already exists!', 4000);
+              $( '#tag-box-input' ).replaceWith(box_clone);
+              //kill it
+              return;
+            }
+          }
+          //tag wasnt found lets post it
+          console.log(c);
+          $scope.contact = {
+            record: {
+              tags: [],
+              id: null,
+            },
+            manager: null,
+          };
+          //lets get the x fields
+          for(i = 0; i < c.x.length; i++){
+
+          }
+
+        }
+      });
+    });
+  }
+
   // Delete Record
   ///////////////////////////////////////////////////////////////
   $scope.deleteRecord = function(r){
