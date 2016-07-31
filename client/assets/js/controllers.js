@@ -36,7 +36,6 @@ angular.module('application.controllers', ['nvd3'])
   //logout button calls the check function to open the modal and confirm a logout
   $scope.check = function(){
     $('#logout').openModal();
-    console.log("check function breh");
   };
 
   //the confirm button in our logout partial will call this to clear
@@ -292,7 +291,6 @@ angular.module('application.controllers', ['nvd3'])
     $($scope.input_id).show();
     $($scope.input_icon_id).show();
     $($scope.input_id).focus();
-    console.log("1");
     $scope.check = $scope.tagCheck(r);
   };
 
@@ -313,13 +311,11 @@ angular.module('application.controllers', ['nvd3'])
     $scope.box_id = "#dropdown-box-" + r._id;
     $scope.input_id = "#tag-box-input-" + r._id;
     $scope.input_icon_id = "#tag-box-input-icon-" + r._id;
-    console.log("2");
     $( $scope.input_id ).keypress(function(e) {
       if(e.keyCode === 13){
         var tag_name = $($scope.input_id).val();
         for(var i = 0; i < r.tags.length; i++){
           if(r.tags[i].name === tag_name){
-            console.log("copy found");
             Materialize.toast('Tag Already Assigned', 5000);
             $($scope.box_id).show();
             $($scope.input_id).hide();
@@ -351,7 +347,6 @@ angular.module('application.controllers', ['nvd3'])
         $scope.contact.manager = sess.user.managers[0];
         //assign record id
         $scope.contact.record.id = r._id;
-        console.log($scope.contact);
         //let saveRecord handle the rest
         $scope.saveRecord($scope.contact);
         return;
