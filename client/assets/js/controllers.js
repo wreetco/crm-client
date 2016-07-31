@@ -54,7 +54,7 @@ angular.module('application.controllers', ['nvd3'])
       $location.path('/');
       $window.location.reload();
     }).error(function(err) {
-      Materialize.toast('Please Try Again', 4000);
+      Materialize.toast('Please Try Again', 5000);
       console.log("error logging out: " + err);
     });
   };
@@ -277,14 +277,14 @@ angular.module('application.controllers', ['nvd3'])
           };
           //close the slideout
           $('.button-collapse').sideNav('hide');
-          Materialize.toast('Successfully Saved!', 4000);
+          Materialize.toast('Successfully Saved!', 5000);
         }).catch(function(err) {
           console.log(err);
         });
       }
       else {
         console.log(res);
-        Materialize.toast('Please Try Again.', 4000);
+        Materialize.toast('Please Try Again.', 5000);
       }
     });
   };
@@ -293,46 +293,61 @@ angular.module('application.controllers', ['nvd3'])
 
   // Add Tag Box
   ///////////////////////////////////////////////////////////////
-  $scope.tagBox = function(c){
-    $scope.box_id = "#box-" + c._id;
-    var box_clone = $( $scope.box_id ).clone();
-    $( $scope.box_id ).hide(0, function() {
-      $( $scope.box_id ).replaceWith("<input id=\"tag-box-input\" style=\"width: 10em; height: 1em; position: absolute; right: 3em; margin: 0;\" type=\"text\">");
-      $( '#tag-box-input' ).focus();
+  $scope.tagBox = function(r){
+    $scope.box_id = "#box-" + r._id;
+    $('#dropdown-box').hide();
+    $('#tag-box-input').show();
+    $( '#tag-box-input' ).focus();
 
-      $( "#tag-box-input" ).keypress(function(e) {
-        if(e.keyCode === 13 || e.keyCode === 44){
-          console.log("brad");
+    $scope.check = $scope.tagCheck(r);
+  };
 
-          var tag_name = $('#tag-box-input').val();
-          console.log(c);
-          for(i = 0; i < c.tags.length; i++){
-            if(c.tags[i].name === tag_name){
-              console.log("already has this tag");
-              Materialize.toast('That tag already exists!', 4000);
-              $( '#tag-box-input' ).replaceWith(box_clone);
-              //kill it
-              return;
-            }
+  // Tag Check
+  ///////////////////////////////////////////////////////////////
+  $scope.tagCheck = function(r){
+    $( "#tag-box-input" ).keypress(function(e) {
+      if(e.keyCode === 13){
+        var tag_name = $('#tag-box-input').val();
+        for(var i = 0; i < r.tags.length; i++){
+          if(r.tags[i].name === tag_name){
+            console.log("copy found");
+            Materialize.toast('Tag Already Assigned', 5000);
+            $('#dropdown-box').hide();
+            $('#tag-box-input').show();
+            $('#tag-box-input').val('');
+            return;
           }
-          //tag wasnt found lets post it
-          console.log(c);
-          $scope.contact = {
-            record: {
-              tags: [],
-              id: null,
-            },
-            manager: null,
-          };
-          //lets get the x fields
-          for(i = 0; i < c.x.length; i++){
-
-          }
-
         }
-      });
-    });
-  }
+
+        //Lets build the contact obj to post
+        $scope.contact = {
+          record: {
+            tags: [],
+            id: null,
+          },
+          manager: null,
+        };
+        //record stuff
+        for (var key in r.x) {
+          $scope.contact.record[key] = r.x[key];
+        }
+        //tags
+        for (var j = 0; j < r.tags.length; j++){
+          $scope.contact.record.tags.push(r.tags[j].name)
+        }
+        $scope.contact.record.tags.push(tag_name)
+        //assign manager id
+        var sess = Session.getSession();
+        $scope.contact.manager = sess.user.managers[0];
+        //assign record id
+        $scope.contact.record.id = r._id;
+        console.log($scope.contact);
+        $scope.saveRecord($scope.contact);
+        return;
+      }
+    })
+  };
+
 
   // Delete Record
   ///////////////////////////////////////////////////////////////
@@ -352,7 +367,7 @@ angular.module('application.controllers', ['nvd3'])
             $scope.$apply();
             // store it to localstorage
             localStorage.contacts = JSON.stringify(contacts);
-            Materialize.toast('Successfully Deleted!', 4000);
+            Materialize.toast('Successfully Deleted!', 5000);
           }).catch(function(err) {
             //couldn't get records
             console.log(err);

@@ -50,16 +50,20 @@
           <td class="center">
             <div id="box-{{ c._id }}">
               <!-- Dropdown Trigger -->
-              <a class="dropdown-button" style="text-align: center !important;" data-activates="demoDropdown" dropdown data-hover="false" >
-                <i class="material-icons left">more_vert</i>
-              </a>
-              <!-- Dropdown Structure -->
-              <ul  id="demoDropdown" class="dropdown-content">
-                <li>
-                  <a ng-click="tagBox(c)">Add Tag</a>
-                </li>
-                <li><a ng-click="deleteRecord(c);">Delete</a></li>
-              </ul>
+              <input id="tag-box-input" style="display: none; height: 1em; margin: 0; cursor: auto;" type="text">
+              <div id="dropdown-box">
+
+                <a class="dropdown-button" style="text-align: center !important; cursor: pointer;" data-activates="demoDropdown" dropdown data-hover="false" >
+                  <i class="material-icons left">more_vert</i>
+                </a>
+                <!-- Dropdown Structure -->
+                <ul  id="demoDropdown" class="dropdown-content">
+                  <li>
+                    <a ng-click="tagBox(c)">Add Tag</a>
+                  </li>
+                  <li><a ng-click="deleteRecord(c);">Delete</a></li>
+                </ul>
+              </div>
             </div>
           </td>
         </tr>
@@ -105,5 +109,6 @@
   });
 
   document.addEventListener("touchstart", function(){}, true);
+
 
 </script>
