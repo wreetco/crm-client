@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CRM | CLIENT</title>
     <!--
-    CSS
-    All of our CSS has been minified and put together into a single file for the app to reference
-    -->
+CSS
+All of our CSS has been minified and put together into a single file for the app to reference
+-->
     <link rel="stylesheet" href="assets/css/styles.css" />
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <!--
-    JS
-    All of our required JS has been concat'd and minified.
-    -->
+JS
+All of our required JS has been concat'd and minified.
+-->
     <script type="text/javascript" src="assets/js/assets.min.js"></script>
 
     <script type="text/javascript" src="assets/js/app.js"></script>
@@ -68,17 +68,18 @@
       <div ng-view></div>
     </div>
 
-    <script>
-      $(".button-collapse").sideNav({
-        menuWidth: 200,
-        edge: 'left',
-      }
-                                   );
-      $('.collapsible').collapsible();
-    </script>
-
-  <ng-include src="'views/_logout_modal.html'"></ng-include>
+    <ng-include src="'views/_logout_modal.html'"></ng-include>
 
   </body>
+
+  <script>
+    $(".button-collapse").sideNav({
+      menuWidth: 200,
+      edge: 'left',
+    }
+                                 );
+    $('.collapsible').collapsible();
+  </script>
+
 
 </html>

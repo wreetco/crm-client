@@ -116,6 +116,17 @@ angular.module('application.services', [])
         });
       }); // end promise
     },
+
+    deleteRecord: function(url, record) {
+      return new Promise(function(resolve, reject) {
+        $http.delete(url, record)
+        .success(function(record) {
+          resolve(record);
+        }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    },
   };
 }])  // end record service
 
