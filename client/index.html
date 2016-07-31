@@ -34,10 +34,13 @@
         <li class="no-padding">
           <ul class="collapsible collapsible-accordion">
             <li>
-              <a class="collapsible-header"><i class="material-icons">person_pin</i>Contacts</a>
+              <a class="collapsible-header">
+                <i class="material-icons">person_pin</i>
+                Contacts
+              </a>
               <div class="collapsible-body">
                 <ul ng-controller="ContactController">
-                  <li><a class="activatable" href="#!/contacts" selected="selected">All</a></li>
+                  <li><a class="activatable" href="#!/contacts">All</a></li>
                   <li ng-repeat="tag in tags">
                     <a ng-href="/#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}
