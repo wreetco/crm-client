@@ -50,7 +50,8 @@
           <td class="center">
             <div id="box-{{ c._id }}">
               <!-- Dropdown Trigger -->
-              <input id="tag-box-input" style="display: none; height: 1em; margin: 0; cursor: auto;" type="text">
+              <input id="tag-box-input" style="display: none; height: 1.5em; width: 88%; margin: 0; cursor: auto; float: right;" type="text">
+              <i class="material-icons right" style="display: none; cursor: pointer;" id="tag-box-input-icon" ng-click="closeTagBox(c._id)">cancel</i>
               <div id="dropdown-box">
 
                 <a class="dropdown-button" style="text-align: center !important; cursor: pointer;" data-activates="demoDropdown" dropdown data-hover="false" >

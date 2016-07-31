@@ -297,10 +297,19 @@ angular.module('application.controllers', ['nvd3'])
     $scope.box_id = "#box-" + r._id;
     $('#dropdown-box').hide();
     $('#tag-box-input').show();
+    $('#tag-box-input-icon').show();
     $( '#tag-box-input' ).focus();
-
     $scope.check = $scope.tagCheck(r);
   };
+
+  // Close Tag Box
+  ///////////////////////////////////////////////////////////////
+  $scope.closeTagBox = function(id){
+    $scope.box_id = "#box-" + id;
+    $('#dropdown-box').show();
+    $('#tag-box-input').hide();
+    $('#tag-box-input-icon').hide();
+  }
 
   // Tag Check
   ///////////////////////////////////////////////////////////////
@@ -312,8 +321,8 @@ angular.module('application.controllers', ['nvd3'])
           if(r.tags[i].name === tag_name){
             console.log("copy found");
             Materialize.toast('Tag Already Assigned', 5000);
-            $('#dropdown-box').hide();
-            $('#tag-box-input').show();
+            $('#dropdown-box').show();
+            $('#tag-box-input').hide();
             $('#tag-box-input').val('');
             return;
           }
@@ -342,6 +351,7 @@ angular.module('application.controllers', ['nvd3'])
         //assign record id
         $scope.contact.record.id = r._id;
         console.log($scope.contact);
+        //let saveRecord handle the rest
         $scope.saveRecord($scope.contact);
         return;
       }
