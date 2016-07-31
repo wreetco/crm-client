@@ -248,13 +248,6 @@ angular.module('application.controllers', ['nvd3'])
     };
   };
 
-  ///////////////////////////////////////////////////////////////
-  // Post Tag
-  ///////////////////////////////////////////////////////////////
-  $scope.addTag = function(tag_name){
-
-  };
-
   ///////////////////////////////////////////////////////////////////
   //saveRecord is used to save either a new record or one that has
   //  been edited, requires a contact be passed into it
@@ -291,6 +284,7 @@ angular.module('application.controllers', ['nvd3'])
           };
           //close the slideout
           $('.button-collapse').sideNav('hide');
+          Materialize.toast('Successfully Saved!', 4000)
         }).catch(function(err) {
           console.log(err);
         });
