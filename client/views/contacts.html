@@ -32,40 +32,44 @@
           <th data-field="email">Email</th>
           <th data-field="phone">Phone</th>
           <th data-field="date">Created</th>
-          <th></th>
+          <th data-field="menu"></th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
           <td style="text-align: center !important;">
-            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}"/>
+            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
-          <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
+          <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }} {{ c._id }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
 
           <td class="center">
-            <div id="box-{{ c._id }}">
-              <!-- Dropdown Trigger -->
-              <input id="tag-box-input" style="display: none; height: 1.5em; width: 88%; margin: 0; cursor: auto; float: right;" type="text">
-              <i class="material-icons right" style="display: none; cursor: pointer;" id="tag-box-input-icon" ng-click="closeTagBox(c._id)">cancel</i>
-              <div id="dropdown-box">
 
-                <a class="dropdown-button" style="text-align: center !important; cursor: pointer;" data-activates="demoDropdown" dropdown data-hover="false" >
+            <div id="box-{{ c._id }}">
+
+              <!-- #tag-box-input -->
+              <i class="material-icons right" style="display: none; cursor: pointer;" id="tag-box-input-icon-{{ c_id }}" ng-click="closeTagBox(c._id)">cancel</i>
+              <input id="tag-box-input-{{ c._id }}" style="display: none; height: 1.5em; width: 80%; margin: 0; cursor: auto; float: right;" type="text">
+              <!-- #dropdown-box-[c._id] -->
+              <div id="dropdown-box-{{ c._id }}">
+                <a class="dropdown-button" style="text-align: center !important; cursor: pointer;" data-activates="demoDropdown{{ c._id }}" dropdown data-hover="false" >
                   <i class="material-icons left">more_vert</i>
                 </a>
                 <!-- Dropdown Structure -->
-                <ul  id="demoDropdown" class="dropdown-content">
+                <ul  id="demoDropdown{{ c._id }}" class="dropdown-content">
                   <li>
-                    <a ng-click="tagBox(c)">Add Tag</a>
+                    <a ng-click="tagBox(contacts[$index]._id);">Add Tag</a>
                   </li>
-                  <li><a ng-click="deleteRecord(c);">Delete</a></li>
+                  <li><a ng-click="deleteRecord(contacts[$index]._id);">Delete {{ c._id }}</a></li>
                 </ul>
               </div>
+
             </div>
+
           </td>
         </tr>
       </tbody>
@@ -79,7 +83,7 @@
   </a>
   <ul>
     <!-- on the next button we need to pass the contact that has its checkbox selected -->
-    <li><a class="btn-floating red slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click=""><i class="material-icons">cancel</i></a></li>
+    <li><a class="btn-floating red" ng-click="multiDeleteRecord();"><i class="material-icons">cancel</i></a></li>
   </ul>
 </div>
 

@@ -61,87 +61,80 @@ angular.module('application.controllers', ['nvd3'])
 
 }])
 
-.controller('ManagerController',
-            ['$scope', '$window', 'Manager',
-             function($scope, $window, Manager) {
+.controller('ManagerController', ['$scope', '$window', 'Manager', function($scope, $window, Manager) {
 
-             }])
+}])
 
-.controller('HomeController',
-            ['$scope', '$window', 'Interface',
-             function($scope, $window, Interface) {
+.controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
+  $scope.getInterface = function() {
+    // for now we only can handle the one manager interface, though the
+    // backend is ready to support more when we want to add that capability
+    // to that end, grab the first manager from the user array
+    var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
+    Interface.getInterface(m_id).then(function(interface) {
+      // store the thing
+      window.localStorage.interface = JSON.stringify(interface);
+      $scope.interface = interface;
+    }).catch(function(err) { // sup, mike, chyea
+      console.log(JSON.stringify(err));
+    });
+  };
 
-               $scope.getInterface = function() {
-                 // for now we only can handle the one manager interface, though the
-                 // backend is ready to support more when we want to add that capability
-                 // to that end, grab the first manager from the user array
-                 var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
-                 Interface.getInterface(m_id).then(function(interface) {
-                   // store the thing
-                   window.localStorage.interface = JSON.stringify(interface);
-                   $scope.interface = interface;
-                 }).catch(function(err) { // sup, mike, chyea
-                   console.log(JSON.stringify(err));
-                 });
-               };
+  // alert("test");
+  function setActive(event) {
+    $(".activeTab").remove();
 
-               // alert("test");
-               function setActive(event) {
-                 $(".activeTab").remove();
+    var activeTab = $("<span></span>");
+    //activeTab.addClass("material-icons");
+    activeTab.addClass("right");
+    activeTab.addClass("activeTab");
+    activeTab.text(">");
+    $(event.target).append(activeTab);
+  }
+  $("a.activatable").click(setActive);
 
-                 var activeTab = $("<span></span>");
-                 //activeTab.addClass("material-icons");
-                 activeTab.addClass("right");
-                 activeTab.addClass("activeTab");
-                 activeTab.text(">");
-                 $(event.target).append(activeTab);
-               }
-               $("a.activatable").click(setActive);
-
-               (function() { // sup
-                 if (!$scope.interface)
-                   $scope.getInterface();
-               })();
-             }])
+  (function() { // sup
+    if (!$scope.interface)
+      $scope.getInterface();
+  })();
+}])
 
 // record controller is god
-.controller('RecordController',
-            ['$scope', 'Record', 'Session',
-             function($scope, Record, Session) {
-               // roch's
-               $scope.getRecords = function(m_id, type, opts) {
-                 // get a manager's record of type
-                 return new Promise(function(resolve, reject) {
-                   Record.getRecords(m_id, type).then(function(records) {
-                     resolve(records);
-                     // store the thing
-                   }).catch(function(err) {
-                     reject(err);
-                   });
-                 });
-               };
+.controller('RecordController', ['$scope', 'Record', 'Session', function($scope, Record, Session) {
+  // roch's
+  $scope.getRecords = function(m_id, type, opts) {
+    // get a manager's record of type
+    return new Promise(function(resolve, reject) {
+      Record.getRecords(m_id, type).then(function(records) {
+        resolve(records);
+        // store the thing
+      }).catch(function(err) {
+        reject(err);
+      });
+    });
+  };
 
-               $scope.saveRec = function(record, callback) {
-                 Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
-                   callback(r);
-                 }).catch(function(e) {
-                   console.log("saveRecord error: " + e);
-                   callback(new Error(e));
-                 });
-               };
+  $scope.saveRec = function(record, callback) {
+    Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
+      callback(r);
+    }).catch(function(e) {
+      console.log("saveRecord error: " + e);
+      callback(new Error(e));
+    });
+  };
 
-               $scope.deleteRec = function(record, callback) {
-                 Record.deleteRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
-                   callback(r);
-                 }).catch(function(e) {
-                   console.log("deleteRecord error: " + e);
-                   callback(new Error(e));
-                 });
-               };
-             }])
+  $scope.deleteRec = function(path, callback) {
+    Record.deleteRecord("http://burnsy.wreet.xyz/record/" + path).then(function(r) {
+      callback(r);
+    }).catch(function(e) {
+      console.log("deleteRecord error: " + e);
+      callback(new Error(e));
+    });
+  };
+}])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', 'Session', 'Interface', function($scope, $window, $controller, $timeout, Session, Interface) {
+.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
   ////////////////////////////////////////////////////////////////
   //contact is a record format used for posting
@@ -294,36 +287,46 @@ angular.module('application.controllers', ['nvd3'])
   // Add Tag Box
   ///////////////////////////////////////////////////////////////
   $scope.tagBox = function(r){
-    $scope.box_id = "#box-" + r._id;
-    $('#dropdown-box').hide();
-    $('#tag-box-input').show();
-    $('#tag-box-input-icon').show();
-    $( '#tag-box-input' ).focus();
+    $scope.box_id = "#dropdown-box-" + r._id;
+    $scope.input_id = "#tag-box-input-" + r._id;
+    $scope.input_icon_id = "#tag-box-input-icon-" + r._id;
+    $($scope.box_id).hide();
+    $($scope.input_id).show();
+    $($scope.input_icon_id).show();
+    $($scope.input_id).focus();
+    console.log("1");
     $scope.check = $scope.tagCheck(r);
   };
 
   // Close Tag Box
   ///////////////////////////////////////////////////////////////
   $scope.closeTagBox = function(id){
-    $scope.box_id = "#box-" + id;
-    $('#dropdown-box').show();
-    $('#tag-box-input').hide();
-    $('#tag-box-input-icon').hide();
-  }
+    $scope.box_id = "#dropdown-box-" + id;
+    $scope.input_id = "#tag-box-input-" + id;
+    $scope.input_icon_id = "#tag-box-input-icon-" + id;
+    $($scope.box_id).show();
+    $($scope.input_id).hide();
+    $($scope.input_icon_id).hide();
+  };
 
   // Tag Check
   ///////////////////////////////////////////////////////////////
   $scope.tagCheck = function(r){
-    $( "#tag-box-input" ).keypress(function(e) {
+    $scope.box_id = "#dropdown-box-" + r._id;
+    $scope.input_id = "#tag-box-input-" + r._id;
+    $scope.input_icon_id = "#tag-box-input-icon-" + r._id;
+    console.log("2");
+    $( $scope.input_id ).keypress(function(e) {
       if(e.keyCode === 13){
-        var tag_name = $('#tag-box-input').val();
+        var tag_name = $($scope.input_id).val();
         for(var i = 0; i < r.tags.length; i++){
           if(r.tags[i].name === tag_name){
             console.log("copy found");
             Materialize.toast('Tag Already Assigned', 5000);
-            $('#dropdown-box').show();
-            $('#tag-box-input').hide();
-            $('#tag-box-input').val('');
+            $($scope.box_id).show();
+            $($scope.input_id).hide();
+            $($scope.input_icon_id).hide();
+            $($scope.input_id).val('');
             return;
           }
         }
@@ -342,9 +345,9 @@ angular.module('application.controllers', ['nvd3'])
         }
         //tags
         for (var j = 0; j < r.tags.length; j++){
-          $scope.contact.record.tags.push(r.tags[j].name)
+          $scope.contact.record.tags.push(r.tags[j].name);
         }
-        $scope.contact.record.tags.push(tag_name)
+        $scope.contact.record.tags.push(tag_name);
         //assign manager id
         var sess = Session.getSession();
         $scope.contact.manager = sess.user.managers[0];
@@ -355,21 +358,19 @@ angular.module('application.controllers', ['nvd3'])
         $scope.saveRecord($scope.contact);
         return;
       }
-    })
+    });
   };
 
 
   // Delete Record
   ///////////////////////////////////////////////////////////////
-  $scope.deleteRecord = function(r){
-    console.log("Not setup on the API");
-    //not sure yet what we will be sending with the delete
-    //  request an ID is probably easiest
-    return;
-    $scope.deleteRec(r, function(res) {
+  $scope.deleteRecord = function(id){
+    var sess = Session.getSession();
+    $scope.delete_path = sess.user.managers[0] + "/" + id;
+    $scope.deleteRec($scope.delete_path, function(res) {
       if (!(res instanceof Error)){
-        var sess = Session.getSession();
         if (sess) {
+          Materialize.toast('Successfully Deleted!', 5000);
           //we have a session, update contacts now that deletion is done
           $scope.getRecords(sess.user.managers[0], 'records', null).then(function(contacts) {
             $scope.contacts = contacts;
@@ -377,7 +378,8 @@ angular.module('application.controllers', ['nvd3'])
             $scope.$apply();
             // store it to localstorage
             localStorage.contacts = JSON.stringify(contacts);
-            Materialize.toast('Successfully Deleted!', 5000);
+            console.log(res);
+            $scope.$apply();
           }).catch(function(err) {
             //couldn't get records
             console.log(err);
@@ -393,6 +395,17 @@ angular.module('application.controllers', ['nvd3'])
         console.log(res);
       }
     });
+  };
+
+  // Multi Delete Record
+  ///////////////////////////////////////////////////////////////
+  $scope.multiDeleteRecord = function(){
+
+    $(".record-checkbox").each(function() {
+      $("input:checkbox").prop('checked', $(this).prop("checked"));
+      console.log("check");
+    });
+
   };
 
   ///////////////////////////////////////////////////////////////
