@@ -70,7 +70,6 @@ angular.module('application.controllers', ['nvd3'])
 .controller('HomeController',
             ['$scope', '$window', 'Interface',
              function($scope, $window, Interface) {
-               $scope.test = "bradhadi thunderfuck kush";
 
                $scope.getInterface = function() {
                  // for now we only can handle the one manager interface, though the
