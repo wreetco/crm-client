@@ -400,11 +400,19 @@ angular.module('application.controllers', ['nvd3'])
   // Multi Delete Record
   ///////////////////////////////////////////////////////////////
   $scope.multiDeleteRecord = function(){
+    $scope.delete_collection = [];
 
-    $(".record-checkbox").each(function() {
-      $("input:checkbox").prop('checked', $(this).prop("checked"));
-      console.log("check");
+    $(".record-checkbox").each(function(i, value) {
+      if(this.checked){
+        $scope.delete_collection.push(this.value);
+      }
     });
+
+    $($scope.delete_collection).each(function(i, value) {
+      console.log("deleting: " + $scope.delete_collection[i]);
+      $scope.deleteRecord($scope.delete_collection[i]);
+    });
+
 
   };
 
