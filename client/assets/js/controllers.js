@@ -1,36 +1,34 @@
 angular.module('application.controllers', ['nvd3'])
 
-.controller('AccountController',
-            ['$scope', '$window', '$location', 'Accounts',
-             function($scope, $window, $location, Accounts) {
-               ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
+.controller('AccountController', ['$scope', '$window', '$location', 'Accounts', function($scope, $window, $location, Accounts) {
+  ((!$window.sessionStorage.session) ? $('#login').openModal() : $location.path('/'));
 
-               $scope.login = function() {
-                 var email = $('#email').val();
-                 var passwd = $('#password').val();
+  $scope.login = function() {
+    var email = $('#email').val();
+    var passwd = $('#password').val();
 
-                 Accounts.login(email, passwd).then(function(sess) {
-                   // store it
-                   var session = {
-                     token: sess._id,
-                     user: sess.user
-                   };
-                   //console.log(session);
-                   $window.sessionStorage.session = JSON.stringify(session);
+    Accounts.login(email, passwd).then(function(sess) {
+      // store it
+      var session = {
+        token: sess._id,
+        user: sess.user
+      };
+      //console.log(session);
+      $window.sessionStorage.session = JSON.stringify(session);
 
-                   $("#login").closeModal();
-                   var target = angular.element('#materialize-lean-overlay-1');
-                   target.remove();
-                   var target = angular.element('#materialize-lean-overlay-2');
-                   target.remove();
-                   $location.path('/contact');
-                   $scope.$apply();
-                 }).catch(function(err) {
-                   // fucked it up bradley
-                   console.log("Login failed with error: " + err);
-                 });
-               }; // end login method
-             }])
+      $("#login").closeModal();
+      var target = angular.element('#materialize-lean-overlay-1');
+      target.remove();
+      var target = angular.element('#materialize-lean-overlay-2');
+      target.remove();
+      $location.path('/contact');
+      $scope.$apply();
+    }).catch(function(err) {
+      // fucked it up bradley
+      console.log("Login failed with error: " + err);
+    });
+  }; // end login method
+}])
 
 .controller('LogoutController', ['$scope', '$window', '$http', '$controller', '$location', '$route', 'Session', function($scope, $window, $http, $controller, $location, $route, Session) {
   $controller('AccountController', {$scope: $scope});
@@ -442,12 +440,43 @@ angular.module('application.controllers', ['nvd3'])
 
 // end of record descendants
 
-.controller('SettingsController',
-            ['$scope',
-             function($scope) {
-               $scope.theme = 'dark-theme';
+.controller('SettingsController', ['$scope', 'Setting', function($scope, Setting) {
+  // Save Theme
+  /////////////////////////////////////////////////////////////////
+  $scope.saveTheme = function(){
+    console.log($('#settings-color-theme input:checked').val());
+    if(!$('#settings-color-theme input:checked').val()){
+      $scope.theme = 'dark-theme';
+    }
+    else {
+      $scope.theme = $('#settings-color-theme input:checked').val();
+      //lets update the database
+      $scope.settings = {theme: $scope.theme};
+      $scope.updateSettingsWrap($scope.settings, function(res){
+        console.log(res);
+      });
 
-             }])
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.theme);
+    }
+  };
+
+  // Update Settings
+  ////////////////////////////////////////////////////////////////
+  // expects k/v pairs in JSON {{key: value},{key1: value1}}
+  $scope.updateSettingsWrap = function(settings, callback){
+    console.log("Not done on API side");
+    Setting.updateSettings("http://burnsy.wreet.xyz/user/settings", settings).then(function(s) {
+      callback(s);
+    }).catch(function(e) {
+      console.log(e);
+      callback(new Error(e));
+    });
+  };
+}])
+
+
+
 
 .controller('StatisticsController',
             ['$scope',

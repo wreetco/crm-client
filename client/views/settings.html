@@ -68,23 +68,23 @@
         </li>
 
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="dark-theme" value="dark-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="dark-theme" value="dark-theme" />
           <label for="dark-theme">Dark</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="light-theme" value="light-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="light-theme" value="light-theme" />
           <label for="light-theme">Light</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="red-theme"  value="red-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="red-theme"  value="red-theme" />
           <label for="red-theme">Red</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="blue-theme" value="blue-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="blue-theme" value="blue-theme" />
           <label for="blue-theme">Blue</label>
         </li>
         <li class="collection-item right-align">
-          <button class="btn waves-effect waves-light" type="submit" name="action" onclick="Materialize.toast('Theme Saved', 2000)">
+          <button class="btn waves-effect waves-light" type="submit" name="action" ng-click="saveTheme();">
             Save<i class="material-icons right">send</i>
           </button>
         </li>
@@ -135,10 +135,3 @@
   </div> <!-- End row 2 -->
 
 </div> <!-- end .settings-page-collection -->
-
-
-<script>
-  function themeChange(value){
-    document.getElementById("theme").className = value;
-  }
-</script>

@@ -135,6 +135,23 @@ angular.module('application.services', [])
   };
 }])  // end record service
 
+
+.factory('Setting', ['$http', function($http) {
+  return {
+    updateSettings: function(url, settings) {
+      return new Promise(function(resolve, reject) {
+        return;
+        $http.post(url, settings)
+        .success(function(res) {
+          resolve(res);
+        }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    },
+  };
+}])  // end record service
+
 //this will format phone numbers
 //found at https://jsfiddle.net/jorgecas99/S7aSj/
 .filter('tel', function () {
