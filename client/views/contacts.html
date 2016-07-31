@@ -42,7 +42,7 @@
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
-          <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }} {{ c._id }}</td>
+          <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
@@ -64,7 +64,7 @@
                   <li>
                     <a ng-click="tagBox(contacts[$index]._id);">Add Tag</a>
                   </li>
-                  <li><a ng-click="deleteRecord(contacts[$index]._id);">Delete {{ c._id }}</a></li>
+                  <li><a ng-click="deleteRecord(contacts[$index]._id);">Delete</a></li>
                 </ul>
               </div>
 
