@@ -29,7 +29,8 @@
         <h4>
           Tags
         </h4>
-        <div class="chips" id="chip-container">
+        <div id="chip-section">
+          <input placeholder="+Tag" type="text" readonly onclick="editable(this);" onblur="noneditable(this);" id="new-tag">
         </div>
       </div>
 
@@ -50,4 +51,20 @@
   function noneditable(el){
     el.setAttribute("readonly", "");
   };
+
+  $( "#new-tag" ).keypress(function(e) {
+    if(e.keyCode === 13 || e.keyCode === 44){
+      var tag_name = $('#new-tag').val();
+      var tag_id = '#tag-id-' + tag_name;
+      console.log(document.getElementById(tag_id));
+      if(document.getElementById(tag_id)) {
+
+      } else {
+        $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\">close</i>").insertBefore('#new-tag');
+      }
+      setTimeout(function(){
+        $('#new-tag').val('');
+      }, 99);
+    }
+  });
 </script>

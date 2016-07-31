@@ -18,7 +18,9 @@
         <h4>
           Tags
         </h4>
-        <div class="chips chips-placeholder"></div>
+        <div id="chip-section-post">
+          <input placeholder="+Tag" type="text" id="new-tag-post">
+        </div>
       </div>
       <div class="row">
         <div class="col s6 m4 offset-m4">
@@ -28,3 +30,21 @@
     </div>
   </div>
 </div>
+
+<script>
+  $( "#new-tag-post" ).keypress(function(e) {
+    if(e.keyCode === 13 || e.keyCode === 44){
+      var tag_name = $('#new-tag-post').val();
+      var tag_id = '#tag-id-post-' + tag_name;
+      if(document.getElementById(tag_id)) {
+
+      } else {
+        $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\">close</i>").insertBefore('#new-tag-post');
+      }
+      setTimeout(function(){
+        $('#new-tag-post').val('');
+      }, 99);
+
+    }
+  });
+</script>

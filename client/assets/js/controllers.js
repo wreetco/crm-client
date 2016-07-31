@@ -164,17 +164,15 @@ angular.module('application.controllers', ['nvd3'])
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-post-card').css('display', 'none');
-    //ok this was ridic but is the only way I can keep the tags doing the right thing
-    // forgive me
-    //ensure the tags deal is empty
-    console.log($scope.current_contact);
-    $('#chip-container').empty();
-    //initialize it
-    $('.chips').material_chip();
+
+
+    //clean out our chips deal
+    $('.chip').remove();
     for(i = 0; i < $scope.current_contact.tags.length; i++){
-      $('#chip-container').append("<div class=\"chip\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
-      console.log("tag: " + $scope.current_contact.tags[i].name);
+      $('#chip-section').append("<div class=\"chip\" id=\"#tag-id-" + $scope.current_contact.tags[i].name + "\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
     }
+    //move this to be the last child
+    $('#chip-section #new-tag').appendTo('#chip-section');
   };
 
 
@@ -193,19 +191,11 @@ angular.module('application.controllers', ['nvd3'])
         id: null,
       },
       manager: null,
-
     };
     //adjust the display so the partial can be seen
     $('#contact-info-card').css('display', 'none');
     $('#contact-post-card').css('display', 'block');
 
-    //ensure the tags deal is empty
-    $('.chips-placeholder').empty();
-    //initialize tha damn thing girl
-    $('.chips-placeholder').material_chip({
-      placeholder: 'Enter a tag',
-      secondaryPlaceholder: 'Enter a tag',
-    });
   };
 
   //////////////////////////////////////////////////////////////////
@@ -221,16 +211,14 @@ angular.module('application.controllers', ['nvd3'])
         $scope.contact.record.tags.push($scope.tag_data[key].tag);
       }
     }
+    $('.chip').each(function(i) {
+      var str = $( this ).text();
+      var lastIndex = str.lastIndexOf(" ");
+      str = str.substring(0, lastIndex);
+      $scope.contact.record.tags.push(str);
+    });
     //save the record to the db
     $scope.saveRecord($scope.contact);
-
-    $scope.contact = {
-      record: {
-        tags: [],
-        id: null,
-      },
-      manager: null,
-    };
   };
 
   //////////////////////////////////////////////////////////////////
@@ -242,17 +230,13 @@ angular.module('application.controllers', ['nvd3'])
       $scope.contact.record[key] = r.x[key];
     }
     $scope.contact.record.id = r._id;
-    console.log(r);
+    $('.chip').each(function(i) {
+      var str = $( this ).text();
+      var lastIndex = str.lastIndexOf(" ");
+      str = str.substring(0, lastIndex);
+      $scope.contact.record.tags.push(str);
+    });
     $scope.contact.manager = r.manager;
-    $scope.tag_data = $('.chips').material_chip('data');
-    for (var dat in $scope.tag_data) {
-      if ($scope.tag_data.hasOwnProperty(dat)) {
-        $scope.contact.record.tags.push($scope.tag_data[dat].tag);
-      }
-    }
-    for (i = 0; i < r.tags.length; i++){
-      $scope.contact.record.tags.push(r.tags[i].name);
-    }
     console.log($scope.contact);
     $scope.saveRecord($scope.contact);
     $scope.contact = {

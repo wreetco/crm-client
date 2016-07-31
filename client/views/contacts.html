@@ -48,19 +48,18 @@
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
           <td class="center">
             <!-- Dropdown Trigger -->
-            <a class='dropdown-button' style="text-align: center !important;" href='javascript:void(0);' data-activates='demoDropdown' dropdown data-hover="false">
+            <a class="dropdown-button" style="text-align: center !important;" href="javascript:void(0);" data-activates="demoDropdown" dropdown data-hover="false">
               <i class="material-icons">more_vert</i>
             </a>
 
             <!-- Dropdown Structure -->
-            <ul id='demoDropdown' class='dropdown-content'>
+            <ul id="demoDropdown" class="dropdown-content">
               <li>
                 <a href="javascript:void(0);">Add Tag</a>
               </li>
               <li><a href="javascript:void(0);">Delete</a></li>
             </ul>
           </td>
-          <td>{{ c._id }}</td>
         </tr>
       </tbody>
     </table>
@@ -104,51 +103,4 @@
   });
 
   document.addEventListener("touchstart", function(){}, true);
-
 </script>
-
-<style>
-  .search-box {
-    transition: width $tl, border-radius $tl, background $tl, box-shadow $tl !important;
-    width: 40px;height: 40px !important;
-    border-radius: 20px;border: none !important;
-    cursor: pointer !important;
-    background: rgb(235, 235, 235) !important;
-    & + label .search-icon {    color: black !important   }
-    &:hover {
-      color: white !important;
-      background: rgb(200, 200, 200) !important;
-      box-shadow: 0 0 0 5px rgb(61, 71, 82) !important;
-      & + label .search-icon {
-        color: white !important;
-      }
-    }
-    &:focus {
-      transition: width $tl cubic-bezier(0,1.22,.66,1.39), border-radius $tl, background $tl !important;
-      border: none;outline: none !important;
-      box-shadow: none !important;
-      padding-left: 15px !important;
-      cursor: text !important;
-      width: 300px !important;
-      border-radius: auto !important;
-      background: rgb(235, 235, 235) !important;
-      color: black;
-      & + label .search-icon {
-        color: black !important;
-      }
-    }
-    &:not(:focus) {    text-indent:-5000px !important;    } // for more-graceful falling back (:not browsers likely support indent)
-  }
-
-  #search-submit {
-    position: relative !important;
-    left: -5000px !important;
-  }
-
-  .search-icon {
-    position: relative !important;
-    left: -30px !important;
-    color: white !important;
-    cursor: pointer !important;
-  }
-</style>
