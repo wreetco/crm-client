@@ -284,9 +284,10 @@ angular.module('application.controllers', ['nvd3'])
           };
           //close the slideout
           $('.button-collapse').sideNav('hide');
-          Materialize.toast('Successfully Saved!', 4000)
+          Materialize.toast('Successfully Saved!', 4000);
         }).catch(function(err) {
           console.log(err);
+          Materialize.toast('Please Try Again.', 4000);
         });
       }
       else {
