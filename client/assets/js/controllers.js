@@ -180,11 +180,9 @@ angular.module('application.controllers', ['nvd3'])
   //postbar is called when posting a new record
   /////////////////////////////////////////////////////////////////
   $scope.postBar = function(){
-    //interface object
-    $scope.current_interface = JSON.parse($window.localStorage.interface);
-    //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    //clean up
     //let make sure this is empty before we do anything.
+    $('.chip').remove();
     $scope.contact = {
       record: {
         tags: [],
@@ -192,6 +190,10 @@ angular.module('application.controllers', ['nvd3'])
       },
       manager: null,
     };
+    //interface object
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    //fields obj
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
     //adjust the display so the partial can be seen
     $('#contact-info-card').css('display', 'none');
     $('#contact-post-card').css('display', 'block');
@@ -201,22 +203,17 @@ angular.module('application.controllers', ['nvd3'])
   //////////////////////////////////////////////////////////////////
   //
   //////////////////////////////////////////////////////////////////
-  $scope.postRecord = function () {
+  $scope.postRecord = function (r) {
     //lets just fill out the tags
-    //  the model took care of everything else
-    //  on the contact that is being uploaded
-    $scope.tag_data = $('.chips-placeholder').material_chip('data');
-    for (var key in $scope.tag_data) {
-      if ($scope.tag_data.hasOwnProperty(key)) {
-        $scope.contact.record.tags.push($scope.tag_data[key].tag);
-      }
-    }
     $('.chip').each(function(i) {
       var str = $( this ).text();
       var lastIndex = str.lastIndexOf(" ");
       str = str.substring(0, lastIndex);
       $scope.contact.record.tags.push(str);
     });
+    //get manager id
+    $scope.current_session = JSON.parse($window.sessionStorage.session);
+    $scope.contact.manager = $scope.current_session.user.managers[0];
     //save the record to the db
     $scope.saveRecord($scope.contact);
   };
