@@ -45,7 +45,6 @@ angular.module('application.controllers', ['nvd3'])
   // out the current session and localstorage.
   $scope.logout = function(){
     $http.delete("http://burnsy.wreet.xyz/auth", { 'cron': true }).success(function(result) {
-      console.log(result);
       $('#logout').closeModal();
       //var target = angular.element('#materialize-lean-overlay-1');
       //target.remove();
@@ -54,8 +53,9 @@ angular.module('application.controllers', ['nvd3'])
       delete localStorage.interface;
 			$location.path('/');
       $window.location.reload();
-    }).error(function() {
-      console.log("error");
+    }).error(function(err) {
+      Materialize.toast('Please Try Again', 4000);
+      console.log("error logging out: " + err);
     });
   };
 
@@ -78,7 +78,6 @@ angular.module('application.controllers', ['nvd3'])
     // to that end, grab the first manager from the user array
     var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
     Interface.getInterface(m_id).then(function(interface) {
-      console.log(interface);
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
@@ -125,10 +124,9 @@ angular.module('application.controllers', ['nvd3'])
 
   $scope.saveRec = function(record, callback) {
     Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
-      console.log(r);
       callback(r);
     }).catch(function(e) {
-      console.log(e);
+      console.log("saveRecord error: " + e);
       callback(new Error(e));
     });
   };
@@ -234,7 +232,6 @@ angular.module('application.controllers', ['nvd3'])
       $scope.contact.record.tags.push(str);
     });
     $scope.contact.manager = r.manager;
-    console.log($scope.contact);
     $scope.saveRecord($scope.contact);
     $scope.contact = {
       record: {
@@ -254,17 +251,13 @@ angular.module('application.controllers', ['nvd3'])
     $scope.post_data = r;
     //assign the manager ID to the new record
     $scope.post_data.manager = Session.getSession().user.managers[0];
-
-    console.log($scope.post_data);
     $scope.saveRec(JSON.stringify($scope.post_data), function(res) {
       if (!(res instanceof Error)){
         //Success, refresh contacts with the new contact
-        console.log("Good job!");
         var sess = Session.getSession();
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
-          console.log("even better");
           $scope.contacts = contacts;
 
           $scope.tags = Interface.getTags($scope.contacts);

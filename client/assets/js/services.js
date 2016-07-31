@@ -100,7 +100,6 @@ angular.module('application.services', [])
         $http.get("http://burnsy.wreet.xyz/manager/" + m_id + "/" + type)
         .success(function(records) {
           resolve(records);
-          console.log(records);
         }).error(function(mess, status) {
           reject(mess);
         });
@@ -113,8 +112,6 @@ angular.module('application.services', [])
         .success(function(record) {
           resolve(record);
         }).error(function(mess, status) {
-          console.log(mess);
-          console.log(status);
           reject(mess);
         });
       }); // end promise
