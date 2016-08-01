@@ -68,23 +68,23 @@
         </li>
 
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="dark-theme" value="dark-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="dark-theme" value="dark-theme" />
           <label for="dark-theme">Dark</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="light-theme" value="light-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="light-theme" value="light-theme" />
           <label for="light-theme">Light</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="red-theme"  value="red-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="red-theme"  value="red-theme" />
           <label for="red-theme">Red</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="blue-theme" value="blue-theme" onchange="themeChange(this.value)"/>
+          <input class="with-gap" name="group1" type="radio" id="blue-theme" value="blue-theme" />
           <label for="blue-theme">Blue</label>
         </li>
         <li class="collection-item right-align">
-          <button class="btn waves-effect waves-light" type="submit" name="action" onclick="Materialize.toast('Theme Saved', 2000)">
+          <button class="btn waves-effect waves-light" type="submit" name="action" ng-click="saveTheme();">
             Save<i class="material-icons right">send</i>
           </button>
         </li>
@@ -132,13 +132,39 @@
       </ul>
     </div>
 
+    <!-- Avatar change section -->
+    <div class="col s12 m12 l6">
+      <ul class="collection z-depth-1">
+        <li class="collection-item avatar">
+          <i class="material-icons circle red darken-2">close</i>
+          <span class="collection-header">File Upload</span>
+          <p>Upload a document with record data</p>
+          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+        </li>
+        <li class="collection-item">
+          <blockquote>
+            Good luck!
+          </blockquote>
+        </li>
+        <li class="collection-item">
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="btn">
+                CSV
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" on-read-file="parseCSVInput(contents);" placeholder="Upload A CSV" type="file">
+              </div>
+            </div>
+          </form>
+        </li>
+        <li class="collection-item">
+          <br>
+        </li>
+      </ul>
+    </div>
+
   </div> <!-- End row 2 -->
 
 </div> <!-- end .settings-page-collection -->
-
-
-<script>
-  function themeChange(value){
-    document.getElementById("theme").className = value;
-  }
-</script>

@@ -9,22 +9,62 @@
       <div class="row">
         <div ng-repeat="field in current_fields">
           <div class="col s12 m6">
-            <input placeholder="{{ current_contact.x[field.db_name] }}" id="{{ field.db_name }}" type="text" class="validate" readonly>
+            <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
             <label for="{{ field.db_name }}">{{ field.name }}</label>
             <br><br>
           </div>
         </div>
         <div class="col s12 m6">
-            <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="validate" readonly>
-            <label for="created">Created Date</label>
-            <br><br>
+          <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="input-date" readonly>
+          <label for="created">Created Date</label>
+          <br><br>
         </div>
         <div class="col s12 m6">
-            <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="validate" readonly>
-            <label for="updated">Last Modified</label>
-            <br><br>
+          <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="input-date" readonly>
+          <label for="updated">Last Modified</label>
+          <br><br>
         </div>
       </div>
+      <div class="row">
+        <h4>
+          Tags
+        </h4>
+        <div id="chip-section">
+          <input placeholder="+Tag" type="text" readonly onclick="editable(this);" onblur="noneditable(this);" id="new-tag">
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m4 offset-m4">
+      <a ng-click="updateRecord(current_contact);" class="waves-effect waves-red btn">Save Changes</a>
     </div>
   </div>
 </div>
+
+<script>
+  function editable(el){
+    el.removeAttribute("readonly");
+  };
+
+  function noneditable(el){
+    el.setAttribute("readonly", "");
+  };
+
+  $( "#new-tag" ).keypress(function(e) {
+    if(e.keyCode === 13 || e.keyCode === 44){
+      var tag_name = $('#new-tag').val();
+      var tag_id = '#tag-id-' + tag_name;
+      console.log(document.getElementById(tag_id));
+      if(document.getElementById(tag_id)) {
+
+      } else {
+        $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\">close</i>").insertBefore('#new-tag');
+      }
+      setTimeout(function(){
+        $('#new-tag').val('');
+      }, 99);
+    }
+  });
+</script>

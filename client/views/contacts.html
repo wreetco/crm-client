@@ -2,7 +2,7 @@
 <div class="row">
   <div class="col s6 input-field">
     <i class="material-icons prefix">search</i>
-    <input id="icon_prefix" ng-model="query" type="text" class="validate" autofocus>
+    <input id="icon_prefix" ng-model="query" type="text" autofocus>
     <label for="icon_prefix">Search</label>
   </div>
   <div class="col input-field s3 offset-s3 right-align">
@@ -21,10 +21,10 @@
 
 <div class="row">
   <div class="col s12">
-    <table class="striped responsive-table">
+    <table class="striped responsive-table z-depth-1">
       <thead>
         <tr>
-          <th data-field="selector">
+          <th data-field="selector" class="center">
             <input type="checkbox" id="checkAll"/>
             <label for="checkAll"></label>
           </th>
@@ -32,33 +32,58 @@
           <th data-field="email">Email</th>
           <th data-field="phone">Phone</th>
           <th data-field="date">Created</th>
+          <th data-field="menu"></th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="c in contacts | filter:query | orderBy:filterGroup">
-          <td colspan="1">
-            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}"/>
+          <td style="text-align: center !important;">
+            <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
           <td style="cursor: pointer;" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
+
+          <td class="center">
+
+            <div id="box-{{ c._id }}">
+
+              <!-- #tag-box-input -->
+              <i class="material-icons right" style="display: none; cursor: pointer;" id="tag-box-input-icon-{{ c_id }}" ng-click="closeTagBox(c._id)">cancel</i>
+              <input id="tag-box-input-{{ c._id }}" style="display: none; height: 1.5em; width: 80%; margin: 0; cursor: auto; float: right;" type="text">
+              <!-- #dropdown-box-[c._id] -->
+              <div id="dropdown-box-{{ c._id }}">
+                <a class="dropdown-button" style="text-align: center !important; cursor: pointer;" data-activates="demoDropdown{{ c._id }}" dropdown data-hover="false" >
+                  <i class="material-icons left">more_vert</i>
+                </a>
+                <!-- Dropdown Structure -->
+                <ul  id="demoDropdown{{ c._id }}" class="dropdown-content">
+                  <li>
+                    <a ng-click="tagBox(contacts[$index]._id);">Add Tag</a>
+                  </li>
+                  <li><a ng-click="deleteRecord(contacts[$index]._id);">Delete</a></li>
+                </ul>
+              </div>
+
+            </div>
+
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
 </div>
 
-<div class="fixed-action-btn" style="bottom: 45px; right: 24px;">
+<div class="fixed-action-btn" style="bottom: 22px; right: 22px;">
   <a class="btn-floating btn-large green slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="postBar();">
     <i class="large material-icons">note_add</i>
   </a>
   <ul>
     <!-- on the next button we need to pass the contact that has its checkbox selected -->
-    <li><a class="btn-floating red slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="postBar();"><i class="material-icons">mode_edit</i></a></li>
-    <li><a class="btn-floating blue slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="infoBar(c);"><i class="material-icons">info</i></a></li>
+    <li><a class="btn-floating red" ng-click="multiDeleteRecord();"><i class="material-icons">cancel</i></a></li>
   </ul>
 </div>
 
@@ -84,26 +109,11 @@
     }
   })();
 
-
-
-  //this hides a partial and shows the other based on what was clicked
-  function contactAction(value, id) {
-    id = id || null;
-    console.log(id);
-    alert(id);
-    //contact-form-card
-    if(value == "contact-form-card"){
-      document.getElementById(value).style.display = "block";
-      document.getElementById("contact-info-card").style.display = "none";
-    }
-    else if(value == "contact-info-card"){
-      document.getElementById(value).style.display = "block";
-      document.getElementById("contact-form-card").style.display = "none";
-    }
-  };
-
   $("#checkAll").change(function () {
     $("input:checkbox").prop('checked', $(this).prop("checked"));
   });
+
+  document.addEventListener("touchstart", function(){}, true);
+
 
 </script>

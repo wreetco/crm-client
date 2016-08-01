@@ -11,6 +11,7 @@
   cursor: pointer;
   min-height: $collapsible-height;
   line-height: $collapsible-height;
+  padding: 0 1rem;
   background-color: $collapsible-header-color;
   border-bottom: 1px solid $collapsible-border-color;
 
@@ -52,7 +53,7 @@
     border: none;
     line-height: inherit;
     height: inherit;
-    padding: 0 $sidenav-padding-right;
+    padding: 0 $sidenav-padding;
 
     &:hover { background-color: rgba(0,0,0,.05); }
     i { line-height: inherit; }
@@ -63,8 +64,8 @@
     background-color: $collapsible-header-color;
 
     li a {
-      padding: 0 (7.5px + $sidenav-padding-right)
-               0 (15px + $sidenav-padding-right);
+      padding: 0 (7.5px + $sidenav-padding)
+               0 (15px + $sidenav-padding);
     }
   }
 

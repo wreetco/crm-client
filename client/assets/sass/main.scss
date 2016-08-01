@@ -3,12 +3,12 @@
   .#{$name} {
     body {
       background-color: $primary-color-dark;
-      text: $primary-text;
+      color: $primary-text;
     }
 
     main {
       background-color: $primary-color;
-      text: $primary-text;
+      color: $primary-text;
     }
 
     i {
@@ -34,20 +34,73 @@
     ul {
       background-color: $primary-color;
     }
-    //Contact page, bottom right buttons
+    //////////////////////////////////////////////////////////////////
+    //Contacts/records page, bottom right buttons
+    ////////////////////////////////////////////////////////////////
     .fixed-action-btn ul {
       background-color: transparent;
     }
     .fixed-action-btn li {
       background-color: transparent;
     }
+    ////////////////////////////////////////////////
+    //chips
+    //////////////////////////////////////////////////
+    .chip {
+      margin: .1em;
+      background-color: $accent;
+      color: $primary-text;
+    }
 
+    .chip i {
+      color: $primary-text;
+    }
+
+    .chips {
+      border-bottom: 1px solid $accent;
+      box-shadow: 0 1px 0 0 $accent;
+    }
+
+    .chips.focus {
+      border-bottom: 1px solid $accent;
+      box-shadow: 0 1px 0 0 $accent;
+    }
+
+    .chips .input {
+      color: $secondary-text !important;
+      margin-left: .6em;
+    }
+
+    input:not([type]):focus:not([readonly]) {
+      color: $accent !important;
+    }
+
+    .chips ::-webkit-input-placeholder {
+      color: $secondary-text;
+    }
+
+    .chips :-moz-placeholder { /* Firefox 18- */
+      color: $secondary-text;
+    }
+
+    .chips ::-moz-placeholder {  /* Firefox 19+ */
+      color: $secondary-text;
+    }
+
+    .chips :-ms-input-placeholder {
+      color: $secondary-text;
+    }
+
+    ////////////////////////////////////////////
     //collapsible lists
+    /////////////////////////////////////////////
     .collapsible {
       background-color: $primary-color-light;
       color: $primary-text;
     }
+    ////////////////////////////////////////////
     //the links in our sidebar
+    ///////////////////////////////////////////
     .side-nav.fixed a {
       color: $primary-text;
     }
@@ -58,21 +111,75 @@
       background-color: darken($accent, 10%);
       color: lighten($primary-text, 10%);
     }
+    /////////////////////////////////////////////
+    // Icons in sidebar
+    ////////////////////////////////////////////
+    .side-nav li > a > i, .side-nav li > a > i.material-icons {
+      color: $accent;
+    }
+    ////////////////////////////////////
     // Form and Inputs
+    ////////////////////////////////////
+    .input-date {
+      color: $secondary-text;
+      border: 1px solid transparent;
+      border-bottom: 1px solid $accent;
+      box-shadow:0 1px 0 0 $accent;
+      padding-left: .3em;
+      cursor: default !important;
+    }
+
+    .input-date:hover {
+      color: $secondary-text !important;
+      border: 1px solid transparent !important;
+      border-bottom: 1px solid $accent !important;
+      box-shadow:0 1px 0 0 $accent !important;
+      padding-left: .3em;
+    }
+
     input[type=text] {
       color: $secondary-text;
       border-bottom: 1px solid $accent;
       box-shadow:0 1px 0 0 $accent;
+      cursor: pointer;
+      padding-left: .3em;
+      -webkit-transition: border-bottom 1s; /* Safari */
+      transition: border-bottom 1s !important;
+      -webkit-transition: box-shadow 1s; /* Safari */
+      transition: box-shadow 1s;
     }
 
-    input[type=password] {
-      color: $secondary-text;
-      border-bottom: $accent;
-      box-shadow:0 1px 0 0 $accent;
+    input[type=text]:hover{
+      border-bottom: 1px solid lighten($primary-color, 5%);
+      box-shadow: 0 1px 0 0 lighten($primary-color, 10%);
+      -webkit-transition: border-bottom 1s; /* Safari */
+      transition: border-bottom 1s !important;
+      -webkit-transition: box-shadow 1s; /* Safari */
+      transition: box-shadow 1s;
     }
 
     input[type=text]:focus:not([readonly]){
       color: $accent;
+      border-bottom: 1px solid lighten($primary-color, 30%);
+      box-shadow:0 1px 0 0 lighten($primary-color, 20%);
+      -webkit-transition: border-bottom 1s; /* Safari */
+      transition: border-bottom 1s !important;
+      -webkit-transition: box-shadow 1s; /* Safari */
+      transition: box-shadow 1s;
+      cursor: auto;
+    }
+
+    input[type=text].validate+label {
+      color: $secondary-text;
+    }
+
+    input[type=text]:focus:not([readonly]) + label {
+      color: $accent;
+      border-bottom:$accent;
+    }
+
+    input[type=password] {
+      color: $secondary-text;
       border-bottom: $accent;
       box-shadow:0 1px 0 0 $accent;
     }
@@ -89,17 +196,6 @@
 
     .input-field label {
       color: $secondary-text;
-    }
-
-    input[type=text]:focus:not([readonly]) {
-      color: $secondary-text;
-      border-bottom: 1px solid $accent;
-      box-shadow:0 1px 0 0 $accent;
-    }
-
-    input[type=text]:focus:not([readonly]) + label {
-      color: $accent;
-      border-bottom:$accent;
     }
 
     input[type=password]:focus:not([readonly]) + label {

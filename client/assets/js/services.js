@@ -112,8 +112,38 @@ angular.module('application.services', [])
         .success(function(record) {
           resolve(record);
         }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    },
+
+    deleteRecord: function(url) {
+      return new Promise(function(resolve, reject) {
+        $http.delete(url)
+        .success(function(res) {
+          console.log("RES");
+          console.log(res);
+          resolve(res);
+        }).error(function(mess, status) {
+          console.log("MESS STATUS");
           console.log(mess);
           console.log(status);
+          reject(mess);
+        });
+      }); // end promise
+    },
+  };
+}])  // end record service
+
+
+.factory('Setting', ['$http', function($http) {
+  return {
+    updateSettings: function(url, settings) {
+      return new Promise(function(resolve, reject) {
+        $http.post(url, settings)
+        .success(function(res) {
+          resolve(res);
+        }).error(function(mess, status) {
           reject(mess);
         });
       }); // end promise
