@@ -112,8 +112,10 @@ angular.module('application.controllers', ['nvd3'])
   };
 
   $scope.saveRec = function(record, callback) {
+    console.log(record);
     Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
       callback(r);
+      console.log(r);
     }).catch(function(e) {
       console.log("saveRecord error: " + e);
       callback(new Error(e));
@@ -266,7 +268,6 @@ angular.module('application.controllers', ['nvd3'])
             manager: null,
           };
           //close the slideout
-          $('.button-collapse').sideNav('hide');
           Materialize.toast('Successfully Saved!', 5000);
         }).catch(function(err) {
           console.log(err);
@@ -435,7 +436,8 @@ angular.module('application.controllers', ['nvd3'])
 
 // end of record descendants
 
-.controller('SettingsController', ['$scope', 'Setting', function($scope, Setting) {
+.controller('SettingsController', ['$scope', '$window', '$controller', 'Setting', 'Interface', 'Session', 'Record', function($scope, $window, $controller, Setting, Interface, Session, Record) {
+  $controller('RecordController', {$scope: $scope}); //Well the Record Controller is our god.
   // Save Theme
   /////////////////////////////////////////////////////////////////
   $scope.saveTheme = function(){
@@ -462,12 +464,97 @@ angular.module('application.controllers', ['nvd3'])
   $scope.updateSettingsWrap = function(settings, callback){
     console.log("Not done on API side");
     Setting.updateSettings("http://burnsy.wreet.xyz/user/settings", settings).then(function(s) {
+      console.log(s);
       callback(s);
     }).catch(function(e) {
       console.log(e);
       callback(new Error(e));
     });
   };
+
+  $scope.parseCSVInput = function(contents){
+    var lines = contents.split("\n");
+    var result = [];
+    var headers = lines[0].split(",");
+
+    for(var i = 1; i < lines.length; i++){
+      if(lines[i] === ''){
+        continue;
+      }
+      var obj = {};
+      var currentline = lines[i].split(",");
+
+      for(var j = 0; j < headers.length; j++){
+        obj[headers[j]] = currentline[j];
+      }
+      result.push(obj);
+    }
+
+    $scope.current_interface = JSON.parse($window.localStorage.interface);
+    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    $scope.sess = Session.getSession();
+
+    console.log(result);
+
+    for(var k = 0; k < result.length; k++){
+      $scope.hasData = false;
+      $scope.contact = {
+        record: {
+          tags: [],
+          id: null,
+        },
+        manager: null,
+      };
+      for(var l = 0; l < $scope.current_fields.length; l++){
+        if($scope.current_fields[l].db_name in result[k]){
+          //insert into our contact deal
+          $scope.contact.record[$scope.current_fields[l].db_name] = result[k][$scope.current_fields[l].db_name];
+          $scope.hasData = true;
+        }
+      }
+
+      if($scope.hasData === true){
+        //$scope.contact.record.id = $scope.sess.user._id;
+        $scope.contact.manager = $scope.sess.user.managers[0];
+        console.log($scope.contact);
+        //Post
+        $scope.saveRec($scope.contact, function(res) {
+          if (!(res instanceof Error)){
+            console.log("post good");
+            console.log(res);
+          }
+          else {
+            console.log(res);
+            Materialize.toast('Please Try Again.', 5000);
+          }
+        });
+      }
+    }
+    $scope.getRecords($scope.sess.user.managers[0], 'records', null)
+    .then(function(contacts) {
+      $scope.contacts = contacts;
+
+      $scope.tags = Interface.getTags($scope.contacts);
+      $scope.$apply();
+      // store it to localstorage
+      localStorage.contacts = JSON.stringify(contacts);
+      //Now that we have saved, lets clear this out.
+      $scope.contact = {
+        record: {
+          tags: [],
+          id: null,
+        },
+        manager: null,
+      };
+      //close the slideout
+      $('.button-collapse').sideNav('hide');
+      Materialize.toast('Successfully Saved!', 5000);
+    }).catch(function(err) {
+      console.log(err);
+    });
+
+  };
+
 }])
 
 

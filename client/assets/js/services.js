@@ -140,7 +140,6 @@ angular.module('application.services', [])
   return {
     updateSettings: function(url, settings) {
       return new Promise(function(resolve, reject) {
-        return;
         $http.post(url, settings)
         .success(function(res) {
           resolve(res);

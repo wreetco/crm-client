@@ -132,6 +132,39 @@
       </ul>
     </div>
 
+    <!-- Avatar change section -->
+    <div class="col s12 m12 l6">
+      <ul class="collection z-depth-1">
+        <li class="collection-item avatar">
+          <i class="material-icons circle red darken-2">close</i>
+          <span class="collection-header">File Upload</span>
+          <p>Upload a document with record data</p>
+          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+        </li>
+        <li class="collection-item">
+          <blockquote>
+            Good luck!
+          </blockquote>
+        </li>
+        <li class="collection-item">
+          <form action="#">
+            <div class="file-field input-field">
+              <div class="btn">
+                CSV
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" on-read-file="parseCSVInput(contents);" placeholder="Upload A CSV" type="file">
+              </div>
+            </div>
+          </form>
+        </li>
+        <li class="collection-item">
+          <br>
+        </li>
+      </ul>
+    </div>
+
   </div> <!-- End row 2 -->
 
 </div> <!-- end .settings-page-collection -->
