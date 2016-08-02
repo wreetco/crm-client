@@ -72,6 +72,7 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
+      console.log($scope.interface);
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
@@ -164,7 +165,13 @@ angular.module('application.controllers', ['nvd3'])
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    $scope.current_fields = $scope.current_interface.tabs;
+
+    for (var i = 0; i < $scope.current_interface.tabs; i++) {
+      if ($scope.current_interface.tabs[i].name === "Contacts") {
+        $scope.current_fields = $scope.current_interface.tabs[i];
+      }
+    }
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-post-card').css('display', 'none');
@@ -196,6 +203,7 @@ angular.module('application.controllers', ['nvd3'])
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
+    console.log($scope.current_fields);
     //adjust the display so the partial can be seen
     $('#contact-info-card').css('display', 'none');
     $('#contact-post-card').css('display', 'block');
@@ -216,6 +224,7 @@ angular.module('application.controllers', ['nvd3'])
     $scope.current_session = JSON.parse($window.sessionStorage.session);
     $scope.contact.manager = $scope.current_session.user.managers[0];
     //save the record to the db
+    console.log($scope.contact);
     $scope.saveRecord($scope.contact);
   };
 
