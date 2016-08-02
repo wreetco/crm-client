@@ -554,15 +554,16 @@ angular.module('application.controllers', ['nvd3'])
         //$scope.contact.record.id = $scope.sess.user._id;
         $scope.contact.manager = $scope.sess.user.managers[0];
         //Post
-        $scope.saveRec($scope.contact, function(res) {
-          if (!(res instanceof Error)){
-            console.log(res);
-          }
-          else {
-            console.log(res);
-            Materialize.toast('Please Try Again.', 5000);
-          }
-        });
+        //
+
+        $scope.saveCSVRecord = function(record, callback) {
+          Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
+            callback(r);
+          }).catch(function(e) {
+            console.log("saveRecord error: " + e);
+            callback(new Error(e));
+          });
+        };
       }
     }
     $scope.getRecords($scope.sess.user.managers[0], 'records', null)
