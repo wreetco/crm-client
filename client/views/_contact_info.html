@@ -60,13 +60,9 @@
   $( "#new-tag" ).keypress(function(e) {
     if(e.keyCode === 13 || e.keyCode === 44){
       var tag_name = $('#new-tag').val();
-      console.log(tag_name);
       var tag_id = '#tag-id-' + tag_name;
       tag_id = tag_id.replace(/\s+/g, '-');
-      console.log(tag_id);
-      console.log(document.getElementById(tag_id));
       if(document.getElementById(tag_id)) {
-
       } else {
         $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\">close</i>").insertBefore('#new-tag');
       }

@@ -237,11 +237,9 @@ angular.module('application.controllers', ['nvd3'])
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
       var str = $( this ).text();
-      console.log(str);
-      str = str.replace(/^[a-z0-9_-]+$/ig, "");
-      console.log(str);
-
-      //$scope.contact.record.tags.push(str);
+      var lastIndex = str.lastIndexOf(" ");
+      str = str.substring(0, lastIndex);
+      $scope.contact.record.tags.push(str);
     });
     $scope.contact.manager = r.manager;
     $scope.saveRecord($scope.contact);
@@ -485,7 +483,6 @@ angular.module('application.controllers', ['nvd3'])
   // Save Theme
   /////////////////////////////////////////////////////////////////
   $scope.saveTheme = function(){
-    console.log($('#settings-color-theme input:checked').val());
     if(!$('#settings-color-theme input:checked').val()){
       $scope.theme = 'dark-theme';
     }
@@ -506,7 +503,6 @@ angular.module('application.controllers', ['nvd3'])
   ////////////////////////////////////////////////////////////////
   // expects k/v pairs in JSON {{key: value},{key1: value1}}
   $scope.updateSettingsWrap = function(settings, callback){
-    console.log("Not done on API side");
     Setting.updateSettings("http://burnsy.wreet.xyz/user/settings", settings).then(function(s) {
       console.log(s);
       callback(s);
@@ -538,8 +534,6 @@ angular.module('application.controllers', ['nvd3'])
     $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
     $scope.sess = Session.getSession();
 
-    console.log(result);
-
     for(var k = 0; k < result.length; k++){
       $scope.hasData = false;
       $scope.contact = {
@@ -562,7 +556,6 @@ angular.module('application.controllers', ['nvd3'])
         //Post
         $scope.saveRec($scope.contact, function(res) {
           if (!(res instanceof Error)){
-            console.log("-----> post good");
             console.log(res);
           }
           else {
