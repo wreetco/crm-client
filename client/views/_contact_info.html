@@ -26,18 +26,23 @@
         </div>
       </div>
       <div class="row">
-        <h4>
-          Tags
-        </h4>
-        <div id="chip-section">
-          <input placeholder="+Tag" type="text" readonly onclick="editable(this);" onblur="noneditable(this);" id="new-tag">
+        <div class="col s12 m6">
+          <h4>
+            Tags
+          </h4>
+          <div id="chip-section">
+            <input placeholder="+Tag" type="text" readonly onclick="editable(this);" onblur="noneditable(this);" id="new-tag" title="poop" pattern="[a-zA-Z0-9_-]+">
+          </div>
         </div>
       </div>
 
     </div>
   </div>
   <div class="row">
-    <div class="col s12 m4 offset-m4">
+    <div class="col s12 m6">
+      <a ng-click="addField()" class="btn">New Field</a>
+    </div>
+    <div class="col s12 m6">
       <a ng-click="updateRecord(current_contact);" class="waves-effect waves-red btn">Save Changes</a>
     </div>
   </div>
@@ -55,7 +60,10 @@
   $( "#new-tag" ).keypress(function(e) {
     if(e.keyCode === 13 || e.keyCode === 44){
       var tag_name = $('#new-tag').val();
+      console.log(tag_name);
       var tag_id = '#tag-id-' + tag_name;
+      tag_id = tag_id.replace(/\s+/g, '-');
+      console.log(tag_id);
       console.log(document.getElementById(tag_id));
       if(document.getElementById(tag_id)) {
 

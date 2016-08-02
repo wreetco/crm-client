@@ -132,6 +132,18 @@ angular.module('application.services', [])
         });
       }); // end promise
     },
+
+    newField: function(url, data) {
+      return new Promise(function(resolve, reject) {
+        $http.post(url, data)
+        .success(function(res) {
+          resolve(res);
+        }).error(function(mess, status) {
+          reject(mess);
+        });
+      }); // end promise
+    },
+
   };
 }])  // end record service
 

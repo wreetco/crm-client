@@ -112,10 +112,8 @@ angular.module('application.controllers', ['nvd3'])
   };
 
   $scope.saveRec = function(record, callback) {
-    console.log(record);
     Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
       callback(r);
-      console.log(r);
     }).catch(function(e) {
       console.log("saveRecord error: " + e);
       callback(new Error(e));
@@ -127,6 +125,15 @@ angular.module('application.controllers', ['nvd3'])
       callback(r);
     }).catch(function(e) {
       console.log("deleteRecord error: " + e);
+      callback(new Error(e));
+    });
+  };
+
+  $scope.newField = function(data, callback) {
+    Record.newField("http://burnsy.wreet.xyz/", data).then(function(r) {
+      callback(r);
+    }).catch(function(e) {
+      console.log("Save Field Error: " + e);
       callback(new Error(e));
     });
   };
@@ -165,7 +172,7 @@ angular.module('application.controllers', ['nvd3'])
 
     //clean out our chips deal
     $('.chip').remove();
-    for(i = 0; i < $scope.current_contact.tags.length; i++){
+    for(var i = 0; i < $scope.current_contact.tags.length; i++){
       $('#chip-section').append("<div class=\"chip\" id=\"#tag-id-" + $scope.current_contact.tags[i].name + "\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
     }
     //move this to be the last child
@@ -182,7 +189,6 @@ angular.module('application.controllers', ['nvd3'])
     $scope.contact = {
       record: {
         tags: [],
-        id: null,
       },
       manager: null,
     };
@@ -223,12 +229,15 @@ angular.module('application.controllers', ['nvd3'])
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
       var str = $( this ).text();
-      var lastIndex = str.lastIndexOf(" ");
-      str = str.substring(0, lastIndex);
-      $scope.contact.record.tags.push(str);
+      console.log(str);
+      str = str.replace(/^[a-z0-9_-]+$/ig, "");
+      console.log(str);
+
+      //$scope.contact.record.tags.push(str);
     });
     $scope.contact.manager = r.manager;
     $scope.saveRecord($scope.contact);
+    //
     $scope.contact = {
       record: {
         tags: [],
@@ -268,6 +277,7 @@ angular.module('application.controllers', ['nvd3'])
             manager: null,
           };
           //close the slideout
+          $('.button-collapse').sideNav('hide');
           Materialize.toast('Successfully Saved!', 5000);
         }).catch(function(err) {
           console.log(err);
@@ -279,8 +289,35 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
-  // Add Tag
+  // Add Field
   ///////////////////////////////////////////////////////////////
+  $scope.addField = function(){
+
+    //FIG-TUR
+    $scope.new_field = {
+      tab: {
+        type: 'String',
+      },
+      section: {
+        type: 'String',
+      },
+      name: {
+        type: 'String',
+      },
+      db_name: {
+        type: 'String',
+      },
+      type: {
+        type: 'String',
+      },
+      //optional
+      visibility: "",
+      order: null,
+    };
+
+
+
+  };
 
   // Add Tag Box
   ///////////////////////////////////////////////////////////////
@@ -403,7 +440,6 @@ angular.module('application.controllers', ['nvd3'])
     });
 
     $($scope.delete_collection).each(function(i, value) {
-      console.log("deleting: " + $scope.delete_collection[i]);
       $scope.deleteRecord($scope.delete_collection[i]);
     });
 
@@ -501,7 +537,6 @@ angular.module('application.controllers', ['nvd3'])
       $scope.contact = {
         record: {
           tags: [],
-          id: null,
         },
         manager: null,
       };
@@ -516,11 +551,10 @@ angular.module('application.controllers', ['nvd3'])
       if($scope.hasData === true){
         //$scope.contact.record.id = $scope.sess.user._id;
         $scope.contact.manager = $scope.sess.user.managers[0];
-        console.log($scope.contact);
         //Post
         $scope.saveRec($scope.contact, function(res) {
           if (!(res instanceof Error)){
-            console.log("post good");
+            console.log("-----> post good");
             console.log(res);
           }
           else {
@@ -546,9 +580,6 @@ angular.module('application.controllers', ['nvd3'])
         },
         manager: null,
       };
-      //close the slideout
-      $('.button-collapse').sideNav('hide');
-      Materialize.toast('Successfully Saved!', 5000);
     }).catch(function(err) {
       console.log(err);
     });
