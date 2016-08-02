@@ -72,7 +72,6 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
-      console.log($scope.interface);
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
@@ -165,11 +164,11 @@ angular.module('application.controllers', ['nvd3'])
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
-    $scope.current_fields = $scope.current_interface.tabs;
+    $scope.current_fields = $scope.current_interface.tabs[0].sections;
 
-    for (var i = 0; i < $scope.current_interface.tabs; i++) {
-      if ($scope.current_interface.tabs[i].name === "Contacts") {
-        $scope.current_fields = $scope.current_interface.tabs[i];
+    for (var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++) {
+      if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
+        $scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
       }
     }
     //adjust the display
@@ -179,8 +178,8 @@ angular.module('application.controllers', ['nvd3'])
 
     //clean out our chips deal
     $('.chip').remove();
-    for(var i = 0; i < $scope.current_contact.tags.length; i++){
-      $('#chip-section').append("<div class=\"chip\" id=\"#tag-id-" + $scope.current_contact.tags[i].name + "\">" + $scope.current_contact.tags[i].name + " <i class=\"close material-icons\">close</i>");
+    for(var j = 0; j < $scope.current_contact.tags.length; j++){
+      $('#chip-section').append("<div class=\"chip\" id=\"#tag-id-" + $scope.current_contact.tags[j].name + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\">close</i>");
     }
     //move this to be the last child
     $('#chip-section #new-tag').appendTo('#chip-section');

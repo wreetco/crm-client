@@ -72,6 +72,7 @@ angular.module('application.services', [])
       return new Promise(function(resolve, reject) {
         Manager.getManagerItem(m_id, 'interface').then(function(ifaz) {
           interfaz = ifaz;
+          console.log(interfaz);
           resolve(ifaz);
         }).catch(function(e) {
           reject(e);
@@ -107,7 +108,6 @@ angular.module('application.services', [])
     },// end getRecords method
 
     saveRecord: function(url, record) {
-      console.log(JSON.parse(record));
       return new Promise(function(resolve, reject) {
         $http.post(url, record)
         .success(function(record) {
@@ -122,8 +122,6 @@ angular.module('application.services', [])
       return new Promise(function(resolve, reject) {
         $http.delete(url)
         .success(function(res) {
-          console.log("RES");
-          console.log(res);
           resolve(res);
         }).error(function(mess, status) {
           console.log("MESS STATUS");
