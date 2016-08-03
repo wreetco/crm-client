@@ -7,7 +7,7 @@
         Contact Info
       </h3>
       <div class="row">
-        <div ng-repeat="section in current_fields">
+        <div ng-repeat="section in current_fields" ng-show="!section.fields.length < 1">
           <h3 ng-hide="$first">
             {{ section.name }}
           </h3>
