@@ -129,18 +129,19 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
-  $scope.newField = function(data, callback) {
-    Record.newField("http://burnsy.wreet.xyz/", data).then(function(r) {
+  $scope.postField = function(data, callback) {
+    Record.postField("http://burnsy.wreet.xyz/manager/field", data).then(function(r) {
       callback(r);
     }).catch(function(e) {
       console.log("Save Field Error: " + e);
+      console.log(e);
       callback(new Error(e));
     });
   };
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, Session, Interface) {
+.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$route', '$location', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $route, $location, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
   ////////////////////////////////////////////////////////////////
   //contact is a record format used for posting
@@ -167,12 +168,10 @@ angular.module('application.controllers', ['nvd3'])
     // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
     //sections object
-    console.log("current_fields");
-    console.log($scope.current_fields);
     //for (var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++) {
-      //if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
-        //$scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
-      //}
+    //if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
+    //$scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
+    //}
     //}
     //adjust the display
     $('#contact-info-card').css('display', 'block');
@@ -259,6 +258,7 @@ angular.module('application.controllers', ['nvd3'])
   //  been edited, requires a contact be passed into it
   ///////////////////////////////////////////////////////////////////
   $scope.saveRecord = function(r){
+    //close sidenav flag
     //the passed in contact is assigned to post_data
     $scope.post_data = r;
     //assign the manager ID to the new record
@@ -275,8 +275,6 @@ angular.module('application.controllers', ['nvd3'])
           // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
           //Now that we have saved, lets clear this out.
-          console.log("post");
-          $scope.$apply();
           $scope.contact = {
             record: {
               tags: [],
@@ -284,6 +282,14 @@ angular.module('application.controllers', ['nvd3'])
             },
             manager: null,
           };
+          Interface.getInterface($scope.post_data.manager).then(function(interface) {
+            // store the thing
+            window.localStorage.interface = JSON.stringify(interface);
+            $scope.interface = interface;
+          }).catch(function(err) { // sup, mike, chyea
+            console.log(JSON.stringify(err));
+          });
+          $scope.$apply();
           //close the slideout
           $('.button-collapse').sideNav('hide');
           Materialize.toast('Successfully Saved!', 5000);
@@ -299,31 +305,95 @@ angular.module('application.controllers', ['nvd3'])
   };
   // Add Field
   ///////////////////////////////////////////////////////////////
-  $scope.addField = function(){
-
-    //FIG-TUR
+  $scope.addField = function(section, c){
     $scope.new_field = {
-      tab: {
-        type: 'String',
+      field: {
+        db_name: '',
+        name: '',
+        section: '',
+        tab: "Contacts",
+        type: "string",
       },
-      section: {
-        type: 'String',
+      manager: '',
+    };
+    $scope.updated_record = {
+      record: {
+        tags: [],
+        id: '',
       },
-      name: {
-        type: 'String',
-      },
-      db_name: {
-        type: 'String',
-      },
-      type: {
-        type: 'String',
-      },
-      //optional
-      visibility: "",
-      order: null,
+      manager: '',
     };
 
 
+    $scope.contact = c || null;
+
+    //input field id's
+    $scope.input_field_value = "#new-field-value-" + section;
+    $scope.input_field_label = "#new-field-label-" + section;
+    //some variablol's
+    $scope.field_value = $($scope.input_field_value).val();
+    $scope.field_label = $($scope.input_field_label).val();
+    $scope.section_name = section || "_contacts";
+    $scope.db_name = $scope.field_label.replace(/\s+/g, '_');
+    //build the new field
+    $scope.new_field = {
+      field: {
+        db_name: $scope.db_name,
+        name: $scope.field_label,
+        section: $scope.section_name,
+        tab: "Contacts",
+        type: "string",
+      },
+      manager: $scope.contact.manager,
+    };
+    //ensure we made a field
+    if($scope.db_name === "" || $scope.field_label === ""){
+      //something is wrong
+      console.log("Field wasn't created");
+    }
+    else {
+      // now lets setup the record that will be updated
+      // Ensure we actually got a contact
+      if($scope.contact === null){
+        console.log("No contact passed");
+        return;
+      }
+      else {
+        //lets build the updated record, post the new field, and then post the record
+        $scope.updated_record = {
+          record: {
+            tags: [],
+            id: $scope.contact._id,
+          },
+          manager: $scope.contact.manager,
+        };
+        for (var key in $scope.contact.x) {
+          $scope.updated_record.record[key] = $scope.contact.x[key];
+        }
+        $scope.updated_record.record[$scope.field_label] = $scope.field_value;
+        $('.chip').each(function(i) {
+          var str = $( this ).text();
+          var lastIndex = str.lastIndexOf(" ");
+          str = str.substring(0, lastIndex);
+          $scope.updated_record.record.tags.push(str);
+        });
+        //field and updated record are ready
+        //lets post the field
+        console.log($scope.new_field);
+        $scope.postField(JSON.stringify($scope.new_field), function(res) {
+          console.log(res);
+          $scope.saveRecord($scope.updated_record, function(res) {
+            console.log(res);
+            console.log("wooo");
+          });
+        });
+        //and now the updated contact with the new field value
+        console.log($scope.updated_record);
+      }
+
+      //clear shit out
+      $scope.new_field = null;
+    }
 
   };
 

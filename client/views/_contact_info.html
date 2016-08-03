@@ -1,5 +1,4 @@
 <!doctype html>
-
 <div class="card" id="contact-info-card" style="display:none;">
   <div class="row">
     <div class="col s12">
@@ -11,25 +10,46 @@
           <h3 ng-hide="$first">
             {{ section.name }}
           </h3>
-          <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
-            <div class="col s12 m6">
-              <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-              <label for="{{ field.db_name }}">{{ field.name }}</label>
-              <br><br>
+          <div class="row">
+            <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
+              <div class="col s12 m6">
+                <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
+                <label for="{{ field.db_name }}">{{ field.name }}</label>
+                <br><br>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <h6>
+              New Field
+            </h6>
+            <div class="col s6 m3">
+              <input name="" id="new-field-label-{{ section.name }}" type="text" />
+              <label for="new-field-input-{{ section.name }}">Field Label</label>
+            </div>
+            <div class="col s6 m3">
+              <input name="" id="new-field-value-{{ section.name }}" type="text" />
+              <label for="new-field-input-{{ section.name }}">Field Value</label>
+            </div>
+            <div class="col s6 m3">
+              <a class="btn" ng-click="addField(section.name, current_contact);"><i class="material-icons left">add_box</i>Add Field</a>
             </div>
           </div>
         </div>
-        <div class="col s12 m6">
-          <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="input-date" readonly>
-          <label for="created">Created Date</label>
-          <br><br>
-        </div>
-        <div class="col s12 m6">
-          <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="input-date" readonly>
-          <label for="updated">Last Modified</label>
-          <br><br>
+        <div class="row">
+          <div class="col s12 m6">
+            <input placeholder="{{ current_contact.created_date | date:'medium'}}" id="created" type="text" class="input-date" readonly>
+            <label for="created">Created Date</label>
+            <br><br>
+          </div>
+          <div class="col s12 m6">
+            <input placeholder="{{ current_contact.updated_at | date:'medium' }}" id="updated" type="text" class="input-date" readonly>
+            <label for="updated">Last Modified</label>
+            <br><br>
+          </div>
         </div>
       </div>
+
       <div class="row">
         <div class="col s12 m6">
           <h4>
@@ -45,10 +65,10 @@
   </div>
   <div class="row">
     <div class="col s12 m6">
-      <a ng-click="addField()" class="btn">New Field</a>
+      <a ng-click="addField(section.name, c)" class="btn">New Field</a>
     </div>
     <div class="col s12 m6">
-      <a ng-click="updateRecord(current_contact);" class="waves-effect waves-red btn">Save Changes</a>
+      <a ng-click="updateRecord(current_contact);" class="btn">Save Changes</a>
     </div>
   </div>
 </div>
@@ -76,4 +96,5 @@
       }, 99);
     }
   });
+
 </script>

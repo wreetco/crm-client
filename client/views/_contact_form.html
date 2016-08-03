@@ -7,7 +7,7 @@
         Contact Create
       </h3>
       <div class="row">
-        <div ng-repeat="field in current_fields">
+        <div ng-repeat="field in current_fields | orderBy:'-order' : true ">
           <div class="col s12 m6">
             <input  id="{{ field.db_name }}" type="text" ng-model="contact.record[field.db_name]">
             <label for="{{ field.db_name }}">{{ field.name }}</label>

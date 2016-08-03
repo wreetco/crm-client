@@ -109,12 +109,8 @@ angular.module('application.services', [])
     saveRecord: function(url, record) {
       console.log("Here too");
       return new Promise(function(resolve, reject) {
-        console.log("in the promise with my dick");
-        console.log(url);
-        console.log(record);
         $http.post(url, record)
         .success(function(record) {
-          console.log("dick mess");
           resolve(record);
         }).error(function(mess, status) {
           console.log(mess);
@@ -130,7 +126,6 @@ angular.module('application.services', [])
         .success(function(res) {
           resolve(res);
         }).error(function(mess, status) {
-          console.log("MESS STATUS");
           console.log(mess);
           console.log(status);
           reject(mess);
@@ -138,8 +133,9 @@ angular.module('application.services', [])
       }); // end promise
     },
 
-    newField: function(url, data) {
+    postField: function(url, data) {
       return new Promise(function(resolve, reject) {
+        console.log(data);
         $http.post(url, data)
         .success(function(res) {
           resolve(res);
