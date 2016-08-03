@@ -7,11 +7,16 @@
         Contact Info
       </h3>
       <div class="row">
-        <div ng-repeat="field in current_fields">
-          <div class="col s12 m6">
-            <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-            <label for="{{ field.db_name }}">{{ field.name }}</label>
-            <br><br>
+        <div ng-repeat="section in current_fields" ng-show="!section.fields.length < 1">
+          <h3 ng-hide="$first">
+            {{ section.name }}
+          </h3>
+          <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
+            <div class="col s12 m6">
+              <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
+              <label for="{{ field.db_name }}">{{ field.name }}</label>
+              <br><br>
+            </div>
           </div>
         </div>
         <div class="col s12 m6">

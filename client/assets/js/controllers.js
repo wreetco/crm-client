@@ -164,13 +164,16 @@ angular.module('application.controllers', ['nvd3'])
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
+    // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
-
-    for (var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++) {
-      if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
-        $scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
-      }
-    }
+    //sections object
+    console.log("current_fields");
+    console.log($scope.current_fields);
+    //for (var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++) {
+      //if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
+        //$scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
+      //}
+    //}
     //adjust the display
     $('#contact-info-card').css('display', 'block');
     $('#contact-post-card').css('display', 'none');
@@ -223,7 +226,6 @@ angular.module('application.controllers', ['nvd3'])
     $scope.current_session = JSON.parse($window.sessionStorage.session);
     $scope.contact.manager = $scope.current_session.user.managers[0];
     //save the record to the db
-    console.log($scope.contact);
     $scope.saveRecord($scope.contact);
   };
 
@@ -269,12 +271,12 @@ angular.module('application.controllers', ['nvd3'])
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
           $scope.contacts = contacts;
-
           $scope.tags = Interface.getTags($scope.contacts);
-          $scope.$apply();
           // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
           //Now that we have saved, lets clear this out.
+          console.log("post");
+          $scope.$apply();
           $scope.contact = {
             record: {
               tags: [],
@@ -479,7 +481,7 @@ angular.module('application.controllers', ['nvd3'])
 // end of record descendants
 
 .controller('SettingsController', ['$scope', '$window', '$controller', 'Setting', 'Interface', 'Session', 'Record', function($scope, $window, $controller, Setting, Interface, Session, Record) {
-  $controller('RecordController', {$scope: $scope}); //Well the Record Controller is our god.
+
   // Save Theme
   /////////////////////////////////////////////////////////////////
   $scope.saveTheme = function(){
@@ -497,6 +499,17 @@ angular.module('application.controllers', ['nvd3'])
       $("#theme").removeClass();
       $("#theme").addClass($scope.theme);
     }
+  };
+
+  $scope.saveCSVRecord = function(record, callback) {
+    console.log("Here we go");
+    console.log(record);
+    Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
+      callback(r);
+    }).catch(function(e) {
+      console.log("saveRecord error: " + e);
+      callback(new Error(e));
+    });
   };
 
   // Update Settings
@@ -554,38 +567,31 @@ angular.module('application.controllers', ['nvd3'])
         //$scope.contact.record.id = $scope.sess.user._id;
         $scope.contact.manager = $scope.sess.user.managers[0];
         //Post
-        //
-
-        $scope.saveCSVRecord = function(record, callback) {
-          Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
-            callback(r);
-          }).catch(function(e) {
-            console.log("saveRecord error: " + e);
-            callback(new Error(e));
-          });
+        $scope.saveCSVRecord($scope.contact, function(res) {
+          console.log("post time");
+          console.log(res);
+        });
+        //Now that we have saved, lets clear this out.
+        $scope.contact = {
+          record: {
+            tags: [],
+            id: null,
+          },
+          manager: null,
         };
+
       }
     }
-    $scope.getRecords($scope.sess.user.managers[0], 'records', null)
-    .then(function(contacts) {
-      $scope.contacts = contacts;
 
-      $scope.tags = Interface.getTags($scope.contacts);
-      $scope.$apply();
+    Record.getRecords($scope.sess.user.managers[0], 'records').then(function(contacts) {
+      // store the thing
       // store it to localstorage
+      $scope.contacts = contacts;
       localStorage.contacts = JSON.stringify(contacts);
-      //Now that we have saved, lets clear this out.
-      $scope.contact = {
-        record: {
-          tags: [],
-          id: null,
-        },
-        manager: null,
-      };
+      $scope.$apply();
     }).catch(function(err) {
       console.log(err);
     });
-
   };
 
 }])
