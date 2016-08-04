@@ -89,6 +89,12 @@ angular.module('application.controllers', ['nvd3'])
     $(event.target).append(activeTab);
   }
   $("a.activatable").click(setActive);
+  
+  $scope.$watch('interface.organization', function(){
+    if ($scope.interface) {
+      $('#org_name').text($scope.interface.organization);
+    }
+  });
 
   (function() { // sup
     if (!$scope.interface)
