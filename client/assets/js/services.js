@@ -107,12 +107,14 @@ angular.module('application.services', [])
     },// end getRecords method
 
     saveRecord: function(url, record) {
-      console.log(JSON.parse(record));
+      console.log("Here too");
       return new Promise(function(resolve, reject) {
         $http.post(url, record)
         .success(function(record) {
           resolve(record);
         }).error(function(mess, status) {
+          console.log(mess);
+          console.log(status);
           reject(mess);
         });
       }); // end promise
@@ -122,11 +124,8 @@ angular.module('application.services', [])
       return new Promise(function(resolve, reject) {
         $http.delete(url)
         .success(function(res) {
-          console.log("RES");
-          console.log(res);
           resolve(res);
         }).error(function(mess, status) {
-          console.log("MESS STATUS");
           console.log(mess);
           console.log(status);
           reject(mess);
@@ -134,8 +133,9 @@ angular.module('application.services', [])
       }); // end promise
     },
 
-    newField: function(url, data) {
+    postField: function(url, data) {
       return new Promise(function(resolve, reject) {
+        console.log(data);
         $http.post(url, data)
         .success(function(res) {
           resolve(res);
