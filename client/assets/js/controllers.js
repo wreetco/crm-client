@@ -141,7 +141,7 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 // and the various types of records are but loyal subjects
-.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$route', '$location', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $route, $location, Session, Interface) {
+.controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', '$routeParams', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, $routeParams, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
   ////////////////////////////////////////////////////////////////
   //contact is a record format used for posting
@@ -544,6 +544,9 @@ angular.module('application.controllers', ['nvd3'])
         });
       }
     } // end contact check
+    if ($routeParams.tag) {
+      
+    }
   })();
 
 }]) // end ContactController
