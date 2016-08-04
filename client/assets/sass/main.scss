@@ -43,6 +43,7 @@
     .fixed-action-btn li {
       background-color: transparent;
     }
+    
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
@@ -340,6 +341,10 @@
     .card {
       background-color: $primary-color;
       color: $primary-text;
+    }
+    
+    #contact-info-card {
+      background-color: $primary-color;
     }
 
     //table rows
