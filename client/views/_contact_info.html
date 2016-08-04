@@ -13,8 +13,13 @@
           <div class="row">
             <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
               <div class="col s12 m6">
-                <input id="{{ field.db_name }}" type="text" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-                <label for="{{ field.db_name }}">{{ field.name }}</label>
+                <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
+                <label for="{{ field._id }}">
+                  {{ field.name }}
+                  <a id="{{ field._id }}-icon" style="visibility: hidden;" class="right" ng-click="fieldModal();">
+                    <i class="material-icons right" >settings</i>
+                  </a>
+                </label>
                 <br><br>
               </div>
             </div>
@@ -73,13 +78,29 @@
   </div>
 </div>
 
+
 <script>
   function editable(el){
     el.removeAttribute("readonly");
+    var icon_id = el.id + "-icon";
+    var icon = document.getElementById(icon_id);
+    icon.style.opacity = 1;
+    icon.style.visibility = "visible";
+    icon.style.WebkitTransition = "visibility linear 1.5s";
+    icon.style.WebkitTransition = "opacity linear 1.5s";
   };
 
   function noneditable(el){
     el.setAttribute("readonly", "");
+    var icon_id = el.id + "-icon";
+    var icon = document.getElementById(icon_id);
+    //prevent it from disapearing for 150ms or else the button cant be clicked
+    setTimeout(function(){
+      icon.style.visibility = "hidden";
+      icon.style.opacity = 0;
+      icon.style.WebkitTransition = "visibility linear 1.4s";
+      icon.style.WebkitTransition = "opacity linear 1.4s";
+    }, 150);
   };
 
   $( "#new-tag" ).keypress(function(e) {
@@ -96,5 +117,4 @@
       }, 99);
     }
   });
-
 </script>
