@@ -89,7 +89,7 @@ angular.module('application.controllers', ['nvd3'])
     $(event.target).append(activeTab);
   }
   $("a.activatable").click(setActive);
-  
+
   $scope.$watch('interface.organization', function(){
     if ($scope.interface) {
       $('#org_name').text($scope.interface.organization);
@@ -121,7 +121,6 @@ angular.module('application.controllers', ['nvd3'])
     Record.saveRecord("http://burnsy.wreet.xyz/record", record).then(function(r) {
       callback(r);
     }).catch(function(e) {
-      console.log("saveRecord error: " + e);
       callback(new Error(e));
     });
   };
@@ -130,7 +129,6 @@ angular.module('application.controllers', ['nvd3'])
     Record.deleteRecord("http://burnsy.wreet.xyz/record/" + path).then(function(r) {
       callback(r);
     }).catch(function(e) {
-      console.log("deleteRecord error: " + e);
       callback(new Error(e));
     });
   };
@@ -139,7 +137,6 @@ angular.module('application.controllers', ['nvd3'])
     Record.postField("http://burnsy.wreet.xyz/manager/field", data).then(function(r) {
       callback(r);
     }).catch(function(e) {
-      console.log("Save Field Error: " + e);
       console.log(e);
       callback(new Error(e));
     });
@@ -149,7 +146,7 @@ angular.module('application.controllers', ['nvd3'])
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', '$routeParams', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, $routeParams, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-  ////////////////////////////////////////////////////////////////
+
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
@@ -160,6 +157,12 @@ angular.module('application.controllers', ['nvd3'])
     },
     manager: null,
   };
+
+  //some stuff for searching and sorting
+
+  $scope.sortType     = 'x.first_name'; // set the default sort type
+  $scope.sortReverse  = false;          // set the default sort order
+  $scope.searchRecord = '';             // set the default search/filter term
 
   // Information Side Nav Bar is called when clicking on a contact, it handles
   //  displaying contact info and the editing features
@@ -333,7 +336,7 @@ angular.module('application.controllers', ['nvd3'])
 
     $scope.contact = c || null;
 
-    //input field id's
+    //input field id's$scope.edit_field.field
     $scope.input_field_value = "#new-field-value-" + section;
     $scope.input_field_label = "#new-field-label-" + section;
     //some variablol's
@@ -401,6 +404,50 @@ angular.module('application.controllers', ['nvd3'])
       $scope.new_field = null;
     }
 
+  };
+
+  // Field Modal
+  ///////////////////////////////////////////////////////////////
+  $scope.fieldModal = function(){
+    $scope.edit_field = this;
+    console.log($scope.edit_field.field);
+    $('#field-edit-modal').openModal();
+  };
+
+  // Edit Field
+  ///////////////////////////////////////////////////////////////
+  $scope.editField = function(){
+    console.log($scope.edit_field.field);
+    $scope.updated_field = {
+      field: {
+        db_name: $scope.edit_field.field.name.replace(/\s+/g, '_'),
+        name: $scope.edit_field.field.name,
+        section: $scope.edit_field.field.section,
+        tab: $scope.edit_field.field.tab,
+        type: $scope.edit_field.field.type,
+        id: $scope.edit_field.field._id,
+      },
+      manager: JSON.parse(window.sessionStorage.session).user.managers[0],
+    };
+    if($scope.updated_field.field.id){
+      //we can post it
+      $scope.postField( $scope.updated_field, function(res) {
+        console.log(res);
+        if(res instanceof Error){
+          Materialize.toast('There was a problem', 5000);
+        }
+        else {
+          Materialize.toast('Field Name Changed', 5000);
+          $('#field-edit-modal').closeModal();
+        }
+      });
+    }
+  };
+
+  // Hide Field
+  ///////////////////////////////////////////////////////////////
+  $scope.hideField = function(){
+    console.log("stink2 hide");
   };
 
   // Add Tag Box
@@ -551,7 +598,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     } // end contact check
     if ($routeParams.tag) {
-      
+
     }
   })();
 
