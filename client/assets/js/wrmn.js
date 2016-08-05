@@ -187,6 +187,10 @@ wrmn.init = function(el, opts) {
     //m.style.border = "1px solid orange"; // debug border
     // since k matches css props top, right, bottom or left, use it directly
     m.style[k] = ((k == "left" || k == "right") ? wrmn.opts.menu_width * -1 : wrmn.opts.menu_height * -1);
+    // stopprop.org
+    m.onclick = function(e) {
+      e.stopPropagation();
+    };
     menu_el.appendChild(m);
   }
   // let's append wrmn to the tree
