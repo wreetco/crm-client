@@ -167,6 +167,7 @@ angular.module('application.controllers', ['nvd3'])
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
+    console.log(c);
     // Make sure this is empty first
     $scope.current_contact = null;
     //contact object
@@ -190,7 +191,9 @@ angular.module('application.controllers', ['nvd3'])
   /////////////////////////////////////////////////////////////////
   $scope.postBar = function(){
     // Make sure this is empty first
-    $scope.current_contact = null;
+    $scope.current_contact = {
+      x: {},
+    };
     //clean up
     //let make sure this is empty before we do anything.
     $('.chip').remove();
@@ -204,6 +207,15 @@ angular.module('application.controllers', ['nvd3'])
   //////////////////////////////////////////////////////////////////
   $scope.postRecord = function (r) {
     //lets just fill out the tags
+    $scope.contact = {
+      record: {
+        tags: [],
+      },
+      manager: null,
+    };
+    for (var key in r.x) {
+      $scope.contact.record[key] = r.x[key];
+    }
     $('.chip').each(function(i) {
       var str = $( this ).text();
       var lastIndex = str.lastIndexOf(" ");
