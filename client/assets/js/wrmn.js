@@ -12,8 +12,6 @@
       to serve as the template html for a menu eg wrmn.addMenu($('.el'),"left")
     * re-calc all the things on page resize or rotate
     * investigate creating a drag div for the menu edges 
-    * where the fug is the foggy overlay?
-    * escape key to close the menu overlay is not reliable
   *****************************************************************************
 */
 
@@ -28,7 +26,8 @@ wrmn.opts = { // some default options and stuff
   transition_time: 300, // default time in ms to complete menu slide
   touch: false, // enable touch support
   disable_overlay: false, // disable the darkening overlay on the page
-  click_close: true // close the menu and overlay on click outside of menu element
+  click_close: true, // close the menu and overlay on click outside of menu element
+  overlay_color: "rgba(0, 0, 0, .5)"
 };
 wrmn.menu = {}; // master ref to the html el on the tree
 wrmn.activated = "";
@@ -85,11 +84,15 @@ wrmn.cron.toggleMenu = function(menu) {
   if (wrmn.activated != "") {
     // if there is already a menu open, translate(X|Y) back to zero position
     pos = 0;
+    // disable fog
+    wrmn.menu.style.background = "transparent";
     wrmn.activated = ""; // let toggleMenu know next time it is ok to open a menu
   }
   else { // otherwise set an active menu so toggleMenu won't try to open another
     wrmn.activated = menu; // menu is active
-    wrmn.menu.style.zIndex = 99; // up the z-index of the menu container to detect click events and disable page els
+    wrmn.menu.style.zIndex = 1337; // up the z-index of the menu container to detect click events and disable page els
+    // add a mystery fog
+    wrmn.menu.style.background = wrmn.opts.overlay_color;
     // do set up a click listener to close this menu (if enabled)
     if (wrmn.opts.click_close) {
       wrmn.menu.addEventListener("click", function l() { // "named anon" as a loltastic way to keep ref
@@ -102,7 +105,7 @@ wrmn.cron.toggleMenu = function(menu) {
         if (e.keyCode == 27) {
           wrmn.menu.style.zIndex = -1;
           wrmn.cron.toggleMenu(menu);
-          window.removeEventListener("click", l, false); // don't let them stack
+          window.removeEventListener("keydown", l, false); // don't let them stack
         }
       });
     } // end add click close listeners
@@ -174,7 +177,7 @@ wrmn.init = function(el, opts) {
   menu_el.style.width = width + wrmn.opts.menu_width + "px";
   console.log('calcd width'); 
   console.log(menu_el.style.width);
-  menu_el.style.zIndex = -1; // default the overdiv to be nondisruptive
+  menu_el.style.zIndex = -1337; // default the overdiv to be nondisruptive
   //menu_el.style.border = "1px solid red"; // debug
   menu_el.style.transition = "all " + wrmn.opts.transition_time / 1000 + "s ease-in-out";
   menu_el.style.overflowY = "scroll";
