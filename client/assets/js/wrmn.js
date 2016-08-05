@@ -93,6 +93,7 @@ wrmn.cron.toggleMenu = function(menu) {
     wrmn.menu.style.zIndex = 1000; // up the z-index of the menu container to detect click events and disable page els
     // add a mystery fog
     wrmn.menu.style.background = wrmn.opts.overlay_color;
+    wrmn.menu.scrollTop = 0;
     // do set up a click listener to close this menu (if enabled)
     if (wrmn.opts.click_close) {
       wrmn.menu.addEventListener("click", function l() { // "named anon" as a loltastic way to keep ref
