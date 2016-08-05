@@ -181,7 +181,8 @@ angular.module('application.controllers', ['nvd3'])
     //clean out our chips deal
     $('.chip').remove();
     for(var j = 0; j < $scope.current_contact.tags.length; j++){
-      $('#chip-section').append("<div class=\"chip\" id=\"#tag-id-" + $scope.current_contact.tags[j].name + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\">close</i>");
+      var tag_id = "tag-id-" + $scope.current_contact.tags[j].name;
+      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
     }
     //move this to be the last child
     $('#chip-section #new-tag').appendTo('#chip-section');
@@ -244,6 +245,7 @@ angular.module('application.controllers', ['nvd3'])
       $scope.contact.record.tags.push(str);
     });
     $scope.contact.manager = r.manager;
+    console.log($scope.contact);
     $scope.saveRecord($scope.contact);
     //
     $scope.contact = {

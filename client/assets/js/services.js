@@ -107,7 +107,6 @@ angular.module('application.services', [])
     },// end getRecords method
 
     saveRecord: function(url, record) {
-      console.log("Here too");
       return new Promise(function(resolve, reject) {
         $http.post(url, record)
         .success(function(record) {

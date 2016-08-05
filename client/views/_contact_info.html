@@ -63,7 +63,7 @@
             Tags
           </h4>
           <div id="chip-section">
-            <input placeholder="+Tag" type="text" readonly onclick="editable(this);" onblur="noneditable(this);" id="new-tag" title="poop" pattern="[a-zA-Z0-9_-]+">
+            <input placeholder="+Tag" type="text" id="new-tag" />
           </div>
         </div>
       </div>
@@ -86,10 +86,12 @@
     el.removeAttribute("readonly");
     var icon_id = el.id + "-icon";
     var icon = document.getElementById(icon_id);
-    icon.style.opacity = 1;
-    icon.style.visibility = "visible";
-    icon.style.WebkitTransition = "visibility linear .5s";
-    icon.style.WebkitTransition = "opacity linear .5s";
+    if(icon){
+      icon.style.opacity = 1;
+      icon.style.visibility = "visible";
+      icon.style.WebkitTransition = "visibility linear .5s";
+      icon.style.WebkitTransition = "opacity linear .5s";
+    }
   };
 
   function noneditable(el){
@@ -97,26 +99,33 @@
     var icon_id = el.id + "-icon";
     var icon = document.getElementById(icon_id);
     //prevent it from disapearing for 150ms or else the button cant be clicked
-    setTimeout(function(){
-      icon.style.visibility = "hidden";
-      icon.style.opacity = 0;
-      icon.style.WebkitTransition = "visibility linear .4s";
-      icon.style.WebkitTransition = "opacity linear .4s";
-    }, 200);
+
+    if(icon){
+      setTimeout(function(){
+        icon.style.visibility = "hidden";
+        icon.style.opacity = 0;
+        icon.style.WebkitTransition = "visibility linear .4s";
+        icon.style.WebkitTransition = "opacity linear .4s";
+      }, 200);
+    }
   };
 
   $( "#new-tag" ).keypress(function(e) {
     if(e.keyCode === 13 || e.keyCode === 44){
       var tag_name = $('#new-tag').val();
-      var tag_id = '#tag-id-' + tag_name;
+      var tag_id = 'tag-id-' + tag_name;
       tag_id = tag_id.replace(/\s+/g, '-');
-      if(document.getElementById(tag_id)) {
-      } else {
-        $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\">close</i>").insertBefore('#new-tag');
+      if(!(document.getElementById(tag_id))){
+        $("<div class=\"chip\" id=\"" + tag_id + "\">" + tag_name + " <i class=\"close material-icons\" onclick=\"closeTag(" + tag_id + ")\">close</i>").insertBefore('#new-tag');
       }
       setTimeout(function(){
         $('#new-tag').val('');
       }, 99);
     }
   });
+
+  function closeTag(tid){
+    document.getElementById(tid).parentNode.removeChild(document.getElementById(tid));
+  };
+
 </script>
