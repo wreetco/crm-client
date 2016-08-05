@@ -6,7 +6,6 @@ angular.module('application.controllers', ['nvd3'])
   $scope.login = function() {
     var email = $('#email').val();
     var passwd = $('#password').val();
-
     Accounts.login(email, passwd).then(function(sess) {
       // store it
       var session = {
@@ -15,7 +14,6 @@ angular.module('application.controllers', ['nvd3'])
       };
       //console.log(session);
       $window.sessionStorage.session = JSON.stringify(session);
-
       $("#login").closeModal();
       var target = angular.element('#materialize-lean-overlay-1');
       target.remove();
@@ -55,11 +53,9 @@ angular.module('application.controllers', ['nvd3'])
       console.log("error logging out: " + err);
     });
   };
-
 }])
 
 .controller('ManagerController', ['$scope', '$window', 'Manager', function($scope, $window, Manager) {
-
 }])
 
 .controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
@@ -77,10 +73,8 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
-  // alert("test");
   function setActive(event) {
     $(".activeTab").remove();
-
     var activeTab = $("<span></span>");
     //activeTab.addClass("material-icons");
     activeTab.addClass("right");
@@ -110,7 +104,6 @@ angular.module('application.controllers', ['nvd3'])
     return new Promise(function(resolve, reject) {
       Record.getRecords(m_id, type).then(function(records) {
         resolve(records);
-        // store the thing
       }).catch(function(err) {
         reject(err);
       });
@@ -160,21 +153,22 @@ angular.module('application.controllers', ['nvd3'])
   $scope.contact = {
     record: {
       tags: [],
-      id: null,
+      //id: null, //only incude if upserting
     },
     manager: null,
   };
 
   //some stuff for searching and sorting
-
   $scope.sortType     = 'x.first_name'; // set the default sort type
-  $scope.sortReverse  = false;          // set the default sort order
+  $scope.sortReverse  = false;          // set the reverse flag
   $scope.searchRecord = '';             // set the default search/filter term
 
   // Information Side Nav Bar is called when clicking on a contact, it handles
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
+    // Make sure this is empty first
+    $scope.current_contact = null;
     //contact object
     c = c || null;
     $scope.current_contact = c;
@@ -183,17 +177,6 @@ angular.module('application.controllers', ['nvd3'])
     //fields obj
     // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
-    //sections object
-    //for (var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++) {
-    //if ($scope.current_interface.tabs[0].sections[i].name === "_contacts") {
-    //$scope.current_fields = $scope.current_interface.tabs[0].sections[i].fields;
-    //}
-    //}
-    //adjust the display
-    $('#contact-info-card').css('display', 'block');
-    $('#contact-post-card').css('display', 'none');
-
-
     //clean out our chips deal
     $('.chip').remove();
     for(var j = 0; j < $scope.current_contact.tags.length; j++){
@@ -203,28 +186,18 @@ angular.module('application.controllers', ['nvd3'])
     $('#chip-section #new-tag').appendTo('#chip-section');
   };
 
-
   // Post Side Nav Bar is called when posting a new record
   /////////////////////////////////////////////////////////////////
   $scope.postBar = function(){
+    // Make sure this is empty first
+    $scope.current_contact = null;
     //clean up
     //let make sure this is empty before we do anything.
     $('.chip').remove();
-    $scope.contact = {
-      record: {
-        tags: [],
-      },
-      manager: null,
-    };
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
-    $scope.current_fields = $scope.current_interface.tabs[0].sections[0].fields;
-    console.log($scope.current_fields);
-    //adjust the display so the partial can be seen
-    $('#contact-info-card').css('display', 'none');
-    $('#contact-post-card').css('display', 'block');
-
+    $scope.current_fields = $scope.current_interface.tabs[0].sections;
   };
 
   // Post Record
@@ -317,6 +290,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
+
   // Add Field
   ///////////////////////////////////////////////////////////////
   $scope.addField = function(section, c){
@@ -337,7 +311,6 @@ angular.module('application.controllers', ['nvd3'])
       },
       manager: '',
     };
-
 
     $scope.contact = c || null;
 
@@ -416,11 +389,9 @@ angular.module('application.controllers', ['nvd3'])
         //and now the updated contact with the new field value
         console.log($scope.updated_record);
       }
-
       //clear shit out
       $scope.new_field = null;
     }
-
   };
 
   // Delete Field
@@ -492,6 +463,7 @@ angular.module('application.controllers', ['nvd3'])
     $($scope.input_id).show();
     $($scope.input_icon_id).show();
     $($scope.input_id).focus();
+    // Check to see if the tag exists, if not post it
     $scope.check = $scope.tagCheck(r);
   };
 
@@ -513,8 +485,10 @@ angular.module('application.controllers', ['nvd3'])
     $scope.input_id = "#tag-box-input-" + r._id;
     $scope.input_icon_id = "#tag-box-input-icon-" + r._id;
     $( $scope.input_id ).keypress(function(e) {
+      // If they press enter
       if(e.keyCode === 13){
         var tag_name = $($scope.input_id).val();
+        // Check if tag already exists
         for(var i = 0; i < r.tags.length; i++){
           if(r.tags[i].name === tag_name){
             Materialize.toast('Tag Already Assigned', 5000);
@@ -525,7 +499,6 @@ angular.module('application.controllers', ['nvd3'])
             return;
           }
         }
-
         //Lets build the contact obj to post
         $scope.contact = {
           record: {
@@ -720,7 +693,6 @@ angular.module('application.controllers', ['nvd3'])
           $scope.hasData = true;
         }
       }
-
       if($scope.hasData === true){
         //$scope.contact.record.id = $scope.sess.user._id;
         $scope.contact.manager = $scope.sess.user.managers[0];
@@ -733,11 +705,9 @@ angular.module('application.controllers', ['nvd3'])
         $scope.contact = {
           record: {
             tags: [],
-            id: null,
           },
           manager: null,
         };
-
       }
     }
 
@@ -751,11 +721,7 @@ angular.module('application.controllers', ['nvd3'])
       console.log(err);
     });
   };
-
 }])
-
-
-
 
 .controller('StatisticsController',
             ['$scope',

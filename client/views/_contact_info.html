@@ -1,5 +1,5 @@
 <!doctype html>
-<div class="" id="contact-info-card" style="padding: 1em;">
+<div class="" id="contact-info-card" style="padding-left: 1.5em;">
   <div class="row">
     <div class="col s12">
       <h3>
@@ -16,11 +16,10 @@
                 <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
                 <label for="{{ field._id }}">
                   {{ field.name }}
-                  <a id="{{ field._id }}-icon" style="visibility: hidden;" class="right" ng-click="fieldModal();">
-                    <i class="material-icons right" >settings</i>
-                  </a>
                 </label>
-                <br><br>
+                <a id="{{ field._id }}-icon" style="visibility: hidden; margin: .3em; cursor: pointer;" class="right" ng-click="fieldModal();">
+                  <i class="material-icons right" >settings</i>
+                </a>
               </div>
             </div>
           </div>
@@ -68,7 +67,10 @@
 
       <div class="row">
         <div class="col s12 m12">
-          <button class="btn-large" style="width: 100%;" ng-click="updateRecord(current_contact);">Save Changes</button>
+          <button class="btn-large" style="width: 100%;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
+        </div>
+        <div class="col s12 m12">
+          <button class="btn-large" style="width: 100%;" ng-if="!(current_contact._id)" ng-click="postRecord();">Post Contact</button>
         </div>
       </div>
     </div>
@@ -83,8 +85,8 @@
     var icon = document.getElementById(icon_id);
     icon.style.opacity = 1;
     icon.style.visibility = "visible";
-    icon.style.WebkitTransition = "visibility linear 1.5s";
-    icon.style.WebkitTransition = "opacity linear 1.5s";
+    icon.style.WebkitTransition = "visibility linear .5s";
+    icon.style.WebkitTransition = "opacity linear .5s";
   };
 
   function noneditable(el){
@@ -95,9 +97,9 @@
     setTimeout(function(){
       icon.style.visibility = "hidden";
       icon.style.opacity = 0;
-      icon.style.WebkitTransition = "visibility linear 1.4s";
-      icon.style.WebkitTransition = "opacity linear 1.4s";
-    }, 150);
+      icon.style.WebkitTransition = "visibility linear .4s";
+      icon.style.WebkitTransition = "opacity linear .4s";
+    }, 200);
   };
 
   $( "#new-tag" ).keypress(function(e) {

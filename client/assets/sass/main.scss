@@ -43,7 +43,7 @@
     .fixed-action-btn li {
       background-color: transparent;
     }
-    
+
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
@@ -99,7 +99,7 @@
       background-color: $primary-color-light;
       color: $primary-text;
     }
-    
+
     /*
       * the little menu drop down on the contact list
     */
@@ -131,6 +131,11 @@
     ////////////////////////////////////
     // Form and Inputs
     ////////////////////////////////////
+    input {
+      margin-left: 0 !important;
+      box-shadow: none;
+    }
+
     .input-date {
       color: $secondary-text;
       border: 1px solid transparent;
@@ -154,29 +159,29 @@
       box-shadow:0 1px 0 0 $accent;
       cursor: pointer;
       padding-left: .3em;
-      -webkit-transition: border-bottom 1s; /* Safari */
-      transition: border-bottom 1s !important;
-      -webkit-transition: box-shadow 1s; /* Safari */
-      transition: box-shadow 1s;
+      -webkit-transition: border-bottom .35s; /* Safari */
+      transition: border-bottom .35s !important;
+      -webkit-transition: box-shadow .35s; /* Safari */
+      transition: box-shadow .35s;
     }
 
     input[type=text]:hover{
       border-bottom: 1px solid lighten($primary-color, 5%);
       box-shadow: 0 1px 0 0 lighten($primary-color, 10%);
-      -webkit-transition: border-bottom 1s; /* Safari */
-      transition: border-bottom 1s !important;
-      -webkit-transition: box-shadow 1s; /* Safari */
-      transition: box-shadow 1s;
+      -webkit-transition: border-bottom .35s; /* Safari */
+      transition: border-bottom .35s !important;
+      -webkit-transition: box-shadow .35s; /* Safari */
+      transition: box-shadow .35s;
     }
 
     input[type=text]:focus:not([readonly]){
       color: $accent;
       border-bottom: 1px solid lighten($primary-color, 30%);
       box-shadow:0 1px 0 0 lighten($primary-color, 20%);
-      -webkit-transition: border-bottom 1s; /* Safari */
-      transition: border-bottom 1s !important;
-      -webkit-transition: box-shadow 1s; /* Safari */
-      transition: box-shadow 1s;
+      -webkit-transition: border-bottom .35s; /* Safari */
+      transition: border-bottom .35s !important;
+      -webkit-transition: box-shadow .35s; /* Safari */
+      transition: box-shadow .35s;
       cursor: auto;
     }
 
@@ -342,7 +347,7 @@
       background-color: $primary-color;
       color: $primary-text;
     }
-    
+
     #contact-info-card {
       background-color: $primary-color;
     }
