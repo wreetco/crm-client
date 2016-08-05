@@ -58,10 +58,10 @@
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
-          <td style="cursor: pointer;" onClick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
-          <td style="cursor: pointer;" onClick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
-          <td style="cursor: pointer;" onClick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
-          <td style="cursor: pointer;" onClick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
+          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
+          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
+          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
+          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
 
           <td class="center">
             <div id="box-{{ c._id }}">
@@ -121,7 +121,7 @@
       slide_triggers[i].setAttribute("data-menuwidth", (window.innerWidth <= 992) ? (window.innerWidth * .80) : ((window.innerWidth - 100) * .75));
     }
   })();
-  
+
   $('#right').ready(function()  {
     setTimeout(function() {
      wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});

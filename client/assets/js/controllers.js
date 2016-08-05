@@ -137,7 +137,14 @@ angular.module('application.controllers', ['nvd3'])
     Record.postField("http://burnsy.wreet.xyz/manager/field", data).then(function(r) {
       callback(r);
     }).catch(function(e) {
-      console.log(e);
+      callback(new Error(e));
+    });
+  };
+
+  $scope.deleteField = function(path, callback) {
+    Record.deleteField("http://burnsy.wreet.xyz/manager/field/id", data).then(function(r) {
+      callback(r);
+    }).catch(function(e) {
       callback(new Error(e));
     });
   };
@@ -299,8 +306,6 @@ angular.module('application.controllers', ['nvd3'])
             console.log(JSON.stringify(err));
           });
           $scope.$apply();
-          //close the slideout
-          $('.button-collapse').sideNav('hide');
           Materialize.toast('Successfully Saved!', 5000);
         }).catch(function(err) {
           console.log(err);
@@ -390,11 +395,23 @@ angular.module('application.controllers', ['nvd3'])
         //lets post the field
         console.log($scope.new_field);
         $scope.postField(JSON.stringify($scope.new_field), function(res) {
-          console.log(res);
-          $scope.saveRecord($scope.updated_record, function(res) {
+          if(!(res instanceof Error)){
             console.log(res);
-            console.log("wooo");
-          });
+            $scope.saveRecord($scope.updated_record, function(res) {
+              if(!(res instanceof Error)){
+                Materialize.toast('Field Added', 5000);
+                console.log(res);
+              }
+              else {
+                Materialize.toast('There Was A Problem', 5000);
+                console.log(res);
+              }
+            });
+          }
+          else {
+            Materialize.toast('There Was A Problem', 5000);
+            console.log(res);
+          }
         });
         //and now the updated contact with the new field value
         console.log($scope.updated_record);
@@ -404,6 +421,21 @@ angular.module('application.controllers', ['nvd3'])
       $scope.new_field = null;
     }
 
+  };
+
+  // Delete Field
+  ////////////////////////////////////////////////////////////////
+  $scope.removeField = function(url) {
+    $scope.deleteField(url, function(res) {
+        if(!(res instanceof Error)){
+          Materialize.toast('Field Removed', 5000);
+          console.log(res);
+        }
+        else {
+          Materialize.toast('There Was A Problem', 5000);
+          console.log(res);
+        }
+    });
   };
 
   // Field Modal

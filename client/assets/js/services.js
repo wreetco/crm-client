@@ -145,6 +145,19 @@ angular.module('application.services', [])
       }); // end promise
     },
 
+    deleteField: function(url) {
+      return new Promise(function(resolve, reject) {
+        $http.delete(url)
+        .success(function(res) {
+          resolve(res);
+        }).error(function(mess, status) {
+          console.log(mess);
+          console.log(status);
+          reject(mess);
+        });
+      }); // end promise
+    },
+
   };
 }])  // end record service
 
