@@ -7,9 +7,13 @@
   * slides x width or y height to accomodate the slider. in this way multiple
   * menus can be defined for any edge of the viewport
   *****************************************************************************
-  * TODO:
+  * TODO/BUGS:
     * fix the function to take an edge with el_id to allow any html el on page
       to serve as the template html for a menu eg wrmn.addMenu($('.el'),"left")
+    * re-calc all the things on page resize or rotate
+    * investigate creating a drag div for the menu edges 
+    * where the fug is the foggy overlay?
+    * escape key to close the menu overlay is not reliable
   *****************************************************************************
 */
 
@@ -67,15 +71,16 @@ wrmn.cron.toggleMenu = function(menu) {
   if (!wrmn.is_initd) // if we have not started the main script there is little hope
     return -1;
   // shift the menu container
+  var axis, pos;
   if (menu == "top" || menu == "bottom") {
-    var axis = "Y"; // we will translateY with this
+    axis = "Y"; // we will translateY with this
     // determine shift amount
-    var pos = (menu == "bottom") ? wrmn.opts.menu_height * -1 : wrmn.opts.menu_height;
+    pos = (menu == "bottom") ? wrmn.opts.menu_height * -1 : wrmn.opts.menu_height;
   }
   else {
-    var axis = "X"; // we will translateX
+    axis = "X"; // we will translateX
     // determine shift
-    var pos = (menu == "right") ? wrmn.opts.menu_width * -1 : wrmn.opts.menu_width;
+    pos = (menu == "right") ? wrmn.opts.menu_width * -1 : wrmn.opts.menu_width;
   }
   if (wrmn.activated != "") {
     // if there is already a menu open, translate(X|Y) back to zero position
@@ -152,11 +157,12 @@ wrmn.init = function(el, opts) {
   // first we need to know the viewport dimensions
   var vp = wrmn.cron.getViewportDimensions(wrmn_tmp.id);
   // now we can calculate the dimensions of the final croduct
-  var width = vp.width;// + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
+  var width, height;
+  width = vp.width;// + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
   if (menus.top || menus.bottom)
-    var height = vp.height;// + ((menus.top && menus.bottom) ? opts.menu_height * 2 : opts.menu_height);
+    height = vp.height;// + ((menus.top && menus.bottom) ? opts.menu_height * 2 : opts.menu_height);
   else
-    var height = vp.height;
+    height = vp.height;
   console.log('width: ' + width);
   console.log('height: ' + height);
   // now we now what things need to look like, let's try and piece this together
@@ -189,9 +195,9 @@ wrmn.init = function(el, opts) {
     m.style[k] = ((k == "left" || k == "right") ? wrmn.opts.menu_width * -1 : wrmn.opts.menu_height * -1);
     // stopprop.org
     m.onclick = function(e) {
-      e.stopPropagation();
+      e.stopPropagation(); // don't let it bubble up to menu_el onclick closer
     };
-    menu_el.appendChild(m);
+    menu_el.appendChild(m); // link it 
   }
   // let's append wrmn to the tree
   document.body.appendChild(menu_el);
