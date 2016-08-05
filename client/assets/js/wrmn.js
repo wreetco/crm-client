@@ -90,7 +90,7 @@ wrmn.cron.toggleMenu = function(menu) {
   }
   else { // otherwise set an active menu so toggleMenu won't try to open another
     wrmn.activated = menu; // menu is active
-    wrmn.menu.style.zIndex = 1337; // up the z-index of the menu container to detect click events and disable page els
+    wrmn.menu.style.zIndex = 1000; // up the z-index of the menu container to detect click events and disable page els
     // add a mystery fog
     wrmn.menu.style.background = wrmn.opts.overlay_color;
     // do set up a click listener to close this menu (if enabled)
