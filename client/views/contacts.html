@@ -86,8 +86,8 @@
   </div>
 </div>
 
-<div class="fixed-action-btn" style="bottom: 22px; right: 22px;">
-  <a class="btn-floating btn-large green slideout-trigger" data-activates="slide-out2" data-sidenav="right" data-menuwidth="" data-closeonclick="false" ng-click="postBar();">
+<div class="fixed-action-btn" style="bottom: 22px; right: 22px; z-index: 20;">
+  <a class="btn-floating btn-large green slideout-trigger">
     <i class="large material-icons">note_add</i>
   </a>
   <ul>
@@ -96,14 +96,12 @@
   </ul>
 </div>
 
-<ul id="slide-out2" class="side-nav" style="z-index: 999; float: right;">
-  <div class="col s12">
-    <div id="wmenu">
-      <div id="right" ng-include="'views/_contact_info.html'"></div>
-    </div>
-    <div ng-include="'views/_contact_form.html'"></div>
+<div class="col s12">
+  <div id="wmenu">
+    <div id="right" ng-include="'views/_contact_info.html'"></div>
   </div>
-</ul>
+  <div ng-include="'views/_contact_form.html'"></div>
+</div>
 
 <ng-include src="'views/_field_edit.html'"></ng-include>
 
