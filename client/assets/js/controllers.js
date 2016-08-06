@@ -59,6 +59,8 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 .controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
+  $scope.theme = 'dark-theme';
+
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
@@ -68,10 +70,15 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
+      $scope.session = JSON.parse(window.sessionStorage.session);
+      $scope.theme = $scope.session.user.settings.theme;
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.theme);
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
   };
+
 
   function setActive(event) {
     $(".activeTab").remove();
@@ -89,6 +96,15 @@ angular.module('application.controllers', ['nvd3'])
       $('#org_name').text($scope.interface.organization);
     }
   });
+
+  $scope.$watch('session.user.settings.theme', function(){
+    if ($scope.session) {
+      console.log("changed");
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.session.user.settings.theme);
+    }
+  });
+
 
   (function() { // sup
     if (!$scope.interface)
@@ -671,12 +687,18 @@ angular.module('application.controllers', ['nvd3'])
     else {
       $scope.theme = $('#settings-color-theme input:checked').val();
       //lets update the database
-      $scope.settings = {theme: $scope.theme};
+      $scope.settings = {
+        settings: {
+          theme: $scope.theme,
+        }
+      };
       console.log($scope.theme);
       console.log($scope.settings);
       $scope.updateSettingsWrap($scope.settings, function(res){
         console.log("its happening");
         console.log(res);
+        var sess = Session.getSession();
+        console.log(sess);
       });
 
       $("#theme").removeClass();
