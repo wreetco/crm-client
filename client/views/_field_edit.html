@@ -17,8 +17,7 @@
         <div input-field>
           <select class="" ng-model="edit_field.field.section" material-select watch>
             <option value="" selected> Choose A Section</option>
-            <option value="Computer" selected>Computer</option>
-            <option ng-repeat="value in section_choices">{{ value }}</option>
+            <option ng-repeat="value in section_choices | orderBy: value" ng-hide="$first">{{ value }}</option>
           </select>
         </div>
       </div>
