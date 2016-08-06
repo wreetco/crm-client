@@ -128,24 +128,19 @@ wrmn.init = function(el, opts) {
       wrmn.opts[k] = opts[k];
   }
   // let's go ahead and look at this element and see what we have
-  /*
-  try {
-    var wrmn_tmp = document.getElementById(el_id);
-  } catch (err) {
-    return "Could not retrieve el " + el_id + ": " + err;
-  }
-  */
   var wrmn_tmp = el;
   // see if they sectioned it off, it not, we assume the standard left slider
   var sections = ["top", "right", "bottom", "left"]; // allowed menu sections
-  var divs = wrmn_tmp.getElementsByTagName('div'); // divs to see if they are menu parts
+  try {
+    var divs = wrmn_tmp.getElementsByTagName('div'); // divs to see if they are menu parts
+  } catch (err) { // seems there is an issue with this element we were passed
+    throw "wrmn.js: could not get menu sections - " + err;
+  }
   var menus = {}; // hold the menu part refs
   for (var i = 0; i < divs.length; i++) {
     if (sections.indexOf(divs[i].id) !== -1)
       menus[divs[i].id] = divs[i];
   }
-  console.log("menus:");
-  console.log(menus);
   // if we did not find any "parts" then we assume the whole deal is a standard left menu
   if (menus.length === 0) {
     wrmn_tmp.id = "left"; // set the menu orientation default
@@ -162,9 +157,9 @@ wrmn.init = function(el, opts) {
   var vp = wrmn.cron.getViewportDimensions(wrmn_tmp.id);
   // now we can calculate the dimensions of the final croduct
   var width, height;
-  width = vp.width;// + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
+  width = vp.width; // + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
   if (menus.top || menus.bottom)
-    height = vp.height;// + ((menus.top && menus.bottom) ? opts.menu_height * 2 : opts.menu_height);
+    height = vp.height; // + ((menus.top && menus.bottom) ? opts.menu_height * 2 : opts.menu_height);
   else
     height = vp.height;
   console.log('width: ' + width);
@@ -210,12 +205,3 @@ wrmn.init = function(el, opts) {
   // quick scroll fix
   menu_el.parentNode.style.overflowX = "hidden";
 }; // end init
-
-
-
-
-
-
-
-
-

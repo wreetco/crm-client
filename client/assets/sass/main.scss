@@ -351,6 +351,15 @@
     #contact-info-card {
       background-color: $primary-color;
     }
+    
+    #contact-info-card input[type="text"] {
+      font-size: 1.5em;
+      transition: all 0.2s ease !important;
+    }
+    
+    #contact-info-card input[type=text]:focus:not([readonly]) {
+      font-size: 1em;
+    }
 
     //table rows
     table.striped>tbody>tr:nth-child(odd) {

@@ -120,11 +120,32 @@
     }
   })();
 
-  $('#right').ready(function()  {
-    setTimeout(function() {
-     wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-    }, 200);
+  
+  
+  
+  enquire.register("only screen and (min-width: 992px)", {
+	  match: function(){
+	    $('#right').ready(function()  {
+        setTimeout(function() {
+          wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
+        }, 0);
+      });
+	  } // end match
   });
+  // medium breakpoint "tablet"
+  enquire.register("only screen and (max-width: 991px) and (min-width: 601px)", {
+    match: function(){
+    } // end match
+  });
+  // small breakpoiint, "phone"
+  enquire.register("only screen and (max-width: 600px)", {
+    match: function(){
+      setTimeout(function() {
+        wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth});
+      }, 0);
+    } // end match
+  });
+
 
   $("#checkAll").change(function () {
     $("input:checkbox").prop('checked', $(this).prop("checked"));
