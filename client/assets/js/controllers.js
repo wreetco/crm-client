@@ -59,6 +59,8 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 .controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
+  $scope.theme = 'dark-theme';
+
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
@@ -68,10 +70,15 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
+      $scope.session = JSON.parse(window.sessionStorage.session);
+      $scope.theme = $scope.session.user.settings.theme;
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.theme);
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
   };
+
 
   function setActive(event) {
     $(".activeTab").remove();
@@ -89,6 +96,15 @@ angular.module('application.controllers', ['nvd3'])
       $('#org_name').text($scope.interface.organization);
     }
   });
+
+  $scope.$watch('session.user.settings.theme', function(){
+    if ($scope.session) {
+      console.log("changed");
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.session.user.settings.theme);
+    }
+  });
+
 
   (function() { // sup
     if (!$scope.interface)
@@ -177,11 +193,24 @@ angular.module('application.controllers', ['nvd3'])
     //fields obj
     // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
+    //lets mark our master variablols
+    $scope.master_fields = ["first_name", "last_name", "email_address", "organization", "phone_num"];
+    for(var i = 0; i < $scope.current_fields.length; i++){
+      for(var j = 0; j < $scope.current_fields[i].fields.length; j++){
+        var field = $scope.current_fields[i].fields[j];
+        if($scope.master_fields.includes($scope.current_fields[i].fields[j].db_name)){
+          field.master = true;
+        }
+        else {
+          field.master = false;
+        }
+      }
+    }
     //clean out our chips deal
     $('.chip').remove();
-    for(var j = 0; j < $scope.current_contact.tags.length; j++){
-      var tag_id = "tag-id-" + $scope.current_contact.tags[j].name;
-      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
+    for(var k = 0; k < $scope.current_contact.tags.length; k++){
+      var tag_id = "tag-id-" + $scope.current_contact.tags[k].name;
+      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[k].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
     }
     //move this to be the last child
     $('#chip-section #new-tag').appendTo('#chip-section');
@@ -233,8 +262,23 @@ angular.module('application.controllers', ['nvd3'])
   //  the edited contact into the proper form for posting to the DB
   //////////////////////////////////////////////////////////////////
   $scope.updateRecord = function(r){
+    $scope.fields = [];
+    console.log($scope.current_fields);
+    for(var i = 0; i < $scope.current_fields.length; i++) {
+      angular.extend($scope.fields, $scope.current_fields[i].fields);
+    }
+
     for (var key in r.x) {
-      $scope.contact.record[key] = r.x[key];
+        console.log($('#' + key).attr("crm-type"));
+      if($('#' + key).attr("crm-type") === "string"){
+        $scope.contact.record[key] = r.x[key];
+      }
+      if($('#' + key).attr("crm-type") === "int"){
+        $scope.contact.record[key] = parseInt(r.x[key]);
+      }
+      if($('#' + key).attr("crm-type") === "date"){
+        $scope.contact.record[key] = Date.parse(r.x[key]);
+      }
     }
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
@@ -313,7 +357,7 @@ angular.module('application.controllers', ['nvd3'])
         name: '',
         section: '',
         tab: "Contacts",
-        type: "string",
+        type: '',
       },
       manager: '',
     };
@@ -673,12 +717,18 @@ angular.module('application.controllers', ['nvd3'])
     else {
       $scope.theme = $('#settings-color-theme input:checked').val();
       //lets update the database
-      $scope.settings = {theme: $scope.theme};
+      $scope.settings = {
+        settings: {
+          theme: $scope.theme,
+        }
+      };
       console.log($scope.theme);
       console.log($scope.settings);
       $scope.updateSettingsWrap($scope.settings, function(res){
         console.log("its happening");
         console.log(res);
+        var sess = Session.getSession();
+        console.log(sess);
       });
 
       $("#theme").removeClass();
