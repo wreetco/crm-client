@@ -265,7 +265,6 @@
       border: 2px solid $primary-text;
     }
     // End Form and Inputs
-
     .btn {
       background-color: $accent;
       color: $primary-text;
@@ -281,6 +280,24 @@
     }
 
     .btn:hover i {
+      color: lighten($secondary-text, 10%);
+    }
+
+    .btn-large {
+      background-color: $accent;
+      color: $primary-text;
+    }
+
+    .btn-large i {
+      color: $secondary-text;
+    }
+
+    .btn-large:hover {
+      background-color: darken($accent, 10%);
+      color: lighten($primary-text, 10%);
+    }
+
+    .btn-large:hover i {
       color: lighten($secondary-text, 10%);
     }
 
