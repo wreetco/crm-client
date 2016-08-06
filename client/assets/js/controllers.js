@@ -167,7 +167,6 @@ angular.module('application.controllers', ['nvd3'])
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
-    console.log(c);
     // Make sure this is empty first
     $scope.current_contact = null;
     //contact object
@@ -412,14 +411,14 @@ angular.module('application.controllers', ['nvd3'])
   ////////////////////////////////////////////////////////////////
   $scope.removeField = function(url) {
     $scope.deleteField(url, function(res) {
-        if(!(res instanceof Error)){
-          Materialize.toast('Field Removed', 5000);
-          console.log(res);
-        }
-        else {
-          Materialize.toast('There Was A Problem', 5000);
-          console.log(res);
-        }
+      if(!(res instanceof Error)){
+        Materialize.toast('Field Removed', 5000);
+        console.log(res);
+      }
+      else {
+        Materialize.toast('There Was A Problem', 5000);
+        console.log(res);
+      }
     });
   };
 
@@ -427,14 +426,23 @@ angular.module('application.controllers', ['nvd3'])
   ///////////////////////////////////////////////////////////////
   $scope.fieldModal = function(){
     $scope.edit_field = this;
-    console.log($scope.edit_field.field);
     $('#field-edit-modal').openModal();
+
+    $scope.section_choices = [];
+    $scope.order_choices = [];
+    $scope.current_fields = $scope.current_interface.tabs[0].sections;
+    for(var i = 0; i < $scope.current_interface.tabs[0].sections.length; i++){
+      $scope.section_choices.push($scope.current_interface.tabs[0].sections[i].name);
+    }
+    console.log($scope.current_fields[0].fields);
+    for(var j = 0; j < $scope.current_fields[0].fields.length; j++){
+      $scope.order_choices.push(j);
+    }
   };
 
   // Edit Field
   ///////////////////////////////////////////////////////////////
   $scope.editField = function(){
-    console.log($scope.edit_field.field);
     $scope.updated_field = {
       field: {
         db_name: $scope.edit_field.field.name.replace(/\s+/g, '_'),
@@ -446,6 +454,7 @@ angular.module('application.controllers', ['nvd3'])
       },
       manager: JSON.parse(window.sessionStorage.session).user.managers[0],
     };
+    console.log($scope.updated_field);
     if($scope.updated_field.field.id){
       //we can post it
       $scope.postField( $scope.updated_field, function(res) {
@@ -455,6 +464,14 @@ angular.module('application.controllers', ['nvd3'])
         }
         else {
           Materialize.toast('Field Name Changed', 5000);
+          Interface.getInterface(JSON.parse(window.sessionStorage.session).user.managers[0]).then(function(interface) {
+            // store the thing
+            window.localStorage.interface = JSON.stringify(interface);
+            $scope.interface = interface;
+          }).catch(function(err) { // sup, mike, chyea
+            console.log(JSON.stringify(err));
+          });
+          $scope.$apply();
           $('#field-edit-modal').closeModal();
         }
       });

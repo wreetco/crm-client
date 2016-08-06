@@ -1,11 +1,39 @@
+
 <!doctype html>
-<div id="field-edit-modal" class="modal">
-  <div class="modal-content">
-    <h4>Brad</h4>
-    <input name="" type="text" ng-model="edit_field.field.name"/>
-  </div>
-  <div class="modal-footer col s12">
-    <input type="submit" value="Delete Field" ng-click="saveField()" class="modal-action btn left">
-    <input type="submit" value="Save" ng-click="editField()" class="modal-action btn right">
+
+<style>
+  .modal {
+    overflow-y:hidden;
+  }
+</style>
+<div id="field-edit-modal" class="modal modal-fixed-footer">
+  <div class="row">
+    <div class="modal-content">
+      <h4>Edit Field</h4>
+      <div class="col s12">
+        <input name="" type="text" ng-model="edit_field.field.name"/>
+      </div>
+      <div class="col s12">
+        <div input-field>
+          <select class="" ng-model="edit_field.field.section" material-select watch>
+            <option value="" selected> Choose A Section</option>
+            <option value="Computer" selected>Computer</option>
+            <option ng-repeat="value in section_choices">{{ value }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col s12">
+        <div input-field>
+          <select class="" ng-model="edit_field.field.order" material-select watch>
+            <option value="" selected> Choose An Order</option>
+            <option ng-repeat="value in order_choices">{{ value }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer col s12">
+      <input type="submit" value="Delete Field" ng-click="hideField()" class="modal-action btn left">
+      <input type="submit" value="Save" ng-click="editField()" class="modal-action btn right">
+    </div>
   </div>
 </div>
