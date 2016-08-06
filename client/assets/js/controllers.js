@@ -262,14 +262,12 @@ angular.module('application.controllers', ['nvd3'])
   //  the edited contact into the proper form for posting to the DB
   //////////////////////////////////////////////////////////////////
   $scope.updateRecord = function(r){
-    $scope.fields = [];
-    console.log($scope.current_fields);
+    $scope.all_fields = [];
     for(var i = 0; i < $scope.current_fields.length; i++) {
-      angular.extend($scope.fields, $scope.current_fields[i].fields);
+      angular.extend($scope.all_fields, $scope.current_fields[i].fields);
     }
 
     for (var key in r.x) {
-        console.log($('#' + key).attr("crm-type"));
       if($('#' + key).attr("crm-type") === "string"){
         $scope.contact.record[key] = r.x[key];
       }
@@ -278,6 +276,9 @@ angular.module('application.controllers', ['nvd3'])
       }
       if($('#' + key).attr("crm-type") === "date"){
         $scope.contact.record[key] = Date.parse(r.x[key]);
+      }
+      else {
+        $scope.contact.record[key] = r.x[key];
       }
     }
     $scope.contact.record.id = r._id;
