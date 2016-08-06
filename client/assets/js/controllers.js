@@ -199,8 +199,6 @@ angular.module('application.controllers', ['nvd3'])
       for(var j = 0; j < $scope.current_fields[i].fields.length; j++){
         var field = $scope.current_fields[i].fields[j];
         if($scope.master_fields.includes($scope.current_fields[i].fields[j].db_name)){
-          console.log("stink");
-          console.log(field.db_name);
           field.master = true;
         }
         else {
@@ -264,8 +262,23 @@ angular.module('application.controllers', ['nvd3'])
   //  the edited contact into the proper form for posting to the DB
   //////////////////////////////////////////////////////////////////
   $scope.updateRecord = function(r){
+    $scope.fields = [];
+    console.log($scope.current_fields);
+    for(var i = 0; i < $scope.current_fields.length; i++) {
+      angular.extend($scope.fields, $scope.current_fields[i].fields);
+    }
+
     for (var key in r.x) {
-      $scope.contact.record[key] = r.x[key];
+        console.log($('#' + key).attr("crm-type"));
+      if($('#' + key).attr("crm-type") === "string"){
+        $scope.contact.record[key] = r.x[key];
+      }
+      if($('#' + key).attr("crm-type") === "int"){
+        $scope.contact.record[key] = parseInt(r.x[key]);
+      }
+      if($('#' + key).attr("crm-type") === "date"){
+        $scope.contact.record[key] = Date.parse(r.x[key]);
+      }
     }
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
@@ -480,7 +493,7 @@ angular.module('application.controllers', ['nvd3'])
         name: $scope.edit_field.field.name,
         section: $scope.edit_field.field.section,
         tab: $scope.edit_field.field.tab,
-        type: parseInt($scope.edit_field.field.type),
+        type: $scope.edit_field.field.type,
         id: $scope.edit_field.field._id,
       },
       manager: JSON.parse(window.sessionStorage.session).user.managers[0],

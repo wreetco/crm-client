@@ -40,11 +40,11 @@
           <div class="row">
             <div ng-repeat="field in section.fields | orderBy:'-order' : true " ng-hide="field.master">
               <div class="col s12 m6 input-field">
-                <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-                <label for="{{ field._id }}" class="light">
+                <input id="{{ field.db_name }}" type="text" crm-type="{{ field.type }}" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
+                <label for="{{ field.db_name }}" class="light">
                   {{ field.name }}
                 </label>
-                <a id="{{ field._id }}-icon" style="visibility: hidden; margin: .3em; cursor: pointer;" class="right" ng-click="fieldModal();">
+                <a id="{{ field.db_name }}-icon" style="visibility: hidden; margin: .3em; cursor: pointer;" class="right" ng-click="fieldModal();">
                   <i class="material-icons right" >settings</i>
                 </a>
               </div>
@@ -100,7 +100,7 @@
           <button class="btn-large" style="width: 100%;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
         </div>
         <div class="col s12 m12">
-          <button class="btn-large" style="width: 100%;" ng-click="updateRecord(current_contact);">Add New Section</button>
+          <button class="btn-large" style="width: 100%;" ng-click="">Add New Section</button>
         </div>
       </div>
     </div>
