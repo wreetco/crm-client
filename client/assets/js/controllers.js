@@ -271,10 +271,10 @@ angular.module('application.controllers', ['nvd3'])
       if($('#' + key).attr("crm-type") === "string"){
         $scope.contact.record[key] = r.x[key];
       }
-      if($('#' + key).attr("crm-type") === "int"){
+      else if($('#' + key).attr("crm-type") === "int"){
         $scope.contact.record[key] = parseInt(r.x[key]);
       }
-      if($('#' + key).attr("crm-type") === "date"){
+      else if($('#' + key).attr("crm-type") === "date"){
         $scope.contact.record[key] = Date.parse(r.x[key]);
       }
       else {
