@@ -344,7 +344,7 @@ angular.module('application.controllers', ['nvd3'])
         name: '',
         section: '',
         tab: "Contacts",
-        type: "string",
+        type: '',
       },
       manager: '',
     };
@@ -480,7 +480,7 @@ angular.module('application.controllers', ['nvd3'])
         name: $scope.edit_field.field.name,
         section: $scope.edit_field.field.section,
         tab: $scope.edit_field.field.tab,
-        type: $scope.edit_field.field.type,
+        type: parseInt($scope.edit_field.field.type),
         id: $scope.edit_field.field._id,
       },
       manager: JSON.parse(window.sessionStorage.session).user.managers[0],
