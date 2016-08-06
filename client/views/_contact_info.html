@@ -3,21 +3,41 @@
   <div class="row">
     <div class="col s12">
       <h3 ng-if="current_contact._id">
-        Contact Info
+        {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
       </h3>
       <h3 ng-if="!(current_contact._id)">
         Post Contact
       </h3>
+      <div class="row">
+        <div class="col s2">
+          <i class="material-icons left">phone</i>Phone:
+        </div>
+        <div class="col s10">
+          <input name="" id="phone-num" class="left" type="text" ng-model="current_contact.x.phone_num" />
+        </div>
+        <div class="col s2">
+          <i class="material-icons left">email</i>Email:
+        </div>
+        <div class="col s10">
+          <input name="" id="phone-num" class="left" type="text" ng-model="current_contact.x.email_address" />
+        </div>
+        <div class="col s2">
+          <i class="material-icons left">phone</i>Phone:
+        </div>
+        <div class="col s10">
+          <input name="" id="phone-num" class="left" type="text" ng-model="current_contact.x.phone_num" />
+        </div>
+      </div>
       <div class="row">
         <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-show="!section.fields.length < 1">
           <h3 ng-hide="$first">
             {{ section.name }}
           </h3>
           <div class="row">
-            <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
+            <div ng-repeat="field in section.fields | orderBy:'-order' : true " ng-hide="field.master">
               <div class="col s12 m6 input-field">
                 <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-                <label for="{{ field._id }}">
+                <label for="{{ field._id }}" class="light">
                   {{ field.name }}
                 </label>
                 <a id="{{ field._id }}-icon" style="visibility: hidden; margin: .3em; cursor: pointer;" class="right" ng-click="fieldModal();">

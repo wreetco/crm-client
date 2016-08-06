@@ -177,11 +177,26 @@ angular.module('application.controllers', ['nvd3'])
     //fields obj
     // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
+    //lets mark our master variablols
+    $scope.master_fields = ["first_name", "last_name", "email_address", "organization", "phone_num"];
+    for(var i = 0; i < $scope.current_fields.length; i++){
+      for(var j = 0; j < $scope.current_fields[i].fields.length; j++){
+        var field = $scope.current_fields[i].fields[j];
+        if($scope.master_fields.includes($scope.current_fields[i].fields[j].db_name)){
+          console.log("stink");
+          console.log(field.db_name);
+          field.master = true;
+        }
+        else {
+          field.master = false;
+        }
+      }
+    }
     //clean out our chips deal
     $('.chip').remove();
-    for(var j = 0; j < $scope.current_contact.tags.length; j++){
-      var tag_id = "tag-id-" + $scope.current_contact.tags[j].name;
-      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
+    for(var k = 0; k < $scope.current_contact.tags.length; k++){
+      var tag_id = "tag-id-" + $scope.current_contact.tags[k].name;
+      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[k].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
     }
     //move this to be the last child
     $('#chip-section #new-tag').appendTo('#chip-section');
