@@ -8,47 +8,44 @@
       <h3 ng-if="!(current_contact._id)">
         Post Contact
       </h3>
-      <div class="row" ng-if="current_contact._id">
-        <div class="col s2">
-          <i class="material-icons left">phone</i>Phone:
-        </div>
-        <div class="col s10">
-          {{ current_contact.x.phone_num }}
-        </div>
-      </div>
-      <div class="row" ng-if="current_contact._id">
-        <div class="col s2">
-          <i class="material-icons left">email</i>Email:
-        </div>
-        <div class="col s10">
-          {{ current_contact.x.email_address }}
-        </div>
-      </div>
-      <div class="row" ng-if="current_contact._id">
-        <div class="col s2">
-          <i class="material-icons left">account_balance</i>Organization:
-        </div>
-        <div class="col s10">
-          {{ current_contact.x.organization }}
-        </div>
-      </div>
-      <div class="row" ng-if="current_contact._id">
-        <div class="col s2">
-          <i class="material-icons">date_range</i>Created:
-        </div>
-        <div class="col s10">
-          {{ current_contact.created_date | date:'medium'}}
-        </div>
-      </div>
-      <div class="row" ng-if="current_contact._id">
-        <div class="col s2">
-          <i class="material-icons">date_range</i>Modified:
-        </div>
-        <div class="col s10">
-          {{ current_contact.updated_at | date:'medium' }}
-        </div>
-      </div>
-
+      <table ng-if="current_contact._id" class="responsive-table">
+        <tr>
+          <td>
+            <i class="material-icons left">phone</i>Phone:
+          </td>
+          <td>
+            {{ current_contact.x.phone_num }}
+          </td>
+          <td>
+            <i class="material-icons">date_range</i>Created:
+          </td>
+          <td>
+            {{ current_contact.created_date | date:'medium'}}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i class="material-icons left">email</i>Email:
+          </td>
+          <td>
+            {{ current_contact.x.email_address }}
+          </td>
+          <td>
+            <i class="material-icons">date_range</i>Modified:
+          </td>
+          <td>
+            {{ current_contact.updated_at | date:'medium' }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <i class="material-icons left">account_balance</i>Organization:
+          </td>
+          <td>
+            {{ current_contact.x.organization }}
+          </td>
+        </tr>
+      </table>
 
       <div class="row">
         <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-show="!section.fields.length < 1">
