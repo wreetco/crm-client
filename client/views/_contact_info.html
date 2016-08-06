@@ -15,7 +15,7 @@
           </h3>
           <div class="row">
             <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
-              <div class="col s12 m6">
+              <div class="col s12 m6 input-field">
                 <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
                 <label for="{{ field._id }}">
                   {{ field.name }}
@@ -74,6 +74,9 @@
         </div>
         <div class="col s12 m12">
           <button class="btn-large" style="width: 100%;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
+        </div>
+        <div class="col s12 m12">
+          <button class="btn-large" style="width: 100%;" ng-click="updateRecord(current_contact);">Add New Section</button>
         </div>
       </div>
     </div>

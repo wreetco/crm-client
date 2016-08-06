@@ -647,6 +647,9 @@ angular.module('application.controllers', ['nvd3'])
   // Save Theme
   /////////////////////////////////////////////////////////////////
   $scope.saveTheme = function(){
+
+    $scope.current_session = JSON.parse($window.sessionStorage.session);
+    console.log($scope.current_session);
     if(!$('#settings-color-theme input:checked').val()){
       $scope.theme = 'dark-theme';
     }
@@ -654,7 +657,10 @@ angular.module('application.controllers', ['nvd3'])
       $scope.theme = $('#settings-color-theme input:checked').val();
       //lets update the database
       $scope.settings = {theme: $scope.theme};
+      console.log($scope.theme);
+      console.log($scope.settings);
       $scope.updateSettingsWrap($scope.settings, function(res){
+        console.log("its happening");
         console.log(res);
       });
 
