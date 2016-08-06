@@ -9,7 +9,7 @@
         Post Contact
       </h3>
       <div class="row">
-        <div ng-repeat="section in current_fields" ng-show="!section.fields.length < 1">
+        <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-show="!section.fields.length < 1">
           <h3 ng-hide="$first">
             {{ section.name }}
           </h3>
