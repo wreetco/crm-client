@@ -685,6 +685,7 @@ angular.module('application.controllers', ['nvd3'])
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
           $scope.contacts = contacts;
+          $scope.tags = Interface.getTags($scope.contacts);
           // store it
           localStorage.contacts = JSON.stringify(contacts);
           $scope.$apply();
@@ -692,7 +693,6 @@ angular.module('application.controllers', ['nvd3'])
           console.log(err);
         });
       }
-      $scope.tags = Interface.getTags($scope.contacts);
     } // end contact check
     $scope.$on('$routeChangeSuccess', function(next, current) { 
       if ($routeParams.tag)
@@ -830,7 +830,7 @@ angular.module('application.controllers', ['nvd3'])
 
 .controller('StatisticsController', ['$scope', function($scope) {
    //This defines the graph on the stats page
-   $scope.options = {
+   $scope.new_contacts_opts = {
      chart: {
        type: 'lineChart',
        height: 450,
@@ -850,12 +850,12 @@ angular.module('application.controllers', ['nvd3'])
          tooltipHide: function(e){ console.log("tooltipHide"); }
        },
        xAxis: {
-         axisLabel: 'Time (ms)'
+         axisLabel: 'day'
        },
        yAxis: {
-         axisLabel: 'Voltage (v)',
+         axisLabel: 'contacts',
          tickFormat: function(d){
-           return d3.format('.02f')(d);
+           return d3.format('d')(d);
          },
          axisLabelDistance: -10
        },
@@ -885,7 +885,7 @@ angular.module('application.controllers', ['nvd3'])
      }
    };
 
-   $scope.data = sinAndCos();
+   $scope.new_contacts_data = sinAndCos();
 
    /*Random Data Generator */
    function sinAndCos() {

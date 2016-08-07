@@ -385,6 +385,11 @@
     table.striped>tbody>tr:nth-child(even) {
       color: $primary-text;
     }
+    
+    // wrmn
+    #__wrmn_right {
+      background-color: $primary-color;
+    }
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%

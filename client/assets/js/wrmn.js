@@ -188,7 +188,8 @@ wrmn.init = function(el, opts) {
     m.style.position = "absolute";
     m.style.display = "block";
     m.style[k] = 0;
-    //m.style.height = ((k == "top" || k == "bottom") ? wrmn.opts.menu_height : vp.height);
+    //m.style.height = ((k == "top" || k == "bottom") ? wrmn.opts.menu_height : vp.height) + "px";
+    m.style.minHeight = "100%";
     m.style.width = ((k == "right" || k == "left") ? wrmn.opts.menu_width : vp.width) + "px";
     //m.style.border = "1px solid orange"; // debug border
     // since k matches css props top, right, bottom or left, use it directly
