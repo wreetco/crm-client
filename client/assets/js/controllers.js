@@ -673,16 +673,21 @@ angular.module('application.controllers', ['nvd3'])
     $scope.contacts = contacts;
   }; // end filterBytag whatev methi
   
-  $scope.newDataSection = function(section_name) {
-    console.log(JSON.parse(localStorage.interface));
+  $scope.newDataSection = function() {
+    $scope.current_fields.push({
+      name: $scope.new_section,
+      fields: []
+    })
+    console.log($scope.current_fields);
   }; // end newDataSection method
 
   ///////////////////////////////////////////////////////////////
   (function() {
     if (!$scope.contacts) {
-      if (localStorage.contacts)
+      if (localStorage.contacts) {
         $scope.contacts = JSON.parse(localStorage.contacts);
-      else {
+        $scope.tags = Interface.getTags($scope.contacts);
+      } else {
         //$scope.contacts = JSON.parse(localStorage.contacts);
         var sess = Session.getSession();
         if (!sess) return 0;

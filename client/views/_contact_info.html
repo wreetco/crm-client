@@ -48,7 +48,7 @@
       </table>
 
       <div class="row">
-        <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-show="!section.fields.length < 1">
+        <div ng-repeat="section in current_fields | orderBy:'-name' : true">
           <h3 ng-hide="$first">
             {{ section.name }}
           </h3>
@@ -84,9 +84,15 @@
         </div>
       </div>
 
-      <div class="row">
+      <div class="row nogut">
         <div class="col s12">
-          <button class="btn-small btn"><i class="material-icons left">list</i>New Section</button>
+          <button class="btn-small btn" onClick="this.style.display='none';$('#new_section').css('display','inline');" ng-click="newDataSection()">
+            <i class="material-icons left">list</i>New Section
+          </button>
+          <div style="display: none;" id="new_section" class="col s12 m6 input-field">
+            <input type="text" ng-model="new_section" id="new_section_text">
+            <label for="new_section_text">Section Name</label>
+          </div>
         </div>
       </div>
 
