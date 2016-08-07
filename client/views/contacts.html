@@ -98,7 +98,7 @@
 
 <div class="col s12">
   <div id="wmenu">
-    <div id="right" ng-include="'views/_contact_info.html'"></div>
+    <div id="right" ng-include="'views/_contact_info.html'" style="display: none;"></div>
   </div>
 </div>
 
@@ -124,7 +124,7 @@
 	  match: function(){
 	    $('#right').ready(function()  {
         setTimeout(function() {
-          wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
+          if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
         }, 100);
       });
 	  } // end match
