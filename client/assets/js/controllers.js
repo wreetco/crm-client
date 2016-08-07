@@ -672,6 +672,10 @@ angular.module('application.controllers', ['nvd3'])
     }
     $scope.contacts = contacts;
   }; // end filterBytag whatev methi
+  
+  $scope.newDataSection = function(section_name) {
+    console.log(JSON.parse(localStorage.interface));
+  }; // end newDataSection method
 
   ///////////////////////////////////////////////////////////////
   (function() {

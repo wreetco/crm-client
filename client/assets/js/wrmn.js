@@ -172,6 +172,7 @@ wrmn.init = function(el, opts) {
     menu_el.style[edge] = 0;
   });
   menu_el.style.width = width + wrmn.opts.menu_width + "px";
+  //menu_el.style.height = height + "px";
   console.log('calcd width');
   console.log(menu_el.style.width);
   menu_el.style.zIndex = -1337; // default the overdiv to be nondisruptive

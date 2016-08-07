@@ -118,16 +118,14 @@
       slide_triggers[i].setAttribute("data-menuwidth", (window.innerWidth <= 992) ? (window.innerWidth * .80) : ((window.innerWidth - 100) * .75));
     }
   })();
-
   
-  
-  
+  // enquiries 
   enquire.register("only screen and (min-width: 992px)", {
 	  match: function(){
 	    $('#right').ready(function()  {
         setTimeout(function() {
           wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-        }, 0);
+        }, 100);
       });
 	  } // end match
   });

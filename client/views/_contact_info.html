@@ -1,5 +1,5 @@
 <!doctype html>
-<div class="" id="contact-info-card" style="padding-left: 1.5em;">
+<div class="" id="contact-info-card" style="margin-left: 1.5em;">
   <div class="row">
     <div class="col s12">
       <h3 ng-if="current_contact._id">
@@ -17,7 +17,7 @@
             {{ current_contact.x.phone_num }}
           </td>
           <td>
-            <i class="material-icons">date_range</i>Created:
+            <i class="material-icons left">date_range</i>Created:
           </td>
           <td>
             {{ current_contact.created_date | date:'medium'}}
@@ -31,7 +31,7 @@
             {{ current_contact.x.email_address }}
           </td>
           <td>
-            <i class="material-icons">date_range</i>Modified:
+            <i class="material-icons left">date_range</i>Modified:
           </td>
           <td>
             {{ current_contact.updated_at | date:'medium' }}
@@ -85,6 +85,12 @@
       </div>
 
       <div class="row">
+        <div class="col s12">
+          <button class="btn-small btn"><i class="material-icons left">list</i>New Section</button>
+        </div>
+      </div>
+
+      <div class="row">
         <div class="col s12 m6">
           <h4>
             Tags
@@ -97,13 +103,10 @@
 
       <div class="row" style="margin-bottom:0;">
         <div class="col s12 m12">
-          <button class="btn-large" style="width: 100%;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
+          <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
         </div>
         <div class="col s12 m12">
-          <button class="btn-large" style="width: 100%;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
-        </div>
-        <div class="col s12 m12">
-          <button class="btn-large" style="width: 100%;" ng-click="">Add New Section</button>
+          <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
         </div>
       </div>
     </div>

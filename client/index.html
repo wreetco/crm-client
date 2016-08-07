@@ -83,16 +83,15 @@ All of our required JS has been concat'd and minified.
     $('.collapsible').collapsible();
   </script>
   <script>
-  $('#right').ready(function()  {
-    setTimeout(function() {
-     wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-    }, 200);
-  });
     // enquire stuff for this page
   	// largest breakpoint in materialize "desktop"
   	enquire.register("only screen and (min-width: 992px)", {
   	  match: function(){
-
+        $('#right').ready(function()  {
+          setTimeout(function() {
+            wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
+          }, 0);
+        });
   	  } // end match
     });
     // medium breakpoint "tablet"
