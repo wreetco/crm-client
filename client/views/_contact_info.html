@@ -48,10 +48,10 @@
       </table>
 
       <div class="row">
-        <div ng-repeat="section in current_fields | orderBy:'-name' : true">
-          <h3 ng-hide="$first">
+        <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts'">
+          <h4>
             {{ section.name }}
-          </h3>
+          </h4>
           <div class="row">
             <div ng-repeat="field in section.fields | orderBy:'-order' : true " ng-hide="field.master">
               <div class="col s12 m6 input-field">
@@ -65,7 +65,8 @@
               </div>
             </div>
           </div>
-          <div class="row" style="display: none">
+          
+          <div class="row" style="display: block;">
             <h6>
               New Field
             </h6>
@@ -81,17 +82,19 @@
               <a class="btn" ng-click="addField(section.name, current_contact);"><i class="material-icons left">add_box</i>Add Field</a>
             </div>
           </div>
-        </div>
-      </div>
+          
+        </div><!-- end repeat of section -->
+      </div><!-- end repeat section outer row -->
 
       <div class="row nogut">
         <div class="col s12">
-          <button class="btn-small btn" onClick="this.style.display='none';$('#new_section').css('display','inline');" ng-click="newDataSection()">
+          <button class="btn-small btn" onclick="this.style.display='none';$('#new_section').css('display','inline');">
             <i class="material-icons left">list</i>New Section
           </button>
-          <div style="display: none;" id="new_section" class="col s12 m6 input-field">
-            <input type="text" ng-model="new_section" id="new_section_text">
+          <div style="display: none; position: relative;" id="new_section" class="col s12 m6 input-field">
+            <input type="text" id="new_section_text">
             <label for="new_section_text">Section Name</label>
+            <i class="material-icons" style="position: absolute; top: 1em; right: 0;" ng-click="newDataSection()">check</i>
           </div>
         </div>
       </div>

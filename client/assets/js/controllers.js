@@ -675,10 +675,11 @@ angular.module('application.controllers', ['nvd3'])
   
   $scope.newDataSection = function() {
     $scope.current_fields.push({
-      name: $scope.new_section,
+      name: $('#new_section_text').val(),
       fields: []
     })
-    console.log($scope.current_fields);
+    $('#new_section_text').val("");
+    $('#new_section').css('display','none');
   }; // end newDataSection method
 
   ///////////////////////////////////////////////////////////////
@@ -703,6 +704,8 @@ angular.module('application.controllers', ['nvd3'])
         });
       }
     } // end contact check
+    if (!$scope.tags && $scope.contact)
+      $scope.tags = Interface.getTags($scope.contacts);
     $scope.$on('$routeChangeSuccess', function(next, current) { 
       if ($routeParams.tag)
         $scope.filterContactsByTag($routeParams.tag);
