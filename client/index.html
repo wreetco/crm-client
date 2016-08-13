@@ -26,6 +26,11 @@ All of our required JS has been concat'd and minified.
   </head>
 
   <body>
+    <!-- This is where the views get served up in this ng view div -->
+    <div class="main">
+      <div ng-view></div>
+    </div>
+
     <div>
       <!-- This is the sidebar -->
       <ul id="slide-out" class="side-nav fixed">
@@ -34,16 +39,16 @@ All of our required JS has been concat'd and minified.
           <p id="org_name"></p>
         </li>
         <li class="no-padding">
-          <ul class="collapsible collapsible-accordion">
+          <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
             <li>
-              <a class="collapsible-header">
+              <a class="collapsible-header" id="contact-collapse">
                 <i class="material-icons">person_pin</i>
                 Contacts
               </a>
-              <div class="collapsible-body">
-                <ul ng-controller="ContactController">
-                  <li><a class="activatable" href="#!/contacts">All</a></li>
-                  <li ng-repeat="tag in tags">
+              <div class="collapsible-body" id="contact-collapse-body">
+                <ul ng-controller="ContactController" class="collection">
+                  <li class="collection-item"><a class="activatable" href="#!/contacts">All</a></li>
+                  <li ng-repeat="tag in tags" class="collection-item">
                     <a ng-href="/#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}
                     </a>
@@ -53,8 +58,8 @@ All of our required JS has been concat'd and minified.
             </li>
           </ul>
         </li>
-        <li><a href="#!/statistics" class="activatable collapsible-header"><i class="material-icons">insert_chart</i>Statistics</a></li>
-        <li><a href="#!/settings" class="activatable collapsible-header"><i class="material-icons">settings_applications</i>Settings</a></li>
+        <li><a href="#!/statistics" class="activatable" onclick="collapseCheck();"><i class="material-icons">insert_chart</i>Statistics</a></li>
+        <li><a href="#!/settings" class="activatable" onclick="collapseCheck();"><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->
         <li id="logoutButton" ng-controller="LogoutController">
@@ -65,16 +70,11 @@ All of our required JS has been concat'd and minified.
     <!-- The button that shows up when it collapstes -->
     <a data-activates="slide-out" class="button-collapse" ><i class="material-icons slideout-icon">keyboard_arrow_down</i></a>
 
-    <!-- This is where the views get served up in this ng view div -->
-    <div class="main">
-      <div ng-view></div>
-    </div>
-
     <ng-include src="'views/_logout_modal.html'"></ng-include>
-    
+
     <!--<div id="wmenu" ng-controller="ContactController">
-      <div id="right" wrmn></div>
-    </div>-->
+<div id="right" wrmn></div>
+</div>-->
 
   </body>
 
@@ -85,24 +85,34 @@ All of our required JS has been concat'd and minified.
     }
                                  );
     $('.collapsible').collapsible();
-  </script>
-  <script>
+
     // enquire stuff for this page
-  	// largest breakpoint in materialize "desktop"
-  	enquire.register("only screen and (min-width: 992px)", {
-  	  match: function(){
-  	  } // end match
+    // largest breakpoint in materialize "desktop"
+    enquire.register("only screen and (min-width: 992px)", {
+      match: function(){
+      } // end match
     });
+
     // medium breakpoint "tablet"
     enquire.register("only screen and (max-width: 991px) and (min-width: 601px)", {
       match: function(){
       } // end match
     });
+
     // small breakpoiint, "phone"
     enquire.register("only screen and (max-width: 600px)", {
       match: function(){
       } // end match
     });
+
+    //collapse the contacts section if its open
+    function collapseCheck(){
+      if($(document.getElementById("contact-collapse")).hasClass("active")) {
+        $(document.getElementById("contact-collapse")).removeClass("active");
+        $(document.getElementById("contact-collapse")).parent().removeClass("active");
+        $(document.getElementById("contact-collapse-body")).css("display", "none");
+      }
+    };
   </script>
 
 </html>
