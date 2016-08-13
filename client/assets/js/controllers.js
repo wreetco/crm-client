@@ -82,14 +82,14 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
-
+  // Sidebar activation stuff
   function setActive(event) {
     $(".activeTab").remove();
     var activeTab = $("<span></span>");
     //activeTab.addClass("material-icons");
     activeTab.addClass("right");
     activeTab.addClass("activeTab");
-    activeTab.html("<i class=\"material-icons\" style=\"vertical-align: middle;\">chevron_right</i>" + activeTab.html());
+    activeTab.html("<i class=\"material-icons\" style=\"vertical-align: middle;\">chevron_right</i>");
     $(event.target).append(activeTab);
   }
   $("a.activatable").click(setActive);
@@ -985,3 +985,4 @@ angular.module('application.controllers', ['nvd3'])
   ];
 }])
 ;
+//It's Time
