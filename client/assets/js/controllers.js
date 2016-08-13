@@ -717,6 +717,9 @@ angular.module('application.controllers', ['nvd3'])
 
 .controller('SettingsController', ['$scope', '$window', '$controller', 'Setting', 'Interface', 'Session', 'Record', function($scope, $window, $controller, Setting, Interface, Session, Record) {
 
+  $scope.session = JSON.parse(window.sessionStorage.session);
+  $scope.theme = $scope.session.user.settings.theme;
+
   // Save Theme
   /////////////////////////////////////////////////////////////////
   $scope.saveTheme = function(){
@@ -734,8 +737,6 @@ angular.module('application.controllers', ['nvd3'])
           theme: $scope.theme,
         }
       };
-      console.log($scope.theme);
-      console.log($scope.settings);
       $scope.updateSettingsWrap($scope.settings, function(res){
         console.log("its happening");
         console.log(res);
