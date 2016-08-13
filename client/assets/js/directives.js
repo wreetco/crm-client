@@ -50,17 +50,28 @@ return {
 	};
 })
 
-.directive('wrmn', function($timeout) {
+
+.directive('wrmn', function($compile) {
 	return {
 		restrict: 'A',
 		scope: false,
-		templateUrl: 'views/_contact_info.html',
 		link: function($scope, $el) {
 			if (!wrmn.is_initd) { 
 				$scope.current_contact = $scope.contacts[0];
 				wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
 			}
 		}
+	};
+})
+
+.directive('wrmnToggleMenu', function($templateRequest, $compile) {
+	return function($scope, $el, $atts) {
+		$templateRequest('views/_contact_info.html').then(function(html){
+			var tmp = angular.element(html);
+			$("#__wrmn_right").empty();
+			$("#__wrmn_right").append(tmp);
+			$compile(tmp)($scope);
+		});
 	};
 })
 
