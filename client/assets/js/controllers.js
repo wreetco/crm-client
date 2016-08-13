@@ -678,8 +678,14 @@ angular.module('application.controllers', ['nvd3'])
       fields: []
     });
     $('#new_section_text').val("");
-    $('#new_section').css('display','none');
+    $scope.current_contact.new_section = false;
   }; // end newDataSection method
+  
+  $scope.new_fields = [];
+  $scope.newField = function(i) {
+    // time to ah yeah 
+    
+  };
 
   ///////////////////////////////////////////////////////////////
   (function() {
