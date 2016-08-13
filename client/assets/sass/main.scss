@@ -227,6 +227,17 @@
       border-bottom: $accent;
     }
 
+    .wedit {
+      display: block;
+      padding: 5px 10px;
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .wedit:hover {
+      box-shadow: 0px 0px 3px 1px rgba($primary-text, .25); 
+      cursor: pointer;
+    }
+
     .file-field input[type=file] {
       background-color: $primary-color-dark;
       color: $secondary-text;

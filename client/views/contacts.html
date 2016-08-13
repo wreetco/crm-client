@@ -58,11 +58,10 @@
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
           </td>
-          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.first_name }} {{ c.x.last_name }}</td>
-          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.email_address }}</td>
-          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.x.phone_num | tel }}</td>
-          <td style="cursor: pointer;" onclick="wrmn.cron.toggleMenu('right');" ng-click="infoBar(c);">{{ c.created_date | date:'MMM d, y' }}</td>
-
+          <td style="cursor: pointer;" wrmn-toggle-menu="c">{{ c.x.first_name }} {{ c.x.last_name }}</td>
+          <td style="cursor: pointer;" wrmn-toggle-menu="c">{{ c.x.email_address }}</td>
+          <td style="cursor: pointer;" wrmn-toggle-menu="c">{{ c.x.phone_num | tel }}</td>
+          <td style="cursor: pointer;" wrmn-toggle-menu="c">{{ c.created_date | date:'MMM d, y' }}</td>
           <td class="center">
             <div id="box-{{ c._id }}">
               <i class="material-icons right" style="display: none; cursor: pointer;" id="tag-box-input-icon-{{ c_id }}" ng-click="closeTagBox(c._id)">cancel</i>
@@ -96,14 +95,12 @@
   </ul>
 </div>
 
-<div class="col s12">
-  <div id="wmenu">
-    <div id="right" ng-include="'views/_contact_info.html'" style=""></div>
-  </div>
-</div>
-
 <ng-include src="'views/_field_edit.html'"></ng-include>
 
+<div id="wmenu" ng-controller="ContactController">
+  <div id="right" wrmn></div>
+</div>
+    
 <script>
   //This was in index.html but doesn't fire off unless you manually refresh the /contacts page
   $('select').ready(function() {
@@ -122,11 +119,6 @@
   // enquiries 
   enquire.register("only screen and (min-width: 992px)", {
 	  match: function(){
-	    $('#right').ready(function()  {
-        setTimeout(function() {
-          if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-        }, 100);
-      });
 	  } // end match
   });
   // medium breakpoint "tablet"

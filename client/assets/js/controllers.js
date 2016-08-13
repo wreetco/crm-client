@@ -162,7 +162,6 @@ angular.module('application.controllers', ['nvd3'])
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', '$routeParams', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, $routeParams, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
@@ -183,11 +182,8 @@ angular.module('application.controllers', ['nvd3'])
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
-    // Make sure this is empty first
-    $scope.current_contact = null;
     //contact object
-    c = c || null;
-    $scope.current_contact = c;
+    $scope.current_contact = c || null;
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
