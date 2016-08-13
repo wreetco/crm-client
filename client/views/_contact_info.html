@@ -109,15 +109,17 @@
       </div><!-- end repeat section outer row -->
 
       <div class="row nogut">
-        <div class="col s12">
-          <button class="btn-small btn" onclick="this.style.display='none';$('#new_section').css('display','inline');">
-            <i class="material-icons left">list</i>New Section
-          </button>
-          <div style="display: none; position: relative;" id="new_section" class="col s12 m6 input-field">
+        <div class="col s12" style="display: none; position: relative;" id="new_section">
+          <div class="col s12 m6 input-field">
             <input type="text" id="new_section_text">
             <label for="new_section_text">Section Name</label>
             <i class="material-icons" style="position: absolute; top: 1em; right: 0;" ng-click="newDataSection()">check</i>
           </div>
+        </div>
+        <div class="col s12">
+          <button class="btn-small btn" style="display: block;" onclick="$('#new_section').css('display','block');">
+            <i class="material-icons left">list</i>New Section
+          </button>
         </div>
       </div>
 
