@@ -20,6 +20,7 @@ All of our required JS has been concat'd and minified.
     <script type="text/javascript" src="assets/js/app.js"></script>
     <script type="text/javascript" src="assets/js/services.js"></script>
     <script type="text/javascript" src="assets/js/controllers.js"></script>
+    <script type="text/javascript" src="/assets/js/directives.js"></script>
     <!-- chase's dough wrmn slider -->
     <script type="text/javascript" src="assets/js/wrmn.js"></script>
   </head>
@@ -70,7 +71,10 @@ All of our required JS has been concat'd and minified.
     </div>
 
     <ng-include src="'views/_logout_modal.html'"></ng-include>
-
+    
+    <!--<div id="wmenu" ng-controller="ContactController">
+      <div id="right" wrmn></div>
+    </div>-->
 
   </body>
 
@@ -83,16 +87,10 @@ All of our required JS has been concat'd and minified.
     $('.collapsible').collapsible();
   </script>
   <script>
-  $('#right').ready(function()  {
-    setTimeout(function() {
-     wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-    }, 200);
-  });
     // enquire stuff for this page
   	// largest breakpoint in materialize "desktop"
   	enquire.register("only screen and (min-width: 992px)", {
   	  match: function(){
-
   	  } // end match
     });
     // medium breakpoint "tablet"
@@ -103,7 +101,6 @@ All of our required JS has been concat'd and minified.
     // small breakpoiint, "phone"
     enquire.register("only screen and (max-width: 600px)", {
       match: function(){
-
       } // end match
     });
   </script>

@@ -11,7 +11,7 @@
     * fix the function to take an edge with el_id to allow any html el on page
       to serve as the template html for a menu eg wrmn.addMenu($('.el'),"left")
     * re-calc all the things on page resize or rotate
-    * investigate creating a drag div for the menu edges 
+    * investigate creating a drag div for the menu edges
   *****************************************************************************
 */
 
@@ -64,7 +64,7 @@ wrmn.cron.toggleMenu = function(menu) {
     * already beedn added to the global menus
   */
   // first, is a menu open?
-  if (wrmn.activated != "")
+  if (wrmn.activated !== "")
     menu = wrmn.activated;
   menu = menu || "left"; // as always, default left
   if (!wrmn.is_initd) // if we have not started the main script there is little hope
@@ -81,7 +81,7 @@ wrmn.cron.toggleMenu = function(menu) {
     // determine shift
     pos = (menu == "right") ? wrmn.opts.menu_width * -1 : wrmn.opts.menu_width;
   }
-  if (wrmn.activated != "") {
+  if (wrmn.activated !== "") {
     // if there is already a menu open, translate(X|Y) back to zero position
     pos = 0;
     // disable fog
@@ -124,15 +124,16 @@ wrmn.init = function(el, opts) {
   */
   opts = opts || {};
   if (opts) { // if they passed opts the least we can do is collect and set them
-    for (k in opts)
-      wrmn.opts[k] = opts[k];
+    for (var l in opts)
+      wrmn.opts[l] = opts[l];
   }
   // let's go ahead and look at this element and see what we have
   var wrmn_tmp = el;
   // see if they sectioned it off, it not, we assume the standard left slider
   var sections = ["top", "right", "bottom", "left"]; // allowed menu sections
+  var divs;
   try {
-    var divs = wrmn_tmp.getElementsByTagName('div'); // divs to see if they are menu parts
+    divs = wrmn_tmp.getElementsByTagName('div'); // divs to see if they are menu parts
   } catch (err) { // seems there is an issue with this element we were passed
     throw "wrmn.js: could not get menu sections - " + err;
   }
@@ -171,7 +172,8 @@ wrmn.init = function(el, opts) {
     menu_el.style[edge] = 0;
   });
   menu_el.style.width = width + wrmn.opts.menu_width + "px";
-  console.log('calcd width'); 
+  //menu_el.style.height = height + "px";
+  console.log('calcd width');
   console.log(menu_el.style.width);
   menu_el.style.zIndex = -1337; // default the overdiv to be nondisruptive
   //menu_el.style.border = "1px solid red"; // debug
@@ -187,7 +189,8 @@ wrmn.init = function(el, opts) {
     m.style.position = "absolute";
     m.style.display = "block";
     m.style[k] = 0;
-    //m.style.height = ((k == "top" || k == "bottom") ? wrmn.opts.menu_height : vp.height);
+    //m.style.height = ((k == "top" || k == "bottom") ? wrmn.opts.menu_height : vp.height) + "px";
+    m.style.minHeight = "100%";
     m.style.width = ((k == "right" || k == "left") ? wrmn.opts.menu_width : vp.width) + "px";
     //m.style.border = "1px solid orange"; // debug border
     // since k matches css props top, right, bottom or left, use it directly
@@ -196,7 +199,7 @@ wrmn.init = function(el, opts) {
     m.onclick = function(e) {
       e.stopPropagation(); // don't let it bubble up to menu_el onclick closer
     };
-    menu_el.appendChild(m); // link it 
+    menu_el.appendChild(m); // link it
   }
   // let's append wrmn to the tree
   document.body.appendChild(menu_el);

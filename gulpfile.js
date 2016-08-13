@@ -31,7 +31,8 @@ var js_paths = [
 var js_paths_main = [
     'client/assets/js/app.js',
     'client/assets/js/controllers.js',
-    'client/assets/js/services.js'
+    'client/assets/js/services.js',
+    'client/assets/js/wrmn.js',
 ];
 
 var css_paths = [

@@ -59,6 +59,8 @@ angular.module('application.controllers', ['nvd3'])
 }])
 
 .controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
+  $scope.theme = 'dark-theme';
+
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
@@ -68,10 +70,15 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
+      $scope.session = JSON.parse(window.sessionStorage.session);
+      $scope.theme = $scope.session.user.settings.theme;
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.theme);
     }).catch(function(err) { // sup, mike, chyea
       console.log(JSON.stringify(err));
     });
   };
+
 
   function setActive(event) {
     $(".activeTab").remove();
@@ -89,6 +96,15 @@ angular.module('application.controllers', ['nvd3'])
       $('#org_name').text($scope.interface.organization);
     }
   });
+
+  $scope.$watch('session.user.settings.theme', function(){
+    if ($scope.session) {
+      console.log("changed");
+      $("#theme").removeClass();
+      $("#theme").addClass($scope.session.user.settings.theme);
+    }
+  });
+
 
   (function() { // sup
     if (!$scope.interface)
@@ -146,7 +162,6 @@ angular.module('application.controllers', ['nvd3'])
 // and the various types of records are but loyal subjects
 .controller('ContactController', ['$scope', '$window', '$controller', '$timeout', '$location', '$routeParams', 'Session', 'Interface', function($scope, $window, $controller, $timeout, $location, $routeParams, Session, Interface) {
   $controller('RecordController', {$scope: $scope}); // simulated ng inheritance amidoinitrite
-
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
@@ -167,21 +182,31 @@ angular.module('application.controllers', ['nvd3'])
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
-    // Make sure this is empty first
-    $scope.current_contact = null;
     //contact object
-    c = c || null;
-    $scope.current_contact = c;
+    $scope.current_contact = c || null;
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
     // this assignment needs to be fixed, always assumes contacts is at position 0
     $scope.current_fields = $scope.current_interface.tabs[0].sections;
+    //lets mark our master variablols
+    $scope.master_fields = ["first_name", "last_name", "email_address", "organization", "phone_num"];
+    for(var i = 0; i < $scope.current_fields.length; i++){
+      for(var j = 0; j < $scope.current_fields[i].fields.length; j++){
+        var field = $scope.current_fields[i].fields[j];
+        if($scope.master_fields.includes($scope.current_fields[i].fields[j].db_name)){
+          field.master = true;
+        }
+        else {
+          field.master = false;
+        }
+      }
+    }
     //clean out our chips deal
     $('.chip').remove();
-    for(var j = 0; j < $scope.current_contact.tags.length; j++){
-      var tag_id = "tag-id-" + $scope.current_contact.tags[j].name;
-      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[j].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
+    for(var k = 0; k < $scope.current_contact.tags.length; k++){
+      var tag_id = "tag-id-" + $scope.current_contact.tags[k].name;
+      $('#chip-section').append("<div class=\"chip\" id=\"" + tag_id + "\">" + $scope.current_contact.tags[k].name + " <i class=\"close material-icons\" onclick=\"closeTag(\'" + tag_id + "\')\">close</i>");
     }
     //move this to be the last child
     $('#chip-section #new-tag').appendTo('#chip-section');
@@ -233,8 +258,24 @@ angular.module('application.controllers', ['nvd3'])
   //  the edited contact into the proper form for posting to the DB
   //////////////////////////////////////////////////////////////////
   $scope.updateRecord = function(r){
+    $scope.all_fields = [];
+    for(var i = 0; i < $scope.current_fields.length; i++) {
+      angular.extend($scope.all_fields, $scope.current_fields[i].fields);
+    }
+
     for (var key in r.x) {
-      $scope.contact.record[key] = r.x[key];
+      if($('#' + key).attr("crm-type") === "string"){
+        $scope.contact.record[key] = r.x[key];
+      }
+      else if($('#' + key).attr("crm-type") === "int"){
+        $scope.contact.record[key] = parseInt(r.x[key]);
+      }
+      else if($('#' + key).attr("crm-type") === "date"){
+        $scope.contact.record[key] = Date.parse(r.x[key]);
+      }
+      else {
+        $scope.contact.record[key] = r.x[key];
+      }
     }
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
@@ -313,7 +354,7 @@ angular.module('application.controllers', ['nvd3'])
         name: '',
         section: '',
         tab: "Contacts",
-        type: "string",
+        type: '',
       },
       manager: '',
     };
@@ -613,18 +654,44 @@ angular.module('application.controllers', ['nvd3'])
 
   };
 
+  $scope.filterContactsByTag = function(tag) {
+    if (!$scope.contacts) return -1;
+    var contacts = [];
+    for (var i = 0; i < $scope.contacts.length; i++) {
+      var c = $scope.contacts[i];
+      for (var j = 0; j < c.tags.length; j++) {
+        if (c.tags[j].name == tag) {
+          contacts.push(c);
+          break;
+        }
+      }
+    }
+    $scope.contacts = contacts;
+  }; // end filterBytag whatev methi
+  
+  $scope.newDataSection = function() {
+    $scope.current_fields.push({
+      name: $('#new_section_text').val(),
+      fields: []
+    })
+    $('#new_section_text').val("");
+    $('#new_section').css('display','none');
+  }; // end newDataSection method
+
   ///////////////////////////////////////////////////////////////
   (function() {
     if (!$scope.contacts) {
-      if (localStorage.contacts)
+      if (localStorage.contacts) {
         $scope.contacts = JSON.parse(localStorage.contacts);
-      else {
+        $scope.tags = Interface.getTags($scope.contacts);
+      } else {
         //$scope.contacts = JSON.parse(localStorage.contacts);
         var sess = Session.getSession();
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
           $scope.contacts = contacts;
+          $scope.tags = Interface.getTags($scope.contacts);
           // store it
           localStorage.contacts = JSON.stringify(contacts);
           $scope.$apply();
@@ -633,9 +700,12 @@ angular.module('application.controllers', ['nvd3'])
         });
       }
     } // end contact check
-    if ($routeParams.tag) {
-
-    }
+    if (!$scope.tags && $scope.contact)
+      $scope.tags = Interface.getTags($scope.contacts);
+    $scope.$on('$routeChangeSuccess', function(next, current) { 
+      if ($routeParams.tag)
+        $scope.filterContactsByTag($routeParams.tag);
+    });
   })();
 
 }]) // end ContactController
@@ -656,12 +726,18 @@ angular.module('application.controllers', ['nvd3'])
     else {
       $scope.theme = $('#settings-color-theme input:checked').val();
       //lets update the database
-      $scope.settings = {theme: $scope.theme};
+      $scope.settings = {
+        settings: {
+          theme: $scope.theme,
+        }
+      };
       console.log($scope.theme);
       console.log($scope.settings);
       $scope.updateSettingsWrap($scope.settings, function(res){
         console.log("its happening");
         console.log(res);
+        var sess = Session.getSession();
+        console.log(sess);
       });
 
       $("#theme").removeClass();
@@ -760,150 +836,148 @@ angular.module('application.controllers', ['nvd3'])
   };
 }])
 
-.controller('StatisticsController',
-            ['$scope',
-             function($scope) {
-               //This defines the graph on the stats page
-               $scope.options = {
-                 chart: {
-                   type: 'lineChart',
-                   height: 450,
-                   margin : {
-                     top: 20,
-                     right: 20,
-                     bottom: 40,
-                     left: 55
-                   },
-                   x: function(d){ return d.x; },
-                   y: function(d){ return d.y; },
-                   useInteractiveGuideline: true,
-                   dispatch: {
-                     stateChange: function(e){ console.log("stateChange"); },
-                     changeState: function(e){ console.log("changeState"); },
-                     tooltipShow: function(e){ console.log("tooltipShow"); },
-                     tooltipHide: function(e){ console.log("tooltipHide"); }
-                   },
-                   xAxis: {
-                     axisLabel: 'Time (ms)'
-                   },
-                   yAxis: {
-                     axisLabel: 'Voltage (v)',
-                     tickFormat: function(d){
-                       return d3.format('.02f')(d);
-                     },
-                     axisLabelDistance: -10
-                   },
-                   callback: function(chart){
-                     console.log("!!! lineChart callback !!!");
-                   }
-                 },
-                 title: {
-                   enable: true,
-                   text: 'Title for Line Chart'
-                 },
-                 subtitle: {
-                   enable: true,
-                   text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-                   css: {
-                     'text-align': 'center',
-                     'margin': '10px 13px 0px 7px'
-                   }
-                 },
-                 caption: {
-                   enable: true,
-                   html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec.',
-                   css: {
-                     'text-align': 'justify',
-                     'margin': '10px 13px 0px 7px'
-                   }
-                 }
-               };
+.controller('StatisticsController', ['$scope', function($scope) {
+   //This defines the graph on the stats page
+   $scope.new_contacts_opts = {
+     chart: {
+       type: 'lineChart',
+       height: 450,
+       margin : {
+         top: 20,
+         right: 20,
+         bottom: 40,
+         left: 55
+       },
+       x: function(d){ return d.x; },
+       y: function(d){ return d.y; },
+       useInteractiveGuideline: true,
+       dispatch: {
+         stateChange: function(e){ console.log("stateChange"); },
+         changeState: function(e){ console.log("changeState"); },
+         tooltipShow: function(e){ console.log("tooltipShow"); },
+         tooltipHide: function(e){ console.log("tooltipHide"); }
+       },
+       xAxis: {
+         axisLabel: 'day'
+       },
+       yAxis: {
+         axisLabel: 'contacts',
+         tickFormat: function(d){
+           return d3.format('d')(d);
+         },
+         axisLabelDistance: -10
+       },
+       callback: function(chart){
+         console.log("!!! lineChart callback !!!");
+       }
+     },
+     title: {
+       enable: true,
+       text: 'Title for Line Chart'
+     },
+     subtitle: {
+       enable: true,
+       text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
+       css: {
+         'text-align': 'center',
+         'margin': '10px 13px 0px 7px'
+       }
+     },
+     caption: {
+       enable: true,
+       html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec.',
+       css: {
+         'text-align': 'justify',
+         'margin': '10px 13px 0px 7px'
+       }
+     }
+   };
 
-               $scope.data = sinAndCos();
+   $scope.new_contacts_data = sinAndCos();
 
-               /*Random Data Generator */
-               function sinAndCos() {
-                 var sin = [],sin2 = [],
-                     cos = [];
+   /*Random Data Generator */
+   function sinAndCos() {
+     var sin = [],sin2 = [],
+         cos = [];
 
-                 //Data is represented as an array of {x,y} pairs.
-                 for (var i = 0; i < 100; i++) {
-                   sin.push({x: i, y: Math.sin(i/10)});
-                   sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
-                   cos.push({x: i, y: 0.5 * Math.cos(i/10+ 2) + Math.random() / 10});
-                 }
+     //Data is represented as an array of {x,y} pairs.
+     for (var i = 0; i < 100; i++) {
+       sin.push({x: i, y: Math.sin(i/10)});
+       sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
+       cos.push({x: i, y: 0.5 * Math.cos(i/10+ 2) + Math.random() / 10});
+     }
 
-                 //Line chart data should be sent as an array of series objects.
-                 return [
-                   {
-                     values: sin,      //values - represents the array of {x,y} data points
-                     key: 'Sine Wave', //key  - the name of the series.
-                     color: '#ff7f0e'  //color - optional: choose your own line color.
-                   },
-                   {
-                     values: cos,
-                     key: 'Cosine Wave',
-                     color: '#2ca02c'
-                   },
-                   {
-                     values: sin2,
-                     key: 'Another sine wave',
-                     color: '#7777ff',
-                     area: true      //area - set to true if you want this line to turn into a filled area chart.
-                   }
-                 ];
-               }
+     //Line chart data should be sent as an array of series objects.
+     return [
+       {
+         values: sin,      //values - represents the array of {x,y} data points
+         key: 'Sine Wave', //key  - the name of the series.
+         color: '#ff7f0e'  //color - optional: choose your own line color.
+       },
+       {
+         values: cos,
+         key: 'Cosine Wave',
+         color: '#2ca02c'
+       },
+       {
+         values: sin2,
+         key: 'Another sine wave',
+         color: '#7777ff',
+         area: true      //area - set to true if you want this line to turn into a filled area chart.
+       }
+     ];
+   }
 
-               $scope.options2 = {
-                 chart: {
-                   type: 'pieChart',
-                   height: 500,
-                   x: function(d){return d.key;},
-                   y: function(d){return d.y;},
-                   showLabels: true,
-                   duration: 500,
-                   labelThreshold: 0.01,
-                   labelSunbeamLayout: true,
-                   legend: {
-                     margin: {
-                       top: 5,
-                       right: 35,
-                       bottom: 5,
-                       left: 0
-                     }
-                   }
-                 }
-               };
+   $scope.options2 = {
+     chart: {
+       type: 'pieChart',
+       height: 500,
+       x: function(d){return d.key;},
+       y: function(d){return d.y;},
+       showLabels: true,
+       duration: 500,
+       labelThreshold: 0.01,
+       labelSunbeamLayout: true,
+       legend: {
+         margin: {
+           top: 5,
+           right: 35,
+           bottom: 5,
+           left: 0
+         }
+       }
+     }
+   };
 
-               $scope.data2 = [
-                 {
-                   key: "One",
-                   y: 5
-                 },
-                 {
-                   key: "Two",
-                   y: 2
-                 },
-                 {
-                   key: "Three",
-                   y: 9
-                 },
-                 {
-                   key: "Four",
-                   y: 7
-                 },
-                 {
-                   key: "Five",
-                   y: 4
-                 },
-                 {
-                   key: "Six",
-                   y: 3
-                 },
-                 {
-                   key: "Seven",
-                   y: 0.5
-                 }
-               ];
-             }])
+   $scope.data2 = [
+     {
+       key: "One",
+       y: 5
+     },
+     {
+       key: "Two",
+       y: 2
+     },
+     {
+       key: "Three",
+       y: 9
+     },
+     {
+       key: "Four",
+       y: 7
+     },
+     {
+       key: "Five",
+       y: 4
+     },
+     {
+       key: "Six",
+       y: 3
+     },
+     {
+       key: "Seven",
+       y: 0.5
+     }
+   ];
+ }])
 ;
