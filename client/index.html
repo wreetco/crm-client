@@ -38,10 +38,10 @@ All of our required JS has been concat'd and minified.
           <i class="large material-icons">account_circle</i>
           <p id="org_name"></p>
         </li>
-        <li class="no-padding">
+        <li class="no-padding" >
           <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
             <li>
-              <a class="collapsible-header" id="contact-collapse">
+              <a class="collapsible-header" id="contact-collapse" onclick="activeSidebar(this);">
                 <i class="material-icons">person_pin</i>
                 Contacts
               </a>
@@ -58,8 +58,8 @@ All of our required JS has been concat'd and minified.
             </li>
           </ul>
         </li>
-        <li><a href="#!/statistics" class="activatable" onclick="collapseCheck();"><i class="material-icons">insert_chart</i>Statistics</a></li>
-        <li><a href="#!/settings" class="activatable" onclick="collapseCheck();"><i class="material-icons">settings_applications</i>Settings</a></li>
+        <li><a href="#!/statistics" onclick="activeSidebar(this);" ><i class="material-icons">insert_chart</i>Statistics</a></li>
+        <li><a href="#!/settings" onclick="activeSidebar(this);" ><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->
         <li id="logoutButton" ng-controller="LogoutController">
@@ -103,6 +103,12 @@ All of our required JS has been concat'd and minified.
       match: function(){
       } // end match
     });
+
+    function activeSidebar(el){
+      collapseCheck();
+      $(".active-sidebar").removeClass("active-sidebar");
+      $(el).addClass("active-sidebar");
+    };
 
     //collapse the contacts section if its open
     function collapseCheck(){

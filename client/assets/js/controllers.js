@@ -92,6 +92,8 @@ angular.module('application.controllers', ['nvd3'])
     activeTab.html("<i class=\"material-icons\" style=\"vertical-align: middle;\">chevron_right</i>");
     $(event.target).append(activeTab);
   }
+
+
   $("a.activatable").click(setActive);
 
   $scope.$watch('interface.organization', function(){

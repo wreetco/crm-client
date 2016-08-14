@@ -5,7 +5,7 @@
     <input id="icon_prefix" ng-model="query" type="text">
     <label for="icon_prefix">Search</label>
   </div>
-  <div class="col input-field s3 offset-s3 right-align">
+  <div class="col input-field s3 offset-s3">
     <select ng-model="sortType">
       <option value="">-- Select --</option>
       <option value="x.first_name">First Name</option>
@@ -86,7 +86,7 @@
 </div>
 
 <div class="fixed-action-btn" style="bottom: 22px; right: 22px; z-index: 20;">
-  <a class="btn-floating btn-large green" onclick="wrmn.cron.toggleMenu('right');" ng-click="postBar()">
+  <a class="btn-floating btn-large green" wrmn-toggle-menu="c" ng-click="postBar()">
     <i class="large material-icons">note_add</i>
   </a>
   <ul>
@@ -111,8 +111,8 @@
       slide_triggers[i].setAttribute("data-menuwidth", (window.innerWidth <= 992) ? (window.innerWidth * .80) : ((window.innerWidth - 100) * .75));
     }
   })();
-  
-  // enquiries 
+
+  // enquiries
   enquire.register("only screen and (min-width: 992px)", {
 	  match: function(){
 	  } // end match
