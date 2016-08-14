@@ -80,6 +80,7 @@ angular.module('application.services', [])
     }, // end getInterface method
 
     getTags: function(contacts) {
+      if (!contacts) return -1;
       var tags = [];
       for (var i = 0; i < contacts.length; i++) {
         contacts[i].tags.map(function(tag) {

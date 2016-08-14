@@ -324,7 +324,6 @@ angular.module('application.controllers', ['nvd3'])
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
           $scope.contacts = contacts;
-          $scope.tags = Interface.getTags($scope.contacts);
           // store it to localstorage
           localStorage.contacts = JSON.stringify(contacts);
           //Now that we have saved, lets clear this out.
@@ -625,7 +624,6 @@ angular.module('application.controllers', ['nvd3'])
           //we have a session, update contacts now that deletion is done
           $scope.getRecords(sess.user.managers[0], 'records', null).then(function(contacts) {
             $scope.contacts = contacts;
-            $scope.tags = Interface.getTags($scope.contacts);
             $scope.$apply();
             // store it to localstorage
             localStorage.contacts = JSON.stringify(contacts);
@@ -720,11 +718,39 @@ angular.module('application.controllers', ['nvd3'])
   };
 
   ///////////////////////////////////////////////////////////////
+  
+  $scope.$watch('contacts', function() {
+    if (!$scope.tags && $scope.contacts) {
+      $timeout(function() {
+        $scope.tags = Interface.getTags($scope.contacts);
+      }, 100);
+    }
+  });
+  
+  $scope.$watch(function () {
+    return sessionStorage.session;
+  }, function (new_val, old_val) {
+    if (!new_val) return;
+    if (new_val !== old_val) {
+      var sess = Session.getSession();
+      if (!sess) return 0;
+      $scope.getRecords(sess.user.managers[0], 'records', null)
+      .then(function(contacts) {
+        $scope.contacts = contacts;
+        // store it
+        localStorage.contacts = JSON.stringify(contacts);
+      }).catch(function(err) {
+        console.log(err);
+      });
+    }
+  });
+  
   (function() {
     if (!$scope.contacts) {
       if (localStorage.contacts) {
-        $scope.contacts = JSON.parse(localStorage.contacts);
-        $scope.tags = Interface.getTags($scope.contacts);
+        $timeout(function() {
+          $scope.contacts = JSON.parse(localStorage.contacts);
+        }, 0);
       } else {
         //$scope.contacts = JSON.parse(localStorage.contacts);
         var sess = Session.getSession();
@@ -732,23 +758,19 @@ angular.module('application.controllers', ['nvd3'])
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
           $scope.contacts = contacts;
-          $scope.tags = Interface.getTags($scope.contacts);
           // store it
           localStorage.contacts = JSON.stringify(contacts);
-          $scope.$apply();
         }).catch(function(err) {
           console.log(err);
         });
       }
     } // end contact check
-    if (!$scope.tags && $scope.contact)
-      $scope.tags = Interface.getTags($scope.contacts);
     $scope.$on('$routeChangeSuccess', function(next, current) {
       if ($routeParams.tag)
         $scope.filterContactsByTag($routeParams.tag);
     });
   })();
-
+  
 }]) // end ContactController
 
 // end of record descendants
