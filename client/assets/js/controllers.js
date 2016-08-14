@@ -350,6 +350,7 @@ angular.module('application.controllers', ['nvd3'])
     });
   };
 
+  /*
   // Add Field
   ///////////////////////////////////////////////////////////////
   $scope.addField = function(section, c){
@@ -452,6 +453,7 @@ angular.module('application.controllers', ['nvd3'])
       $scope.new_field = null;
     }
   };
+  */
 
   // Delete Field
   ////////////////////////////////////////////////////////////////
@@ -680,8 +682,35 @@ angular.module('application.controllers', ['nvd3'])
       fields: []
     });
     $('#new_section_text').val("");
-    $('#new_section').css('display','none');
+    $scope.current_contact.new_section = false;
   }; // end newDataSection method
+  
+  $scope.$watch('current_contact', function() {
+    if ($scope.current_contact && $scope.current_contact.new_field) $scope.current_contact.new_field = [];
+  });
+  $scope.newField = function(i, section, tab) {
+    // time to ah yeah 
+    var req = {
+      field: {
+        tab: tab,
+        section: section.name,
+        name: $scope.current_contact.new_field[i].name,
+        db_name: $scope.current_contact.new_field[i].name.toLowerCase().replace(/\s/g, "_"),
+        type: $scope.current_contact.new_field[i].type, 
+        order: $scope.current_contact.new_field[i].order || 99
+      },
+      manager: $scope.current_contact.manager
+    };
+    console.log(req);
+    $scope.postField(req, function(res) {
+      if (res._id) {
+        // dope
+      } else {
+        // problem 
+      }
+    });
+    // now call our method to send it off to the db
+  };
 
   ///////////////////////////////////////////////////////////////
   (function() {

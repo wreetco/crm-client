@@ -64,53 +64,35 @@
           <h4 ng-if="section.name != '_contacts'">
             {{ section.name }}
           </h4>
-          <div class="row">
-            <div ng-repeat="field in section.fields | orderBy:'-order' : true " ng-hide="field.master">
-              <div class="col s12 m6 input-field">
-                <input id="{{ field.db_name }}" type="text" crm-type="{{ field.type }}" class="field-selector" ng-model="current_contact.x[field.db_name]" readonly onclick="editable(this);" onblur="noneditable(this);">
-                <label for="{{ field.db_name }}" class="light">
-                  {{ field.name }}
-                </label>
-                <a id="{{ field.db_name }}-icon" style="visibility: hidden; margin: .3em; cursor: pointer;" class="right" ng-click="fieldModal();">
-                  <i class="material-icons right" >settings</i>
-                </a>
+
+          <!-- add field button -->
+          <div class="row nogut">
+            <div class="col s12" ng-show="current_contact.new_field[$index]" id="new_field">
+              <div class="col s6 m3 input-field">
+                <input type="text" id="new_field_name[{{ $index }}]" ng-model="current_contact.new_field[$index].name">
+                <label for="new_field_name[{{ $index }}]">Field Name</label>
+              </div>
+              <div class="col s6 m3 input-field">
+                <input type="text" id="new_field_type[{{ $index }}]" ng-model="current_contact.new_field[$index].type">
+                <label for="new_field_type[{{ $index }}]">Type</label>
+              </div>
+              <div class="col s1">
+                <i class="material-icons" style="font-size: 2em;" ng-click="newField($index, section, 'Contacts')">check</i>
+                <i class="material-icons" style="font-size: 2em;">cancel</i>
               </div>
             </div>
-          </div>
-
-          <!--
-          <div class="row" style="display: block;">
-            <h6>
-              New Field
-            </h6>
-            <div class="col s6 m3 input-field">
-              <input name="" id="new-field-label-{{ section.name }}" type="text" />
-              <label for="new-field-input-{{ section.name }}">Field Label</label>
-            </div>
-            <div class="col s6 m3 input-field">
-              <input name="" id="new-field-value-{{ section.name }}" type="text" />
-              <label for="new-field-input-{{ section.name }}">Field Value</label>
-            </div>
-            <div class="col s6 m3">
-              <a class="btn" ng-click="addField(section.name, current_contact);"><i class="material-icons left">add_box</i>Add Field</a>
-            </div>
-          </div>
-          -->
-
-          <div class="row" id="new_field">
             <div class="col s12">
-              <button class="btn btn-small">
-                <i class="material-icons left">text_fields</i>
-                Add Field
+              <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_field[$index] = {};">
+                <i class="material-icons left">list</i>New Field
               </button>
             </div>
           </div>
-
+          <!-- end add field -->
         </div><!-- end repeat of section -->
       </div><!-- end repeat section outer row -->
 
       <div class="row nogut">
-        <div class="col s12" style="display: none; position: relative;" id="new_section">
+        <div class="col s12" ng-show="current_contact.new_section" id="new_section">
           <div class="col s12 m6 input-field">
             <input type="text" id="new_section_text">
             <label for="new_section_text">Section Name</label>
@@ -118,7 +100,7 @@
           </div>
         </div>
         <div class="col s12">
-          <button class="btn-small btn" style="display: block;" onclick="$('#new_section').css('display','block');">
+          <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
             <i class="material-icons left">list</i>New Section
           </button>
         </div>

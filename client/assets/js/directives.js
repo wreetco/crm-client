@@ -100,6 +100,10 @@ return {
 		$el.bind('mouseout', function() {
 			// tear down the edit icons and actions
 		});
+		// the click action to bring up the icons and input field
+		$el.click(function() {
+			
+		}); // sup 
 	};
 })
 
