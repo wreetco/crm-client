@@ -1,7 +1,6 @@
 <!doctype html>
 <div class="" id="contact-info-card" style="margin-left: 1.5em;">
   <div class="row">
-    <div class="col s12">
       <h3 ng-if="current_contact._id">
         <span class="wedit" w-editable style="display: inline;">
           {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
@@ -97,7 +96,6 @@
           <!-- end add field -->
         </div>
       </div><!-- end repeat of section -->
-    </div><!-- end repeat section outer row -->
 
     <div class="row nogut">
       <div class="col s12" ng-show="current_contact.new_section" id="new_section">
