@@ -5,7 +5,7 @@
     <input id="icon_prefix" ng-model="query" type="text">
     <label for="icon_prefix">Search</label>
   </div>
-  <div class="col input-field s3 offset-s3 right-align">
+  <div class="col input-field s3 offset-s3">
     <select ng-model="sortType">
       <option value="">-- Select --</option>
       <option value="x.first_name">First Name</option>
@@ -111,8 +111,8 @@
       slide_triggers[i].setAttribute("data-menuwidth", (window.innerWidth <= 992) ? (window.innerWidth * .80) : ((window.innerWidth - 100) * .75));
     }
   })();
-  
-  // enquiries 
+
+  // enquiries
   enquire.register("only screen and (min-width: 992px)", {
 	  match: function(){
 	  } // end match

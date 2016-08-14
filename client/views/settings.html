@@ -11,23 +11,23 @@
           <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="dark-theme" ng-model="theme" value="dark-theme" />
+          <input class="with-gap" type="radio" id="dark-theme" ng-model="theme" value="dark-theme" />
           <label for="dark-theme">Dark</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="light-theme" ng-model="theme" value="light-theme" />
+          <input class="with-gap" type="radio" id="light-theme" ng-model="theme" value="light-theme" />
           <label for="light-theme">Light</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="red-theme" ng-model="theme" value="red-theme" />
+          <input class="with-gap" type="radio" id="red-theme" ng-model="theme" value="red-theme" />
           <label for="red-theme">Red</label>
         </li>
         <li class="collection-item">
-          <input class="with-gap" name="group1" type="radio" id="blue-theme" ng-model="theme" value="blue-theme" />
+          <input class="with-gap" type="radio" id="blue-theme" ng-model="theme" value="blue-theme" />
           <label for="blue-theme">Blue</label>
         </li>
         <li class="collection-item right-align">
-          <button class="btn waves-effect waves-light" type="submit" name="action" ng-click="saveTheme();">
+          <button class="btn" type="submit" name="action" ng-click="saveTheme();">
             Save<i class="material-icons right">send</i>
           </button>
         </li>
@@ -37,23 +37,25 @@
       <ul class="collection z-depth-1">
         <li class="collection-item avatar">
           <i class="material-icons circle red darken-2">close</i>
-          <span class="collection-header">File Upload</span>
-          <p>Upload a document with record data</p>
+          <span class="collection-header">Import Contacts</span>
+          <p>Upload a document with record data.</p>
           <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
         </li>
         <li class="collection-item">
           <blockquote>
-            Good luck!
+            File should be in CSV format, values can be wrapped in single, double, or no quotes.
+            The File should have a header with proper column headers. The column headers are simply the field labels, with any spaces replaced by an underscore.
+            (e.g. the field 'First Name' would need a header in the csv like 'first_name')
           </blockquote>
         </li>
         <li class="collection-item">
           <form action="#">
-            <div class="file-field input-field">
+            <div class="file-field file-path-wrapper" >
               <div class="btn">
                 <span>CSV</span>
                 <input type="file" />
               </div>
-              <div class="file-path-wrapper">
+              <div class="">
                 <input class="file-path validate" on-read-file="parseCSVInput(contents);" placeholder="Upload A CSV" type="file">
               </div>
             </div>

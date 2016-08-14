@@ -109,6 +109,14 @@
       background-color: $primary-color-light;
       color: $primary-text;
     }
+    .collapsible-header {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+    .collapsible-body {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
 
     /*
       * the little menu drop down on the contact list
@@ -130,6 +138,14 @@
     }
     .side-nav a.btn-large:hover, .side-nav a.btn:hover {
       background-color: darken($accent, 10%);
+      color: lighten($primary-text, 10%);
+    }
+    .side-nav li:hover {
+      background-color: $primary-color-light;
+      color: lighten($primary-text, 10%);
+    }
+    .active-sidebar {
+      background-color: $primary-color-light;
       color: lighten($primary-text, 10%);
     }
     /////////////////////////////////////////////
@@ -175,8 +191,8 @@
     }
 
     input[type=text]:hover{
-      border-bottom: 1px solid lighten($primary-color, 5%);
-      box-shadow: 0 1px 0 0 lighten($primary-color, 10%);
+      border-bottom: 1px solid lighten($accent, 20%);
+      box-shadow: 0 1px 0 0 lighten($accent, 20%);
       -webkit-transition: border-bottom .35s; /* Safari */
       transition: border-bottom .35s !important;
       -webkit-transition: box-shadow .35s; /* Safari */
@@ -185,8 +201,8 @@
 
     input[type=text]:focus:not([readonly]){
       color: $accent;
-      border-bottom: 1px solid lighten($primary-color, 30%);
-      box-shadow:0 1px 0 0 lighten($primary-color, 20%);
+      border-bottom: 1px solid lighten($accent, 35%);
+      box-shadow:0 1px 0 0 lighten($accent, 35%);
       -webkit-transition: border-bottom .35s; /* Safari */
       transition: border-bottom .35s !important;
       -webkit-transition: box-shadow .35s; /* Safari */
@@ -257,6 +273,11 @@
 
     ul .collection {
       background-color: $primary-color;
+    }
+
+    .collection {
+      background-color: $primary-color;
+      color: $primary-text;
     }
 
     .collection .collection-item {
@@ -434,4 +455,4 @@
 @include theme(dark-theme, #1F242A, #263238, #182939, #0288d1, rgba(#eceff1, 1), rgba(#eceff1, .9), rgba(182, 182, 182, .54));
 
 //@include theme(light-theme, #bcbcbc, #eee, #fafafa, rgba(255, 82, 82, .84), rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
-@include theme(light-theme, #f5f5f5, #fafafa, #f5f5f5, #0288d1, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
+@include theme(light-theme, #f5f5f5, #fafafa, #fff, #0288d1, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));

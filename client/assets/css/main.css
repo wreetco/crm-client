@@ -22,8 +22,9 @@ header, .main, footer {
 }
 
 .collection {
-   border: hidden;
+  border: hidden;
+  border-radius: 0 !important;
 }
 .collection-item {
-    border-bottom: none !important;
+  border-bottom: none !important;
 }

@@ -60,11 +60,18 @@
       </table>
 
       <div class="row">
-        <div ng-repeat="section in current_fields | orderBy:'-name' : true">
+        <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
           <h4 ng-if="section.name != '_contacts'">
             {{ section.name }}
           </h4>
-
+          <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
+            <div class="col s12 m4">
+              <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]">
+              <label for="{{ field._id }}">
+                {{ field.name }}
+              </label>
+            </div>
+          </div>
           <!-- add field button -->
           <div class="row nogut">
             <div class="col s12" ng-show="current_contact.new_field[$index]" id="new_field">
@@ -88,44 +95,45 @@
             </div>
           </div>
           <!-- end add field -->
-        </div><!-- end repeat of section -->
-      </div><!-- end repeat section outer row -->
-
-      <div class="row nogut">
-        <div class="col s12" ng-show="current_contact.new_section" id="new_section">
-          <div class="col s12 m6 input-field">
-            <input type="text" id="new_section_text">
-            <label for="new_section_text">Section Name</label>
-            <i class="material-icons" style="position: absolute; top: 1em; right: 0;" ng-click="newDataSection()">check</i>
-          </div>
         </div>
-        <div class="col s12">
-          <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
-            <i class="material-icons left">list</i>New Section
-          </button>
+      </div><!-- end repeat of section -->
+    </div><!-- end repeat section outer row -->
+
+    <div class="row nogut">
+      <div class="col s12" ng-show="current_contact.new_section" id="new_section">
+        <div class="col s12 m6 input-field">
+          <input type="text" id="new_section_text">
+          <label for="new_section_text">Section Name</label>
+          <i class="material-icons" style="position: absolute; top: 1em; right: 0;" ng-click="newDataSection()">check</i>
         </div>
       </div>
+      <div class="col s12">
+        <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
+          <i class="material-icons left">list</i>New Section
+        </button>
+      </div>
+    </div>
 
-      <!-- tags -->
-      <div class="row" style="margin-top: 2em;">
-        <div class="col s12 m6">
-          <div id="chip-section">
-            <input placeholder="+Tag" type="text" id="new-tag" style="margin-top: .5em;" />
-          </div>
+    <!-- tags -->
+    <div class="row" style="margin-top: 2em;">
+      <div class="col s12 m6">
+        <div id="chip-section">
+          <input placeholder="+Tag" type="text" id="new-tag" style="margin-top: .5em;" />
         </div>
       </div>
+    </div>
 
-      <div class="row" style="margin-bottom:0;">
-        <div class="col s12 m12">
-          <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
-        </div>
-        <div class="col s12 m12">
-          <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
-        </div>
+    <div class="row" style="margin-bottom:0;">
+      <div class="col s12 m12">
+        <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
+      </div>
+      <div class="col s12 m12">
+        <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
       </div>
     </div>
   </div>
 </div>
+
 
 
 <script>
