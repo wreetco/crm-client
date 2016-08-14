@@ -15,7 +15,7 @@
           <i class="material-icons left">phone</i>Phone:
         </td>
         <td>
-          <span class="wedit" w-weditable="current_contact.x.phone_num">
+          <span class="wedit" w-editable="current_contact.x.phone_num">
             {{ current_contact.x.phone_num | tel }}
           </span>
         </td>
@@ -29,11 +29,11 @@
         </td>
       </tr>
       <tr>
-        <td>
+        <td class="input-field">
           <i class="material-icons left">email</i>Email:
         </td>
-        <td>
-          <span class="wedit" w-weditable="current_contact.x.email_address">
+        <td class="input-field">
+          <span class="wedit" w-editable="current_contact.x.email_address">
             {{ current_contact.x.email_address }}
           </span>
         </td>
@@ -136,34 +136,6 @@
 
 
 <script>
-  function editable(el){
-    el.removeAttribute("readonly");
-    var icon_id = el.id + "-icon";
-    var icon = document.getElementById(icon_id);
-    if(icon){
-      icon.style.opacity = 1;
-      icon.style.visibility = "visible";
-      icon.style.WebkitTransition = "visibility linear .5s";
-      icon.style.WebkitTransition = "opacity linear .5s";
-    }
-  };
-
-  function noneditable(el){
-    el.setAttribute("readonly", "");
-    var icon_id = el.id + "-icon";
-    var icon = document.getElementById(icon_id);
-    //prevent it from disapearing for 150ms or else the button cant be clicked
-
-    if(icon){
-      setTimeout(function(){
-        icon.style.visibility = "hidden";
-        icon.style.opacity = 0;
-        icon.style.WebkitTransition = "visibility linear .4s";
-        icon.style.WebkitTransition = "opacity linear .4s";
-      }, 200);
-    }
-  };
-
   $( "#new-tag" ).keypress(function(e) {
     if(e.keyCode === 13 || e.keyCode === 44){
       var tag_name = $('#new-tag').val();
