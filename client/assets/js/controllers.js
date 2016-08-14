@@ -707,7 +707,6 @@ angular.module('application.controllers', ['nvd3'])
       },
       manager: $scope.current_contact.manager
     };
-    console.log(req);
     $scope.postField(req, function(res) {
       if (res._id) {
         console.log(res);
