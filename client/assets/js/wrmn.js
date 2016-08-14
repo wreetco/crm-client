@@ -21,6 +21,7 @@ var wrmn = wrmn || {};
 wrmn.uniq = "__wrmn_"; // avoid potential id conflicts with other dom els
 // some wrmn wide vars for us
 wrmn.opts = { // some default options and stuff
+  width_offset: 0, // needed when certain frameworks make overrides messy
   menu_width: 340, // the default width for a side menu
   menu_height: 200, // the default height for a slide menu
   transition_time: 300, // default time in ms to complete menu slide
@@ -158,7 +159,7 @@ wrmn.init = function(el, opts) {
   var vp = wrmn.cron.getViewportDimensions(wrmn_tmp.id);
   // now we can calculate the dimensions of the final croduct
   var width, height;
-  width = vp.width; // + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
+  width = vp.width + wrmn.opts.width_offset; // + ((menus.left && menus.right) ? opts.menu_width * 2 : opts.menu_width);
   if (menus.top || menus.bottom)
     height = vp.height; // + ((menus.top && menus.bottom) ? opts.menu_height * 2 : opts.menu_height);
   else

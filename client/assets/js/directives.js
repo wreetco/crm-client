@@ -56,10 +56,7 @@ return {
 		restrict: 'A',
 		scope: false,
 		link: function($scope, $el) {
-			if (!wrmn.is_initd) { 
-				$scope.current_contact = $scope.contacts[0];
-				wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7});
-			}
+			if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7, width_offset: 33});
 		}
 	};
 })
