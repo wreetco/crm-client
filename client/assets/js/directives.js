@@ -88,20 +88,31 @@ return {
 	};
 })
 
-.directive('wEditable', function() {
-	return function($scope, $el) {
-		$el.bind("mouseenter", function() {
-			// setup edit icons and actions
-			console.log($el);
-		}); 
-		$el.bind('mouseout', function() {
-			// tear down the edit icons and actions
-		});
-		// the click action to bring up the icons and input field
-		$el.click(function() {
-			
-		}); // sup 
+.directive('wEditable', function($timeout, $compile) {
+	return {
+		scope: {
+			obj: "=wEditable",
+		},
+		controller: function($scope) {
+			$scope.save = function() {
+
+			};
+			$scope.cancel = function() {
+				// don't change anything
+			}; 
+		},
+		link: function($scope, $el) {
+			$el.click(function() {
+				var editz = "<input type='text' ng-model='obj'><i class='material-icons right' ng-click='save()'>check</i>";
+				editz = angular.element(editz);
+				// clear the parent
+				$el.empty();
+				// add div to the dom
+				$el.append($compile(editz)($scope));
+				// watch for change
+			});
+		}
 	};
 })
-
-;
+	
+;		

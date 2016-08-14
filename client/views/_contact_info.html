@@ -16,7 +16,7 @@
             <i class="material-icons left">phone</i>Phone:
           </td>
           <td>
-            <span class="wedit">
+            <span class="wedit" w-weditable="current_contact.x.phone_num">
               {{ current_contact.x.phone_num | tel }}
             </span>
           </td>
@@ -24,7 +24,7 @@
             <i class="material-icons left">date_range</i>Created:
           </td>
           <td>
-            <span class="wedit">
+            <span class="">
               {{ current_contact.created_date | date:'medium'}}
             </span>
           </td>
@@ -34,7 +34,7 @@
             <i class="material-icons left">email</i>Email:
           </td>
           <td>
-            <span class="wedit">
+            <span class="wedit" w-editable="current_contact.x.email_address">
               {{ current_contact.x.email_address }}
             </span>
           </td>
@@ -42,7 +42,7 @@
             <i class="material-icons left">date_range</i>Modified:
           </td>
           <td>
-            <span class="wedit">
+            <span class="">
               {{ current_contact.updated_at | date:'medium' }}
             </span>
           </td>
@@ -52,7 +52,7 @@
             <i class="material-icons left">account_balance</i>Organization:
           </td>
           <td>
-            <span class="wedit">
+            <span class="wedit" w-editable="current_contact.x.organization">
               {{ current_contact.x.organization }}
             </span>
           </td>
