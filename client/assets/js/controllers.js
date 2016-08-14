@@ -12,14 +12,15 @@ angular.module('application.controllers', ['nvd3'])
         token: sess._id,
         user: sess.user
       };
+      console.log(session);
       //console.log(session);
       $window.sessionStorage.session = JSON.stringify(session);
       $("#login").closeModal();
       var target = angular.element('#materialize-lean-overlay-1');
       target.remove();
-      var target = angular.element('#materialize-lean-overlay-2');
+      target = angular.element('#materialize-lean-overlay-2');
       target.remove();
-      $location.path('/contact');
+      $location.path('/');
       $scope.$apply();
     }).catch(function(err) {
       // fucked it up bradley
@@ -78,7 +79,7 @@ angular.module('application.controllers', ['nvd3'])
       $("#theme").removeClass();
       $("#theme").addClass($scope.theme);
     }).catch(function(err) { // sup, mike, chyea
-      console.log(JSON.stringify(err));
+      console.log(err);
     });
   };
 
@@ -93,7 +94,6 @@ angular.module('application.controllers', ['nvd3'])
     $(event.target).append(activeTab);
   }
 
-
   $("a.activatable").click(setActive);
 
   $scope.$watch('interface.organization', function(){
@@ -104,7 +104,6 @@ angular.module('application.controllers', ['nvd3'])
 
   $scope.$watch('session.user.settings.theme', function(){
     if ($scope.session) {
-      console.log("changed");
       $("#theme").removeClass();
       $("#theme").addClass($scope.session.user.settings.theme);
     }
@@ -306,14 +305,20 @@ angular.module('application.controllers', ['nvd3'])
   //  been edited, requires a contact be passed into it
   ///////////////////////////////////////////////////////////////////
   $scope.saveRecord = function(r){
+    console.log("save record called");
+    console.log(r);
     //close sidenav flag
     //the passed in contact is assigned to post_data
     $scope.post_data = r;
     //assign the manager ID to the new record
     $scope.post_data.manager = Session.getSession().user.managers[0];
     $scope.saveRec(JSON.stringify($scope.post_data), function(res) {
+      console.log("Saved");
+      console.log($scope.post_data);
       if (!(res instanceof Error)){
         //Success, refresh contacts with the new contact
+        console.log("success");
+        console.log(res);
         var sess = Session.getSession();
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
@@ -684,19 +689,20 @@ angular.module('application.controllers', ['nvd3'])
     $('#new_section_text').val("");
     $scope.current_contact.new_section = false;
   }; // end newDataSection method
-  
+
   $scope.$watch('current_contact', function() {
     if ($scope.current_contact && $scope.current_contact.new_field) $scope.current_contact.new_field = [];
   });
   $scope.newField = function(i, section, tab) {
-    // time to ah yeah 
+    // time to ah yeah
+    console.log(section);
     var req = {
       field: {
         tab: tab,
         section: section.name,
         name: $scope.current_contact.new_field[i].name,
         db_name: $scope.current_contact.new_field[i].name.toLowerCase().replace(/\s/g, "_"),
-        type: $scope.current_contact.new_field[i].type, 
+        type: $scope.current_contact.new_field[i].type,
         order: $scope.current_contact.new_field[i].order || 99
       },
       manager: $scope.current_contact.manager
@@ -704,9 +710,11 @@ angular.module('application.controllers', ['nvd3'])
     console.log(req);
     $scope.postField(req, function(res) {
       if (res._id) {
+        console.log(res);
         // dope
       } else {
-        // problem 
+        // problem
+        console.log(res);
       }
     });
     // now call our method to send it off to the db
