@@ -56,7 +56,7 @@ angular.module('application.directives', [])
     restrict: 'A',
     scope: false,
     link: function($scope, $el) {
-      if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7, width_offset: 33});
+      if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * 0.70, width_offset: 33});
     }
   };
 })
@@ -95,19 +95,30 @@ angular.module('application.directives', [])
     },
     controller: function($scope) {
       $scope.save = function() {
-
+        //save that shit breh
+        console.log("save");
+        var wrapper = $('#edit-field').parent();
+        console.log(wrapper.attr("w-editable"));
+        wrapper.empty();
+        wrapper.text(wrapper.children().first().val());
       };
       $scope.cancel = function() {
-        // don't change anything
+        // don't change anything just empty and replace
         console.log("cancel");
+        var wrapper = $('#edit-field').parent();
+        console.log(wrapper.children().first().val());
+        console.log(wrapper.attr("w-editable"));
+        wrapper.empty();
+        wrapper.text("{{ " + wrapper.attr("w-editable") + " }}");
+        $scope.$apply();
       };
     },
     link: function($scope, $el) {
       $el.click(function() {
         var editz = " \
-                      <input type='text' ng-model='obj' autofocus id='edit-dat-field'> \
-                      <i class='material-icons' style='position: absolute; right: 1.5em; top: 1.5em; display: inline-block;' ng-click='save()'>check</i> \
-                      <i class='material-icons' style='position: absolute; right: .5em; top: 1.5em; display: inline-block;' ng-click='cancel()'>cancel</i> \
+                      <input type='text' ng-model='obj' autofocus ng-blur='cancel()' id='edit-field'> \
+                      <i class='material-icons green-text' style='font-size: 3em; border: 1px solid red; position: absolute; right: 2em; top: 1.5em; display: inline-block;' ng-click='save();'>check</i> \
+                      <i class='material-icons red-text' style='border: 1px solid red; position: absolute; right: .5em; top: 1.5em; display: inline-block;' ng-click='cancel();'>cancel</i> \
                     ";
         console.log($el);
         editz = angular.element(editz);

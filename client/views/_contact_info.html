@@ -14,7 +14,7 @@
         <td>
           <i class="material-icons left">phone</i>Phone:
         </td>
-        <td>
+        <td class="input-field">
           <span class="wedit" w-editable="current_contact.x.phone_num">
             {{ current_contact.x.phone_num | tel }}
           </span>
@@ -29,7 +29,7 @@
         </td>
       </tr>
       <tr>
-        <td class="input-field">
+        <td>
           <i class="material-icons left">email</i>Email:
         </td>
         <td class="input-field">
@@ -51,7 +51,7 @@
           <i class="material-icons left">account_balance</i>Organization:
         </td>
         <td>
-          <span class="wedit">
+          <span class="wedit" w-editable="current_contact.x.email_address">
             {{ current_contact.x.organization }}
           </span>
         </td>
@@ -92,10 +92,9 @@
               <i class="material-icons left">list</i>New Field
             </button>
           </div>
-        </div>
-        <!-- end add field -->
-      </div>
-    </div><!-- end repeat of section -->
+        </div><!-- end add field -->
+      </div><!-- end repeat of section -->
+    </div>
 
     <div class="row nogut">
       <div class="col s12" ng-show="current_contact.new_section" id="new_section">
@@ -132,8 +131,6 @@
     </div>
   </div>
 </div>
-
-
 
 <script>
   $( "#new-tag" ).keypress(function(e) {
