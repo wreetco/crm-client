@@ -52,7 +52,6 @@ return {
 
 
 .directive('wrmn', function($compile) {
-<<<<<<< HEAD
 	return {
 		restrict: 'A',
 		scope: false,
