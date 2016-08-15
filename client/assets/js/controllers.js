@@ -96,12 +96,6 @@ angular.module('application.controllers', ['nvd3'])
 
   $("a.activatable").click(setActive);
 
-  $scope.$watch('interface.organization', function(){
-    if ($scope.interface) {
-      $('#org_name').append($scope.interface.organization);
-    }
-  });
-
   $scope.$watch('session.user.settings.theme', function(){
     if ($scope.session) {
       $("#theme").removeClass();
@@ -109,11 +103,14 @@ angular.module('application.controllers', ['nvd3'])
     }
   });
 
-
-  (function() { // sup
-    if (!$scope.interface)
-      $scope.getInterface();
-  })();
+  $scope.$watch(function () {
+    return sessionStorage.session;
+  }, function (new_val, old_val) {
+    if (!new_val) return;
+    if (new_val !== old_val) {
+      $scope.getInterface()
+    }
+  });
 }])
 
 // record controller is god
@@ -169,6 +166,7 @@ angular.module('application.controllers', ['nvd3'])
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
+  
   $scope.contact = {
     record: {
       tags: [],
@@ -676,7 +674,7 @@ angular.module('application.controllers', ['nvd3'])
         }
       }
     }
-    $scope.contacts = contacts;
+    return contacts;
   }; // end filterBytag whatev methi
 
   $scope.newDataSection = function() {
@@ -730,6 +728,7 @@ angular.module('application.controllers', ['nvd3'])
   $scope.$watch(function () {
     return sessionStorage.session;
   }, function (new_val, old_val) {
+    if ($scope.contact) return -1;
     if (!new_val) return;
     if (new_val !== old_val) {
       var sess = Session.getSession();
@@ -766,8 +765,11 @@ angular.module('application.controllers', ['nvd3'])
       }
     } // end contact check
     $scope.$on('$routeChangeSuccess', function(next, current) {
-      if ($routeParams.tag)
-        $scope.filterContactsByTag($routeParams.tag);
+      if ($routeParams.tag) {
+        $timeout(function() {
+          $scope.contacts = $scope.filterContactsByTag($routeParams.tag);
+        }, 0);
+      }
     });
   })();
   
