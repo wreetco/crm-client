@@ -168,7 +168,7 @@ angular.module('application.controllers', ['nvd3'])
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
-  
+
   $scope.contact = {
     record: {
       tags: [],
@@ -703,13 +703,13 @@ angular.module('application.controllers', ['nvd3'])
   };
 
   ///////////////////////////////////////////////////////////////
-  
+
   $scope.$watch('contacts', function() {
     if ($scope.contacts && $scope.contacts.length > 0) {
       $scope.tags = Interface.getTags($scope.contacts);
     }
   });
-  
+
   $scope.$watch(function () {
     return sessionStorage.session;
   }, function (new_val, old_val) {
@@ -728,7 +728,7 @@ angular.module('application.controllers', ['nvd3'])
       });
     }
   });
-  
+
   (function() {
     if (!$scope.contacts) {
       if (localStorage.contacts) {
@@ -753,7 +753,7 @@ angular.module('application.controllers', ['nvd3'])
     } // end contact check
 
   })();
-  
+
 }]) // end ContactController
 
 // end of record descendants
