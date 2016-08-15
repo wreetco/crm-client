@@ -52,6 +52,7 @@ return {
 
 
 .directive('wrmn', function($compile) {
+<<<<<<< HEAD
 	return {
 		restrict: 'A',
 		scope: false,
@@ -89,30 +90,54 @@ return {
 })
 
 .directive('wEditable', function($timeout, $compile) {
-	return {
-		scope: {
-			obj: "=wEditable",
-		},
-		controller: function($scope) {
-			$scope.save = function() {
-				alert($scope.obj);
-			};
-			$scope.cancel = function() {
-				// cancel
-			}; 
-		},
-		link: function($scope, $el) {
-			$el.click(function() {
-				var editz = "<input type='text' ng-model='obj'><i class='material-icons right' ng-click='fart()'>check</i>";
-				editz = angular.element(editz);
-				// clear the parent
-				$el.empty();
-				// add div to the dom
-				$el.append($compile(editz)($scope));
-				// watch for change
-			});
-		}
-	};
+  return {
+    scope: {
+      obj: "=wEditable",
+    },
+    controller: function($scope) {
+      $scope.save = function() {
+        //save that shit breh
+        console.log("save");
+        var wrapper = $('#' + $scope.id).parent();
+        var newval = wrapper.children().first().val();
+        //empty the wedit span
+        wrapper.empty();
+        //reinsert new value
+        wrapper.text(newval);
+      };
+      $scope.cancel = function() {
+        // don't change anything just empty and replace
+        console.log("cancel");
+        var wrapper = $('#' + $scope.id).parent();
+        //empty the wedit span
+        wrapper.empty();
+        //reset the value/model
+        $scope.obj = $scope.orig;
+        //put in the original value
+        wrapper.text($scope.obj);
+      };
+    },
+    link: function($scope, $el) {
+      $el.click(function() {
+        console.log();
+        var editz = " \
+                      <input type='text' ng-model='obj' autofocus id='" + $el.attr("w-editable") + "'> \
+                      <a ng-click='save()'><i class='material-icons green-text' style='border: 1px solid red;' ng-click='save();'>check</i></a> \
+                      <a ng-click='cancel()'><i class='material-icons red-text' style='border: 1px solid red;' ng-click='cancel();'>cancel</i></a> \
+                    ";
+        //I need to keep a copy of the original value
+        $scope.orig = $scope.obj;
+        //ID for each one
+        $scope.id = $el.attr("w-editable");
+        editz = angular.element(editz);
+        // clear the parent
+        $el.empty();
+        // add div to the dom
+        $el.append($compile(editz)($scope));
+        // watch for change
+      });
+    }
+  };
 })
 	
 ;		
