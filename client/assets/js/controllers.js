@@ -108,7 +108,7 @@ angular.module('application.controllers', ['nvd3'])
   }, function (new_val, old_val) {
     if (!new_val) return;
     if (new_val !== old_val) {
-      $scope.getInterface()
+      $scope.getInterface();
     }
   });
 }])
@@ -166,7 +166,7 @@ angular.module('application.controllers', ['nvd3'])
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
-  
+
   $scope.contact = {
     record: {
       tags: [],
@@ -716,7 +716,7 @@ angular.module('application.controllers', ['nvd3'])
   };
 
   ///////////////////////////////////////////////////////////////
-  
+
   $scope.$watch('contacts', function() {
     if (!$scope.tags && $scope.contacts) {
       $timeout(function() {
@@ -724,7 +724,7 @@ angular.module('application.controllers', ['nvd3'])
       }, 100);
     }
   });
-  
+
   $scope.$watch(function () {
     return sessionStorage.session;
   }, function (new_val, old_val) {
@@ -743,7 +743,7 @@ angular.module('application.controllers', ['nvd3'])
       });
     }
   });
-  
+
   (function() {
     if (!$scope.contacts) {
       if (localStorage.contacts) {
@@ -772,7 +772,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   })();
-  
+
 }]) // end ContactController
 
 // end of record descendants
