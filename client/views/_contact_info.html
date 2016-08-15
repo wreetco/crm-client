@@ -69,7 +69,7 @@
             </label>
           </div>
         </div>
-        <!-- add field button -->
+       <!-- add field button -->
         <div class="row nogut">
           <div class="col s12" ng-show="current_contact.new_field[$index]" id="new_field">
             <div class="col s6 m3 input-field">
@@ -81,13 +81,13 @@
               <label for="new_field_type[{{ $index }}]">Type</label>
             </div>
             <div class="col s1">
-              <i class="material-icons green-text" style="font-size: 2em;" ng-click="newField($index, section, 'Contacts')">check</i>
-              <i class="material-icons red-text" style="font-size: 2em;">cancel</i>
+              <i class="material-icons" style="font-size: 2em;" ng-click="newField($index, section, 'Contacts')">check</i>
+              <i class="material-icons" style="font-size: 2em;">cancel</i>
             </div>
           </div>
           <div class="col s12">
             <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_field[$index] = {};">
-              <i class="material-icons left">list</i>New Field
+              <i class="material-icons left">text_fields</i>New Field
             </button>
           </div>
         </div><!-- end add field -->
@@ -114,7 +114,7 @@
     <div class="row" style="margin-top: 2em;">
       <div class="col s12" style="float: left;">
         <div id="chip-section">
-          <input placeholder="+Tag" type="text" id="new-tag" style="margin-top: .5em; width: 6em; display: inline-block;" />
+          <input placeholder="+" type="text" id="new-tag" style="margin-top: 10px; margin-left: 20px; width: 128px; display: inline-block;" />
         </div>
       </div>
     </div>

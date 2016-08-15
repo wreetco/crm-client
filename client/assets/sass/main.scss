@@ -30,9 +30,23 @@
       background-color: $primary-color;
       color: $primary-text;
     }
+    
+    li.center:hover {
+      cursor: pointer;
+    }
 
     ul {
       background-color: $primary-color;
+    }
+    
+    #org_name {
+      font-size: 1.5em;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    #org_name i {
+      font-size: 1.5em !important;
     }
 
     .nogut {
@@ -57,10 +71,27 @@
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
+    
+    #new-tag::-moz-placeholder {
+      color: $accent !important;
+      font-size: 1.25em !important;
+    }
+    
+    #new-tag::-webkit-input-placeholder {
+      color: $accent !important;
+      font-size: 1.25em !important;
+    }
+    
+    #new-tag:focus {
+      font-size: 23px !important;
+    }
+    
     .chip {
       margin: .1em;
       background-color: $accent;
       color: $primary-text;
+      font-weight: 300;
+      font-size: 1.1em;
     }
 
     .chip i {
@@ -239,6 +270,10 @@
       color: $secondary-text;
     }
 
+    label {
+      font-size: 1em !important;
+    }
+
     input[type=password]:focus:not([readonly]) + label {
       color: $accent;
       border-bottom: $accent;
@@ -309,6 +344,7 @@
     .btn {
       background-color: $accent;
       color: $primary-text;
+      font-weight: 300;
     }
 
     .btn i {
@@ -333,7 +369,6 @@
       background-color: $accent;
       color: $primary-text;
     }
-
 
     .btn-large i {
       color: $secondary-text;
