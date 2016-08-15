@@ -9,54 +9,52 @@
     <h3 ng-if="!(current_contact._id)">
       Post Contact
     </h3>
-    <table ng-if="current_contact._id" class="responsive-table">
-      <tr>
-        <td>
-          <i class="material-icons left">phone</i>Phone:
-        </td>
-        <td class="input-field">
-          <span class="wedit" w-editable="current_contact.x.phone_num">
-            {{ current_contact.x.phone_num | tel }}
-          </span>
-        </td>
-        <td>
-          <i class="material-icons left">date_range</i>Created:
-        </td>
-        <td>
-          <span class="wedit">
-            {{ current_contact.created_date | date:'medium'}}
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <i class="material-icons left">email</i>Email:
-        </td>
-        <td class="input-field">
-          <span class="wedit" w-editable="current_contact.x.email_address">
-            {{ current_contact.x.email_address }}
-          </span>
-        </td>
-        <td>
-          <i class="material-icons left">date_range</i>Modified:
-        </td>
-        <td>
-          <span class="wedit">
-            {{ current_contact.updated_at | date:'medium' }}
-          </span>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <i class="material-icons left">account_balance</i>Organization:
-        </td>
-        <td>
-          <span class="wedit" w-editable="current_contact.x.email_address">
-            {{ current_contact.x.organization }}
-          </span>
-        </td>
-      </tr>
-    </table>
+    <div ng-if="current_contact._id" class="row">
+      <div class="col s3 input-field">
+        <i class="material-icons left">phone</i>Phone:
+      </div>
+      <div class="col s3 input-field">
+        <span class="wedit" w-editable="current_contact.x.phone_num">
+          {{ current_contact.x.phone_num | tel }}
+        </span>
+      </div>
+      <div class="col s3 input-field">
+        <i class="material-icons left">date_range</i>Created:
+      </div>
+      <div class="col s3 input-field">
+        <span class="wedit">
+          {{ current_contact.created_date | date:'medium'}}
+        </span>
+      </div>
+    </div>
+    <div ng-if="current_contact._id" class="row">
+      <div class="col s3 input-field">
+        <i class="material-icons left">email</i>Email:
+      </div>
+      <div class="col s3 input-field">
+        <span class="wedit" w-editable="current_contact.x.email_address">
+          {{ current_contact.x.email_address }}
+        </span>
+      </div>
+      <div class="col s3 input-field">
+        <i class="material-icons left">date_range</i>Modified:
+      </div>
+      <div class="col s3 input-field">
+        <span class="wedit">
+          {{ current_contact.updated_at | date:'medium' }}
+        </span>
+      </div>
+    </div>
+    <div ng-if="current_contact._id" class="row">
+      <div class="col s3 input-field">
+        <i class="material-icons left">account_balance</i>Organization:
+      </div>
+      <div class="col s3 input-field">
+        <span class="wedit" w-editable="current_contact.x.organization">
+          {{ current_contact.x.organization }}
+        </span>
+      </div>
+    </div>
 
     <div class="row">
       <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">

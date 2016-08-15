@@ -97,30 +97,33 @@ angular.module('application.directives', [])
       $scope.save = function() {
         //save that shit breh
         console.log("save");
-        var wrapper = $('#edit-field').parent();
-        console.log(wrapper.attr("w-editable"));
+        var wrapper = $('#' + $scope.id).parent();
+        var newval = wrapper.children().first().val();
         wrapper.empty();
-        wrapper.text(wrapper.children().first().val());
+        wrapper.text($scope.orig);
       };
       $scope.cancel = function() {
         // don't change anything just empty and replace
         console.log("cancel");
-        var wrapper = $('#edit-field').parent();
-        console.log(wrapper.children().first().val());
-        console.log(wrapper.attr("w-editable"));
+        var wrapper = $('#' + $scope.id).parent();
         wrapper.empty();
-        wrapper.text("{{ " + wrapper.attr("w-editable") + " }}");
-        $scope.$apply();
+        //reset the value/model
+        $scope.obj = $scope.orig;
+        wrapper.text($scope.obj);
       };
     },
     link: function($scope, $el) {
       $el.click(function() {
+        console.log();
         var editz = " \
-                      <input type='text' ng-model='obj' autofocus ng-blur='cancel()' id='edit-field'> \
-                      <i class='material-icons green-text' style='font-size: 3em; border: 1px solid red; position: absolute; right: 2em; top: 1.5em; display: inline-block;' ng-click='save();'>check</i> \
-                      <i class='material-icons red-text' style='border: 1px solid red; position: absolute; right: .5em; top: 1.5em; display: inline-block;' ng-click='cancel();'>cancel</i> \
+                      <input type='text' ng-model='obj' autofocus id='" + $el.attr("w-editable") + "'> \
+                      <a ng-click='save()'><i class='material-icons green-text' style='border: 1px solid red;' ng-click='save();'>check</i></a> \
+                      <a ng-click='cancel()'><i class='material-icons red-text' style='border: 1px solid red;' ng-click='cancel();'>cancel</i></a> \
                     ";
         console.log($el);
+        //I need to keep a copy of the original value
+        $scope.id = $el.attr("w-editable");
+        $scope.orig = $scope.obj;
         editz = angular.element(editz);
         // clear the parent
         $el.empty();
