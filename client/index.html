@@ -34,11 +34,11 @@ All of our required JS has been concat'd and minified.
     <div>
       <!-- This is the sidebar -->
       <ul id="slide-out" class="side-nav fixed">
-        <li class="center" style="padding-top: 1em;" ng-controller="HomeController" onclick="window.location = '/#!/';">
+        <li class="center" style="padding-top: 1em;" onclick="window.location = '/#!/';">
           <img src="assets/img/wreetcon.png" width="48" />
-          <p id="org_name">
+          <p id="org_name" ng-controller="HomeController">
             <i class="material-icons small">account_circle</i>
-            <span ng-bind="interface.organization" style="position: relative; top: -.4em;"></span>
+            <span ng-bind="interface.organization" style="position: relative; top: -.4em; left: .25em;"></span>
           </p>
         </li>
         <li class="no-padding" >
@@ -50,7 +50,7 @@ All of our required JS has been concat'd and minified.
               </a>
               <div class="collapsible-body" id="contact-collapse-body">
                 <ul ng-controller="ContactController" class="collection">
-                  <li class="collection-item"><a class="activatable" ng-href="#!/contacts">All</a></li>
+                  <li class="collection-item"><a class="activatable" ng-href="/#!/contacts">All</a></li>
                   <li ng-repeat="tag in tags" class="collection-item">
                     <a ng-href="/#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}

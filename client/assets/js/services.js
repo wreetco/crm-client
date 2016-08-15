@@ -222,4 +222,29 @@ angular.module('application.services', [])
 
     return (country + " (" + city + ") " + number).trim();
   };
-});
+})
+
+.filter('tag', function($location) {
+  return function(contacts) {
+    if ($location.$$path.split('/').length !== 3) return contacts;
+    var tag = $location.$$path.split('/')[2];
+    var filtered = [];
+    try {
+      for (var i = 0; i < contacts.length; i++) {
+        var c = contacts[i];
+        for (var j = 0; j < c.tags.length; j++) {
+          if (c.tags[j].name == tag) {
+            filtered.push(c);
+            break;
+          }
+        }
+      }
+      return filtered;
+    } catch(err) {
+      console.log('the last errblaster');
+    }
+  };
+})
+
+
+;

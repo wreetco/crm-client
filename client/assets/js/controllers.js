@@ -62,22 +62,22 @@ angular.module('application.controllers', ['nvd3'])
 .controller('ManagerController', ['$scope', '$window', 'Manager', function($scope, $window, Manager) {
 }])
 
-.controller('HomeController', ['$scope', '$window', 'Interface', function($scope, $window, Interface) {
+.controller('HomeController', ['$scope', '$window', '$timeout','Interface', function($scope, $window, $timeout, Interface) {
   $scope.theme = 'dark-theme';
-
+  
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
     // to that end, grab the first manager from the user array
-    var m_id = JSON.parse(window.sessionStorage.session).user.managers[0];
-    Interface.getInterface(m_id).then(function(interface) {
+    $scope.session = JSON.parse(window.sessionStorage.session);
+    Interface.getInterface($scope.session.user.managers[0]).then(function(interface) {
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
-      $scope.session = JSON.parse(window.sessionStorage.session);
       $scope.theme = $scope.session.user.settings.theme;
       $("#theme").removeClass();
       $("#theme").addClass($scope.theme);
+      $scope.$apply();
     }).catch(function(err) { // sup, mike, chyea
       console.log(err);
     });
@@ -108,9 +108,11 @@ angular.module('application.controllers', ['nvd3'])
   }, function (new_val, old_val) {
     if (!new_val) return;
     if (new_val !== old_val) {
-      $scope.getInterface()
+      $scope.getInterface();
     }
   });
+  
+  if (localStorage.interface) $scope.getInterface();
 }])
 
 // record controller is god
@@ -662,21 +664,6 @@ angular.module('application.controllers', ['nvd3'])
 
   };
 
-  $scope.filterContactsByTag = function(tag) {
-    if (!$scope.contacts) return -1;
-    var contacts = [];
-    for (var i = 0; i < $scope.contacts.length; i++) {
-      var c = $scope.contacts[i];
-      for (var j = 0; j < c.tags.length; j++) {
-        if (c.tags[j].name == tag) {
-          contacts.push(c);
-          break;
-        }
-      }
-    }
-    return contacts;
-  }; // end filterBytag whatev methi
-
   $scope.newDataSection = function() {
     $scope.current_fields.push({
       name: $('#new_section_text').val(),
@@ -718,17 +705,15 @@ angular.module('application.controllers', ['nvd3'])
   ///////////////////////////////////////////////////////////////
   
   $scope.$watch('contacts', function() {
-    if (!$scope.tags && $scope.contacts) {
-      $timeout(function() {
-        $scope.tags = Interface.getTags($scope.contacts);
-      }, 100);
+    if ($scope.contacts && $scope.contacts.length > 0) {
+      $scope.tags = Interface.getTags($scope.contacts);
     }
   });
   
   $scope.$watch(function () {
     return sessionStorage.session;
   }, function (new_val, old_val) {
-    if ($scope.contact) return -1;
+    if ($scope.contacts) return -1;
     if (!new_val) return;
     if (new_val !== old_val) {
       var sess = Session.getSession();
@@ -756,7 +741,9 @@ angular.module('application.controllers', ['nvd3'])
         if (!sess) return 0;
         $scope.getRecords(sess.user.managers[0], 'records', null)
         .then(function(contacts) {
-          $scope.contacts = contacts;
+          $timeout(function() {
+            $scope.contacts = contacts;
+          }, 0);
           // store it
           localStorage.contacts = JSON.stringify(contacts);
         }).catch(function(err) {
@@ -764,13 +751,7 @@ angular.module('application.controllers', ['nvd3'])
         });
       }
     } // end contact check
-    $scope.$on('$routeChangeSuccess', function(next, current) {
-      if ($routeParams.tag) {
-        $timeout(function() {
-          $scope.contacts = $scope.filterContactsByTag($routeParams.tag);
-        }, 0);
-      }
-    });
+
   })();
   
 }]) // end ContactController
