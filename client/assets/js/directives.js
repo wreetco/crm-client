@@ -119,7 +119,7 @@ angular.module('application.directives', [])
         //ID for each one
         $scope.id = $el.attr("w-editable");
         var editz = "<input type='text' ng-model='obj' autofocus id='" + $scope.id + "' />" +
-                    "<i class='material-icons green-text' style='position: absolute; top: 1em; right: 1.5em;' ng-click='save();'>check</i>" +
+                    "<i class='material-icons green-check' style='position: absolute; top: 1em; right: 1.5em;' ng-click='save();'>check</i>" +
                     "<i class='material-icons red-text' style='position: absolute; top: 1em; right: .5em;' ng-click='cancel();'>cancel</i>";
         //I need to keep a copy of the original value
         $scope.orig = $scope.obj;
@@ -131,6 +131,7 @@ angular.module('application.directives', [])
         // add div to the dom
         $el.append($compile(editz)($scope));
         // we need to get rid of the attatched handler or you cant select the input without firing off a new click event
+        console.log($el);
         $el.off();
       });
     }
