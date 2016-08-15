@@ -98,7 +98,7 @@ angular.module('application.controllers', ['nvd3'])
 
   $scope.$watch('interface.organization', function(){
     if ($scope.interface) {
-      $('#org_name').text($scope.interface.organization);
+      $('#org_name').append($scope.interface.organization);
     }
   });
 

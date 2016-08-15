@@ -30,9 +30,27 @@
       background-color: $primary-color;
       color: $primary-text;
     }
+    
+    li.center:hover {
+      cursor: pointer;
+    }
 
     ul {
       background-color: $primary-color;
+    }
+    
+    #org_name {
+      font-size: 1.5em;
+      font-weight: bold;
+      padding-top: 0;
+      margin-top: 0;
+    }
+
+    #org_name i {
+      position: relative;
+      top: .33em;
+      left: -.5em;
+      font-size: 1.5em !important;
     }
 
     .nogut {
