@@ -30,7 +30,7 @@
       background-color: $primary-color;
       color: $primary-text;
     }
-    
+
     li.center:hover {
       cursor: pointer;
     }
@@ -38,7 +38,7 @@
     ul {
       background-color: $primary-color;
     }
-    
+
     #org_name {
       font-size: 1.5em;
       font-weight: bold;
@@ -71,21 +71,21 @@
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
-    
+
     #new-tag::-moz-placeholder {
       color: $accent !important;
       font-size: 1.25em !important;
     }
-    
+
     #new-tag::-webkit-input-placeholder {
       color: $accent !important;
       font-size: 1.25em !important;
     }
-    
+
     #new-tag:focus {
       font-size: 23px !important;
     }
-    
+
     .chip {
       margin: .1em;
       background-color: $accent;
@@ -473,6 +473,11 @@
     #__wrmn_right {
       background-color: $primary-color;
     }
+
+    //green from logo for checks
+    .green-check {
+      color: #92c13e;
+    }
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%
@@ -487,7 +492,7 @@
 @include theme(blue-theme, #303f9f, #3F51B5, #C5CAE9, #ffc107, rgba(0, 0, 0, .87), rgba(0, 0, 0, .87), rgba(182, 182, 182, .54));
 
 //@include theme(dark-theme, #17181C, #1F242A, #182939, rgba(183, 44, 44, .74), rgba(255, 255, 255, 1), rgba(255, 255, 255, .7), rgba(182, 182, 182, .54));
-@include theme(dark-theme, #1F242A, #263238, #182939, #0288d1, rgba(#eceff1, 1), rgba(#eceff1, .9), rgba(182, 182, 182, .54));
+@include theme(dark-theme, #1F242A, #263238, #182939, #209dd8, rgba(#eceff1, 1), rgba(#eceff1, .9), rgba(182, 182, 182, .54));
 
 //@include theme(light-theme, #bcbcbc, #eee, #fafafa, rgba(255, 82, 82, .84), rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
 @include theme(light-theme, #f5f5f5, #fafafa, #fff, #0288d1, rgba(0, 0, 0, .87), rgba(0, 0, 0, .54), rgba(182, 182, 182, .54));
