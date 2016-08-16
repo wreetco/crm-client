@@ -40,7 +40,7 @@
     }
 
     #org_name {
-      font-size: 1.5em;
+      font-size: 1.33em;
       font-weight: bold;
       text-align: center;
     }
@@ -61,6 +61,35 @@
     //////////////////////////////////////////////////////////////////
     //Contacts/records page, bottom right buttons
     ////////////////////////////////////////////////////////////////
+    
+    .repeated-contact.ng-enter,
+    .repeated-contact.ng-leave {
+      transition: 0.3s linear all;
+    }
+    
+    .repeated-contact.ng-enter,
+    .repeated-contact.ng-leave.ng-leave-active {
+      opacity: 0;
+    }
+    .repeated-contact.ng-leave,
+    .repeated-contact.ng-enter.ng-enter-active {
+      opacity: 1;
+    }
+    
+    .main-anim.ng-enter {
+      transition: 0.3s linear all; /* IE10+ and Future Browsers */
+    }
+
+    .main-anim.ng-enter{
+      /* The animation preparation code */
+      opacity: 0;
+    }
+    
+    .main-anim.ng-enter.ng-enter-active { 
+      /* The animation code itself */
+      opacity: 1;
+    }
+  
     .fixed-action-btn ul {
       background-color: transparent;
     }

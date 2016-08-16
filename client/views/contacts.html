@@ -53,7 +53,7 @@
       </thead>
 
       <tbody>
-        <tr ng-repeat="c in contacts | filter:query | tag | orderBy:sortType:sortReverse">
+        <tr ng-repeat="c in contacts | filter:query | tag | orderBy:sortType:sortReverse" class="repeated-contact">
           <td style="text-align: center !important;">
             <input type="checkbox" id="{{c._id.substring(c._id.length-6, c._id.length)}} selector" value="{{ c._id }}" class="record-checkbox"/>
             <label for="{{c._id.substring(c._id.length-6, c._id.length)}} selector"></label>
