@@ -53,7 +53,7 @@ All of our required JS has been concat'd and minified.
                 <ul ng-controller="ContactController" class="collection">
                   <li class="collection-item"><a class="activatable" ng-href="/#!/contacts">All</a></li>
                   <li ng-repeat="tag in tags" class="collection-item">
-                    <a ng-href="/#!/contacts/{{ tag.name }}" class="activatable">
+                    <a ng-href="#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}
                     </a>
                   </li>

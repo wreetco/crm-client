@@ -97,6 +97,19 @@
       background-color: transparent;
     }
 
+    /* gen purpose for ng-show/if etc */
+    .w-anim {
+      transition: 0.3s linear all !important;
+    }
+    .w-anim.ng-hide-add, .w-anim.ng-hide-remove {
+      opacity: 1 !important;
+      display: block !important;
+    }
+    .w-anim.ng-hide {
+      opacity: 0 !important;
+    }
+    // end anim
+    
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
