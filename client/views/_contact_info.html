@@ -5,6 +5,9 @@
       <span class="wedit" w-editable style="display: inline;">
         {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
       </span>
+      <span class="wedit org-name" w-editable="current_contact.x.organization">
+        - &nbsp;&nbsp;{{ current_contact.x.organization }}
+      </span>
     </h3>
     <h3 ng-if="!(current_contact._id)">
       Post Contact
@@ -43,9 +46,8 @@
           {{ current_contact.updated_at | date:'medium' }}
       </div>
     </div>
-
-    <div ng-if="current_contact._id" class="row">
-      <div class="col s2">
+    <!--<div ng-if="current_contact._id" class="row">
+      <div class="col s2 input-field">
         <i class="material-icons left">account_balance</i>Organization:
       </div>
       <div class="col s4 wedit" ng-model="current_contact.x.organization" contenteditable>
@@ -53,7 +55,7 @@
           {{ current_contact.x.organization }}
         </p>
       </div>
-    </div>
+    </div>-->
 
     <div class="row">
       <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">

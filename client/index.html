@@ -34,7 +34,7 @@ All of our required JS has been concat'd and minified.
     <div>
       <!-- This is the sidebar -->
       <ul id="slide-out" class="side-nav fixed">
-        <li class="center" style="padding-top: 1em;" onclick="window.location = '/#!/';">
+        <li class="center" style="padding-top: 1em; background: transparent;" onclick="window.location = '/#!/'; activeSidebar(this);">
           <img src="assets/img/wreetcon.png" width="48" />
           <p id="org_name" ng-controller="HomeController">
             <i class="material-icons small">account_circle</i>
@@ -62,7 +62,7 @@ All of our required JS has been concat'd and minified.
             </li>
           </ul>
         </li>
-        <li><a href="#!/statistics" onclick="activeSidebar(this);" ><i class="material-icons">insert_chart</i>Statistics</a></li>
+        <!--<li><a href="#!/statistics" onclick="activeSidebar(this);" ><i class="material-icons">insert_chart</i>Statistics</a></li>-->
         <li><a href="#!/settings" onclick="activeSidebar(this);" ><i class="material-icons">settings_applications</i>Settings</a></li>
 
         <!-- TBD: Float this button to the bottom of the left area -->

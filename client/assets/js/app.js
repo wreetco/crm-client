@@ -26,10 +26,10 @@
 				templateUrl: "./views/settings.html",
 				controller: "SettingsController"
 			})
-			.when("/statistics", {
+			/*.when("/statistics", {
 				templateUrl: "./views/statistics.html",
 				controller: "StatisticsController"
-			})
+			})*/
 			.otherwise({
 				redirectTo: '/'
 			});

@@ -82,9 +82,13 @@ angular.module('application.services', [])
     getTags: function(contacts) {
       if (!contacts) return -1;
       var tags = [];
+      var collected = [];
       for (var i = 0; i < contacts.length; i++) {
         contacts[i].tags.map(function(tag) {
-          tags.push(tag);
+          if (collected.indexOf(tag.name) === -1) { 
+            tags.push(tag);
+            collected.push(tag.name);
+          }
         });
       }
       interfaz.tags = tags;

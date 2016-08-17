@@ -50,15 +50,25 @@ angular.module('application.directives', [])
   };
 })
 
+.directive('wMasonry', function() {
+	return function($scope,  $el) {
+		// setup the masonry deal
+		$('#masonry-container').masonry({
+			itemSelector: '#masonry-container .col',
+			columnWidth: '.l3',
+			percentPosition: true
+		});
+	};
+})
 
 .directive('wrmn', function($compile) {
-  return {
-    restrict: 'A',
-    scope: false,
-    link: function($scope, $el) {
-      if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .7, width_offset: 33});
-    }
-  };
+	return {
+		restrict: 'A',
+		scope: false,
+		link: function($scope, $el) {
+			if (!wrmn.is_initd) wrmn.init(document.getElementById('wmenu'), {menu_width: document.body.offsetWidth * .56, width_offset: 33});
+		}
+	};
 })
 
 .directive('wrmnToggleMenu', function($templateRequest, $compile) {
