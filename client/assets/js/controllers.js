@@ -168,6 +168,7 @@ angular.module('application.controllers', ['nvd3'])
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
+  $scope.$location = $location;
   $scope.contact = {
     record: {
       tags: [],
@@ -904,10 +905,10 @@ angular.module('application.controllers', ['nvd3'])
         tooltipHide: function(e){ console.log("tooltipHide"); }
       },
       xAxis: {
-        axisLabel: 'day'
+        axisLabel: 'Date'
       },
       yAxis: {
-        axisLabel: 'contacts',
+        axisLabel: 'Number',
         tickFormat: function(d){
           return d3.format('d')(d);
         },
@@ -918,11 +919,11 @@ angular.module('application.controllers', ['nvd3'])
       }
     },
     title: {
-      enable: true,
+      enable: false,
       text: 'Title for Line Chart'
     },
     subtitle: {
-      enable: true,
+      enable: false,
       text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
       css: {
         'text-align': 'center',
@@ -930,7 +931,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     },
     caption: {
-      enable: true,
+      enable: false,
       html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec.',
       css: {
         'text-align': 'justify',
@@ -939,20 +940,49 @@ angular.module('application.controllers', ['nvd3'])
     }
   };
 
-  $scope.new_contacts_data = sinAndCos();
+  //$scope.new_contacts_data = sinAndCos();
+  $scope.new_contacts_data = [];
+
+  $scope.recentContacts = function() {
+    // by now localstorage should have it
+    // first we need to key out the dates
+    var contacts = JSON.parse(localStorage.contacts);
+    if (!contacts) return -1;
+    var data = [];
+    for (var i = 7; i >= 0; i--) {
+      var date = new Date(Date.now() + (-i * 24 * 60 * 60 * 1000));
+      var key = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getFullYear();
+      var count = 0;
+      // now see if any of the contacts match up
+      for (var j = 0; j < contacts.length; j++) {
+        var create_date = new Date(contacts[j].created_date);
+        if (create_date.getDate() == date.getDate() && create_date.getMonth() == date.getMonth() && create_date.getFullYear() == date.getFullYear())
+          count++;
+      }
+      // now set them up
+      data.push({
+        label: key,
+        x: data.length,
+        y: count
+      });
+    }
+    $scope.new_contacts_data.push({
+      values: data,
+      key: "New Contacts"
+    });
+  };
+  $scope.recentContacts();
 
   /*Random Data Generator */
   function sinAndCos() {
     var sin = [],sin2 = [],
         cos = [];
-
     //Data is represented as an array of {x,y} pairs.
     for (var i = 0; i < 100; i++) {
       sin.push({x: i, y: Math.sin(i/10)});
       sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
       cos.push({x: i, y: 0.5 * Math.cos(i/10+ 2) + Math.random() / 10});
     }
-
     //Line chart data should be sent as an array of series objects.
     return [
       {
@@ -973,11 +1003,38 @@ angular.module('application.controllers', ['nvd3'])
       }
     ];
   }
+  
+  $scope.popularTags = function() {
+    var contacts = JSON.parse(localStorage.contacts);
+    if (!contacts) return -1;
+    var data = [];
+    var tags = [];
+    for (var i = 0; i < contacts.length; i++) {
+      for (var j = 0; j < contacts[i].tags.length; j++) {
+        // first see if there is a ref 
+        if (tags.indexOf(contacts[i].tags[j].name) === -1) {
+          data.push({
+            key: contacts[i].tags[j].name,
+            y: 1
+          });
+        } else {
+          console.log('in else');
+          data.map(function(t) {
+            if (t.key == contacts[i].tags[j].name) t.y += 1;
+          });
+        }
+        tags.push(contacts[i].tags[j].name);
+      }
+    }   
+    $scope.tag_chart_data = data;
+    console.log($scope.tag_chart_data);
+  };
+  $scope.popularTags();
 
-  $scope.options2 = {
+  $scope.tag_chart_opts = {
     chart: {
       type: 'pieChart',
-      height: 500,
+      height: 350,
       x: function(d){return d.key;},
       y: function(d){return d.y;},
       showLabels: true,
@@ -986,45 +1043,15 @@ angular.module('application.controllers', ['nvd3'])
       labelSunbeamLayout: true,
       legend: {
         margin: {
-          top: 5,
-          right: 35,
-          bottom: 5,
+          top: 15,
+          right: 0,
+          bottom: 0,
           left: 0
         }
       }
     }
   };
-
-  $scope.data2 = [
-    {
-      key: "One",
-      y: 5
-    },
-    {
-      key: "Two",
-      y: 2
-    },
-    {
-      key: "Three",
-      y: 9
-    },
-    {
-      key: "Four",
-      y: 7
-    },
-    {
-      key: "Five",
-      y: 4
-    },
-    {
-      key: "Six",
-      y: 3
-    },
-    {
-      key: "Seven",
-      y: 0.5
-    }
-  ];
+  
 }])
 ;
 //It's Time

@@ -25,7 +25,8 @@ var js_paths = [
 		'client/bower_components/d3/d3.js',
 		'client/bower_components/nvd3/build/nv.d3.js',
 		'client/bower_components/angular-nvd3/dist/angular-nvd3.js',
-		'client/bower_components/enquire/dist/enquire.js'
+		'client/bower_components/enquire/dist/enquire.js',
+		'client/bower_components/masonry/dist/masonry.pkgd.min.js'
 ];
 
 var js_paths_main = [

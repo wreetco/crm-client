@@ -1,9 +1,42 @@
 <!doctype html>
-<div class="row">
-  <div class="s12 col m8 debug">
-    fart
+<div class="row" id="masonry-container">
+  <div class="col s12 m6">
+    <div class="card nogut">
+      <div class="card-content">
+        <h5 class="underblur" style="display: inline;">Recent Activity</h5>
+        <div ng-controller="StatisticsController">
+          <nvd3 options="new_contacts_opts" data="new_contacts_data"></nvd3>
+        </div>
+      </div><!-- end card content -->
+    </div><!-- end card -->
+  </div><!-- end col -->
+
+  <div class="col s12 m6 l3">
+    <div class="card nogut">
+      <div class="card-content">
+        <!--<span class="card-title underblur">New</span>-->
+        <h5 class="underblur" style="display: inline;">New</h5>
+        <br style="line-height: 40px;"/>
+        <ul class="collection latest nogut" ng-controller="ContactController">
+          <li class="collection-item" ng-repeat="c in contacts" ng-click="$location.path('/contacts')">{{ ::c.x.first_name }} {{ ::c.x.last_name }}</li>
+        </ul>
+      </div>
+    </div>
   </div>
-  <div class="s12 col m4 debug">
-    dad
+
+  <div class="col s12 m6 l3">
+    <div class="card nogut" style="height: 365px;">
+      <div class="card-content" ng-controller="StatisticsController">
+        <h5 class="underblur" style="display: inline;">Tags</h5>
+        <nvd3 options="tag_chart_opts" data="tag_chart_data"></nvd3>
+      </div>
+    </div>
   </div>
 </div>
+
+<w-masonry></w-masonry>
+<script>
+  $('svg').ready(function() {
+    $('text').attr('fill', $('text').css('color'));
+  });
+</script>

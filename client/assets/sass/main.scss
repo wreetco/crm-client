@@ -58,6 +58,14 @@
       border: 1px solid red !important;
     }
 
+    .nvd3 text {
+      color: $primary-text !important;
+    }
+
+    .nvd3 .tick {
+      opacity: 0 !important;
+    }
+
     //////////////////////////////////////////////////////////////////
     //Contacts/records page, bottom right buttons
     ////////////////////////////////////////////////////////////////
@@ -88,6 +96,11 @@
     .main-anim.ng-enter.ng-enter-active { 
       /* The animation code itself */
       opacity: 1;
+    }
+    
+    .main-anim {
+      //border: 1px solid red;
+      padding: 1em;
     }
   
     .fixed-action-btn ul {
@@ -430,9 +443,13 @@
       color: $secondary-text;
     }
 
+    #masonry-container .card .card-content {
+      padding: 10px;
+    }
+
     // charts on stats page
     svg {
-      background-color: $primary-color-light;
+      //background-color: $primary-color-light;
     }
     // end charts
 
@@ -450,6 +467,13 @@
       color: $primary-text;
     }
     // end Modals
+
+    #contact-info-card .org-name {
+      display: inline;
+      font-size: .66em;
+      position: relative;
+      left: -10px;
+    }
 
     // Tables
     table {
@@ -483,10 +507,36 @@
     }
     // end Option and Select
 
+    li.collection-header {
+      margin: 0 !important;
+      padding: 0 0 0 1em !important;
+    }
+  
+    ul.collection {
+      border: none !important;
+    }
+  
+    .underblur {
+      box-shadow: 0 5px 4px -5px $accent;
+      padding: 0 10px 3px 10px;
+    }
+  
     //cards
     .card {
       background-color: $primary-color;
       color: $primary-text;
+    }
+
+    span.card-title {
+      //font-weight: bold;
+    }
+    
+    li.collection-header {
+      background-color: $primary-color !important;
+    }
+
+    .latest .collection-item {
+      cursor: pointer;
     }
 
     #contact-info-card {
@@ -520,6 +570,7 @@
     .green-check {
       color: #92c13e;
     }
+    
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%
