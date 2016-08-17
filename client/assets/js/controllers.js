@@ -1018,7 +1018,6 @@ angular.module('application.controllers', ['nvd3'])
             y: 1
           });
         } else {
-          console.log('in else');
           data.map(function(t) {
             if (t.key == contacts[i].tags[j].name) t.y += 1;
           });
@@ -1027,7 +1026,6 @@ angular.module('application.controllers', ['nvd3'])
       }
     }   
     $scope.tag_chart_data = data;
-    console.log($scope.tag_chart_data);
   };
   $scope.popularTags();
 
