@@ -64,7 +64,7 @@ angular.module('application.controllers', ['nvd3'])
 
 .controller('HomeController', ['$scope', '$window', '$timeout','Interface', function($scope, $window, $timeout, Interface) {
   $scope.theme = 'dark-theme';
-  
+
   $scope.getInterface = function() {
     // for now we only can handle the one manager interface, though the
     // backend is ready to support more when we want to add that capability
@@ -74,7 +74,7 @@ angular.module('application.controllers', ['nvd3'])
       // store the thing
       window.localStorage.interface = JSON.stringify(interface);
       $scope.interface = interface;
-      $scope.theme = $scope.session.user.settings.theme;
+      $scope.theme = $scope.session.user.settings.theme || 'dark-theme';
       $("#theme").removeClass();
       $("#theme").addClass($scope.theme);
       $scope.$apply();
@@ -111,7 +111,7 @@ angular.module('application.controllers', ['nvd3'])
       $scope.getInterface();
     }
   });
-  
+
   if (localStorage.interface) $scope.getInterface();
 }])
 
@@ -1003,7 +1003,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     ];
   }
-  
+
   $scope.popularTags = function() {
     var contacts = JSON.parse(localStorage.contacts);
     if (!contacts) return -1;
@@ -1011,7 +1011,7 @@ angular.module('application.controllers', ['nvd3'])
     var tags = [];
     for (var i = 0; i < contacts.length; i++) {
       for (var j = 0; j < contacts[i].tags.length; j++) {
-        // first see if there is a ref 
+        // first see if there is a ref
         if (tags.indexOf(contacts[i].tags[j].name) === -1) {
           data.push({
             key: contacts[i].tags[j].name,
@@ -1025,7 +1025,7 @@ angular.module('application.controllers', ['nvd3'])
         }
         tags.push(contacts[i].tags[j].name);
       }
-    }   
+    }
     $scope.tag_chart_data = data;
     console.log($scope.tag_chart_data);
   };
@@ -1051,7 +1051,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     }
   };
-  
+
 }])
 ;
 //It's Time

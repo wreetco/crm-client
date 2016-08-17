@@ -25,5 +25,8 @@
     "d3": "^3.5.17",
     "enquire": "^2.1.2",
     "masonry": "^4.1.1"
+  },
+  "resolutions": {
+    "angular": "1.5.8"
   }
 }

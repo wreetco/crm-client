@@ -163,7 +163,8 @@ angular.module('application.directives', [])
         console.log("canceled changes");
         $scope.element.off("blur");
         $scope.element.children("i").detach();
-        $scope.element.html($scope.original_value[0]);
+        $scope.element.html($scope.original_value);
+        $scope.model.$setViewValue($scope.element.html());
         $scope.element.blur();
       };
 
@@ -172,33 +173,39 @@ angular.module('application.directives', [])
         console.log("saved changes");
         $scope.element.off("blur");
         $scope.element.children("i").detach();
+        console.log($scope.element.text);
         $scope.element.blur();
       };
 
     },
     link: function($scope, element, attrs, ngModel) {
       $scope.element = element;
+      $scope.model = ngModel;
 
       function read() {
         ngModel.$setViewValue(element.html());
+        console.log("changes");
       }
 
       ngModel.$render = function() {
         element.html(ngModel.$viewValue || "");
+        console.log("changes2");
       };
 
       element.bind("focus", function() {
+        //keep track of original value if they dont save
+        $scope.original_value = element.text();
         var editz = "<i class='material-icons red-text' style='display: inline-block; float: right;' ng-click='cancel();'>cancel</i>" +
             "<i class='material-icons green-check' style='display: inline-block; float: right;' ng-click='save();'>check</i>";
         editz = angular.element(editz);
         element.append($compile(editz)($scope));
-        $scope.original_value = element.text().split('cancel');
       });
 
       element.bind("blur", function () {
         console.log("cancelled changes");
         element.children("i").detach();
-        $scope.element.html($scope.original_value[0]);
+        $scope.element.html($scope.original_value);
+        ngModel.$setViewValue(element.html());
         $scope.$apply(read);
       });
     }
