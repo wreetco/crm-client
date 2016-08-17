@@ -28,7 +28,7 @@ All of our required JS has been concat'd and minified.
   <body>
     <!-- This is where the views get served up in this ng view div -->
     <div class="main">
-      <div ng-view></div>
+      <div class="main-anim" ng-view></div>
     </div>
 
     <div>
@@ -39,6 +39,7 @@ All of our required JS has been concat'd and minified.
           <p id="org_name" ng-controller="HomeController">
             <i class="material-icons small">account_circle</i>
             <span ng-bind="interface.organization" style="position: relative; top: -.4em; left: .25em;"></span>
+            <i class="material-icons small" style="position: relative;">keyboard_arrow_down</i>
           </p>
         </li>
         <li class="no-padding" >
@@ -52,7 +53,7 @@ All of our required JS has been concat'd and minified.
                 <ul ng-controller="ContactController" class="collection">
                   <li class="collection-item"><a class="activatable" ng-href="/#!/contacts">All</a></li>
                   <li ng-repeat="tag in tags" class="collection-item">
-                    <a ng-href="/#!/contacts/{{ tag.name }}" class="activatable">
+                    <a ng-href="#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}
                     </a>
                   </li>

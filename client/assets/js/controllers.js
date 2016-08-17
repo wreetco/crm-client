@@ -168,7 +168,6 @@ angular.module('application.controllers', ['nvd3'])
   //contact is a record format used for posting
   //  to the DB
   ///////////////////////////////////////////////////////////////
-
   $scope.contact = {
     record: {
       tags: [],
