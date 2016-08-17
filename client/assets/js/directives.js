@@ -88,56 +88,111 @@ angular.module('application.directives', [])
   };
 })
 
-.directive('wEditable', function($timeout, $compile) {
-  return {
-    scope: {
-      obj: "=wEditable",
-    },
-    controller: function($scope) {
-      $scope.save = function() {
+//.directive('wEditable', function($timeout, $compile) {
+  //return {
+    //scope: {
+      //obj: "=wEditable",
+    //},
+    //controller: function($scope) {
+      //$scope.save = function() {
         //save that shit breh
-        console.log("save");
-        var newval = $scope.element.children().first().val();
+        //console.log("save");
+        //var newval = $scope.element.children().first().val();
         //empty the wedit span
-        $scope.element.empty();
+        //$scope.element.empty();
         //put in the new value
-        $scope.element.text(newval);
-        $scope.element[0].addEventListener("click", $scope.listener, false);
-      };
-      $scope.cancel = function() {
+        //$scope.element.text(newval);
+      //};
+      //$scope.cancel = function() {
         // don't change anything just empty and replace
-        console.log("cancel");
+        //console.log("cancel");
         //empty the wedit span
-        $scope.element.empty();
+        //$scope.element.empty();
         //reset the value/model
-        $scope.obj = $scope.orig;
+        //$scope.obj = $scope.orig;
         //put in the original value
-        $scope.element.text($scope.obj);
-        $scope.element[0].addEventListener("click", $scope.listener, true);
-      };
-      $scope.listener = function(){
-        //ID for each one
-        $scope.id = $scope.element.attr("w-editable");
-        var editz = "<input type='text' ng-model='obj' autofocus id='" + $scope.id + "' />" +
-            "<i class='material-icons green-check' style='position: absolute; top: 1em; right: 1.5em;' ng-click='save();'>check</i>" +
-            "<i class='material-icons red-text' style='position: absolute; top: 1em; right: .5em;' ng-click='cancel();'>cancel</i>";
-        //I need to keep a copy of the original value
-        $scope.orig = $scope.obj;
-        //Lets keep track of our parent element
-        editz = angular.element(editz);
-        // clear the parent
-        $scope.element.empty();
-        // add div to the dom
-        $scope.element.append($compile(editz)($scope));
-        // we need to get rid of the attatched handler or you cant select the input without firing off a new click event
-        console.log($scope.element);
-        //remove event listener after swapping in the input deal
-      };
-    },
-    link: function($scope, $el) {
+        //$scope.element.text($scope.obj);
+      //};
+      //$scope.listener = function(){
+      //ID for each one
+      // $scope.id = $scope.element.attr("w-editable");
+      //var editz = "<input type='text' ng-model='obj' autofocus id='" + $scope.id + "' />" +
+      //  "<i class='material-icons green-check' style='position: absolute; top: 1em; right: 1.5em;' ng-click='save();'>check</i>" +
+      //"<i class='material-icons red-text' style='position: absolute; top: 1em; right: .5em;' ng-click='cancel();'>cancel</i>";
+      //I need to keep a copy of the original value
+      //$scope.orig = $scope.obj;
+      //Lets keep track of our parent element
+      //editz = angular.element(editz);
+      // clear the parent
+      //$scope.element.empty();
+      // add div to the dom
+      //$scope.element.append($compile(editz)($scope));
+      // we need to get rid of the attatched handler or you cant select the input without firing off a new click event
+      //console.log($scope.element);
+      //remove event listener after swapping in the input deal
+      //};
+    //},
+    //link: function($scope, $el) {
       //add element to scope so we can like do things with it
-      $scope.element = $el;
+      //$scope.element = $el;
       //add the even listener
-      $scope.element[0].addEventListener("click", $scope.listener, true);
+      //$scope.element[0].addEventListener("click", $scope.listener, true);
+    //}
+  //}
+//})
+
+//Using html5 contenteditable attribute
+.directive("contenteditable", function($compile) {
+  return {
+    //match attribute
+    restrict: "A",
+    require: "ngModel",
+    controller: function($scope) {
+      $scope.cancel = function() {
+        //what the fuck
+        console.log("canceled changes");
+        $scope.element.off("blur");
+        $scope.element.children("i").detach();
+        $scope.element.html($scope.original_value[0]);
+        $scope.element.blur();
+      };
+
+      $scope.save = function() {
+        //good luck
+        console.log("saved changes");
+        $scope.element.off("blur");
+        $scope.element.children("i").detach();
+        $scope.element.blur();
+      };
+
+    },
+    link: function($scope, element, attrs, ngModel) {
+      $scope.element = element;
+
+      function read() {
+        ngModel.$setViewValue(element.html());
+      }
+
+      ngModel.$render = function() {
+        element.html(ngModel.$viewValue || "");
+      };
+
+      element.bind("focus", function() {
+        var editz = "<i class='material-icons red-text' style='display: inline-block; float: right;' ng-click='cancel();'>cancel</i>" +
+            "<i class='material-icons green-check' style='display: inline-block; float: right;' ng-click='save();'>check</i>";
+        editz = angular.element(editz);
+        element.append($compile(editz)($scope));
+        $scope.original_value = element.text().split('cancel');
+      });
+
+      element.bind("blur", function () {
+        console.log("cancelled changes");
+        element.children("i").detach();
+        $scope.element.html($scope.original_value[0]);
+        $scope.$apply(read);
+      });
     }
-  }});
+  };
+})
+
+;
