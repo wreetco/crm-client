@@ -12,50 +12,48 @@
     <h3 ng-if="!(current_contact._id)">
       Post Contact
     </h3>
+
     <div ng-if="current_contact._id" class="row">
-      <div class="col s2 input-field">
+      <div class="col s2">
         <i class="material-icons left">phone</i>Phone:
       </div>
-      <div class="col s4 input-field">
-        <span class="wedit" w-editable="current_contact.x.phone_num">
+      <div class="col s4 wedit" ng-model="current_contact.x.phone_num" contenteditable>
+        <p>
           {{ current_contact.x.phone_num | tel }}
-        </span>
+        </p>
       </div>
-      <div class="col s2 input-field">
+      <div class="col s2">
         <i class="material-icons left">date_range</i>Created:
       </div>
-      <div class="col s4 input-field">
-        <span class="wedit">
+      <div class="col s4">
           {{ current_contact.created_date | date:'medium'}}
-        </span>
       </div>
     </div>
+
     <div ng-if="current_contact._id" class="row">
-      <div class="col s2 input-field">
+      <div class="col s2">
         <i class="material-icons left">email</i>Email:
       </div>
-      <div class="col s4 input-field">
-        <span class="wedit" w-editable="current_contact.x.email_address">
+      <div class="col s4 wedit" ng-model="current_contact.x.email_address" contenteditable>
+        <p>
           {{ current_contact.x.email_address }}
-        </span>
+        </p>
       </div>
-      <div class="col s2 input-field">
+      <div class="col s2">
         <i class="material-icons left">date_range</i>Modified:
       </div>
-      <div class="col s4 input-field">
-        <span class="wedit">
+      <div class="col s4">
           {{ current_contact.updated_at | date:'medium' }}
-        </span>
       </div>
     </div>
     <!--<div ng-if="current_contact._id" class="row">
       <div class="col s2 input-field">
         <i class="material-icons left">account_balance</i>Organization:
       </div>
-      <div class="col s4 input-field">
-        <span class="wedit" w-editable="current_contact.x.organization">
+      <div class="col s4 wedit" ng-model="current_contact.x.organization" contenteditable>
+        <p>
           {{ current_contact.x.organization }}
-        </span>
+        </p>
       </div>
     </div>-->
 
@@ -72,7 +70,7 @@
             </label>
           </div>
         </div>
-       <!-- add field button -->
+        <!-- add field button -->
         <div class="row nogut">
           <div class="col s12 w-anim" ng-show="current_contact.new_field[$index]" id="new_field">
             <div class="col s6 m3 input-field">
