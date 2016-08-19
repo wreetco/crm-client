@@ -343,6 +343,7 @@ angular.module('application.controllers', ['nvd3'])
           });
           $scope.$apply();
           Materialize.toast('Successfully Saved!', 5000);
+          wrmn.cron.toggleMenu("right");
         }).catch(function(err) {
           console.log(err);
         });
@@ -887,8 +888,9 @@ angular.module('application.controllers', ['nvd3'])
   //This defines the graph on the stats page
   $scope.new_contacts_opts = {
     chart: {
-      type: 'lineChart',
+      type: 'stackedAreaChart',
       height: 450,
+      showLegend: false,
       margin : {
         top: 20,
         right: 20,
@@ -905,7 +907,11 @@ angular.module('application.controllers', ['nvd3'])
         tooltipHide: function(e){ console.log("tooltipHide"); }
       },
       xAxis: {
-        axisLabel: 'Date'
+        axisLabel: 'Date',
+        tickFormat: function (d) {
+          return d3.time.format('%x')(new Date(d));
+        },
+        showMaxMin: false
       },
       yAxis: {
         axisLabel: 'Number',
@@ -917,32 +923,9 @@ angular.module('application.controllers', ['nvd3'])
       callback: function(chart){
         console.log("!!! lineChart callback !!!");
       }
-    },
-    title: {
-      enable: false,
-      text: 'Title for Line Chart'
-    },
-    subtitle: {
-      enable: false,
-      text: 'Subtitle for simple line chart. Lorem ipsum dolor sit amet, at eam blandit sadipscing, vim adhuc sanctus disputando ex, cu usu affert alienum urbanitas.',
-      css: {
-        'text-align': 'center',
-        'margin': '10px 13px 0px 7px'
-      }
-    },
-    caption: {
-      enable: false,
-      html: '<b>Figure 1.</b> Lorem ipsum dolor sit amet, at eam blandit sadipscing, <span style="text-decoration: underline;">vim adhuc sanctus disputando ex</span>, cu usu affert alienum urbanitas. <i>Cum in purto erat, mea ne nominavi persecuti reformidans.</i> Docendi blandit abhorreant ea has, minim tantas alterum pro eu. <span style="color: darkred;">Exerci graeci ad vix, elit tacimates ea duo</span>. Id mel eruditi fuisset. Stet vidit patrioque in pro, eum ex veri verterem abhorreant, id unum oportere intellegam nec.',
-      css: {
-        'text-align': 'justify',
-        'margin': '10px 13px 0px 7px'
-      }
     }
   };
-
-  //$scope.new_contacts_data = sinAndCos();
-  $scope.new_contacts_data = [];
-
+  
   $scope.recentContacts = function() {
     // by now localstorage should have it
     // first we need to key out the dates
@@ -961,49 +944,18 @@ angular.module('application.controllers', ['nvd3'])
       }
       // now set them up
       data.push({
-        label: key,
-        x: data.length,
+        x: new Date(key).getTime(),
         y: count
       });
     }
-    $scope.new_contacts_data.push({
+    $scope.new_contacts_data = [{
       values: data,
       key: "New Contacts"
-    });
+    }];
+    console.log($scope.new_contacts_data);
   };
-  $scope.recentContacts();
-
-  /*Random Data Generator */
-  function sinAndCos() {
-    var sin = [],sin2 = [],
-        cos = [];
-    //Data is represented as an array of {x,y} pairs.
-    for (var i = 0; i < 100; i++) {
-      sin.push({x: i, y: Math.sin(i/10)});
-      sin2.push({x: i, y: i % 10 == 5 ? null : Math.sin(i/10) *0.25 + 0.5});
-      cos.push({x: i, y: 0.5 * Math.cos(i/10+ 2) + Math.random() / 10});
-    }
-    //Line chart data should be sent as an array of series objects.
-    return [
-      {
-        values: sin,      //values - represents the array of {x,y} data points
-        key: 'Sine Wave', //key  - the name of the series.
-        color: '#ff7f0e'  //color - optional: choose your own line color.
-      },
-      {
-        values: cos,
-        key: 'Cosine Wave',
-        color: '#2ca02c'
-      },
-      {
-        values: sin2,
-        key: 'Another sine wave',
-        color: '#7777ff',
-        area: true      //area - set to true if you want this line to turn into a filled area chart.
-      }
-    ];
-  }
-
+  if (!$scope.new_contacts_data) $scope.recentContacts();
+  
   $scope.popularTags = function() {
     var contacts = JSON.parse(localStorage.contacts);
     if (!contacts) return -1;

@@ -62,8 +62,12 @@
       color: $primary-text !important;
     }
 
-    .nvd3 .tick {
+    #activity .nv-legend {
       opacity: 0 !important;
+    }
+    
+    .nvd3 .tick {
+      opacity: .75 !important;
     }
 
     //////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@
       <div class="card-content">
         <h5 class="underblur" style="display: inline;">Activity</h5>
         <div ng-controller="StatisticsController">
-          <nvd3 options="new_contacts_opts" data="new_contacts_data"></nvd3>
+          <nvd3 options="new_contacts_opts" id="activity" data="new_contacts_data"></nvd3>
         </div>
       </div><!-- end card content -->
     </div><!-- end card -->
@@ -18,7 +18,9 @@
         <h5 class="underblur" style="display: inline;">New</h5>
         <br style="line-height: 40px;"/>
         <ul class="collection latest nogut" ng-controller="ContactController">
-          <li class="collection-item" ng-repeat="c in contacts" ng-click="$location.path('/contacts')">{{ ::c.x.first_name }} {{ ::c.x.last_name }}</li>
+          <li class="collection-item" tooltipped data-position="bottom" data-delay="100" data-tooltip="Some preview info from contact" ng-repeat="c in contacts | orderBy:-created_date | limitTo:5" ng-click="$location.path('/contacts')">
+            {{ ::c.x.first_name }} {{ ::c.x.last_name }}
+          </li>
         </ul>
       </div>
     </div>
