@@ -84,18 +84,29 @@ angular.module('application.directives', [])
 			obj: "=wEditable",
 		}, 
 		controller: function($scope) {
+			if (!$scope.el) $scope.el = {};
 			$scope.save = function() {
 				// clean up, save the changes
-				alert('save');
+				$scope.el.empty(); // fuck the el down
+				$timeout(function() {
+					$scope.el.append($scope.obj);
+					$scope.el.bind('click', function() {$scope.clickHandler($scope.el)});
+				}, 0);
 			};
 			
 			$scope.cancel = function() {
 				// cancel changes, undo the setup
-				alert('cancel');
+				$scope.el.empty(); // fuck the el down
+				$timeout(function() {
+					$scope.el.append($scope.original_value);
+					$scope.el.bind('click', function() {$scope.clickHandler($scope.el)});
+				}, 0);
 			};
-		}, 
-		link: function($scope, $el) {
-			$el.click(function () {
+			
+			$scope.clickHandler = function($el) {
+				// store a ref
+				$scope.el = $el;
+				$scope.original_value = $scope.obj;
 				$el.text(''); // clear the urrea
 				$compile($el.append("<input ng-model='obj'>"))($scope); // add the field
 				// setup some icons for krohner
@@ -103,75 +114,18 @@ angular.module('application.directives', [])
 				html += "<i class='material-icons red-text' ng-click='cancel()'>cancel</i></div>";
 				// pop them in there  
 				$compile($el.append(html))($scope);
-				
 				// clean up
 				$el.unbind('click'); // remove click handler shens
 				$el[0].getElementsByTagName('input')[0].focus(); // reporting for duty cron
+			};
+		}, // end controller 
+		link: function($scope, $el) {
+			$el.click(function () {
+				$scope.clickHandler($el);
 			});
 		}
 	}
 })
 
-//Using html5 contenteditable attribute
-/*
-.directive("contenteditable", function($compile) {
-  return {
-    //match attribute
-    restrict: "A",
-    require: "ngModel",
-    controller: function($scope) {
-      $scope.cancel = function() {
-        //what the fuck
-        console.log("canceled changes");
-        $scope.element.off("blur");
-        $scope.element.children("i").detach();
-        $scope.element.html($scope.original_value);
-        $scope.model.$setViewValue($scope.element.html());
-        $scope.element.blur();
-      };
 
-      $scope.save = function() {
-        //good luck
-        console.log("saved changes");
-        $scope.element.off("blur");
-        $scope.element.children("i").detach();
-        console.log($scope.element.text);
-        $scope.element.blur();
-      };
-
-    },
-    link: function($scope, element, attrs, ngModel) {
-      $scope.element = element;
-      $scope.model = ngModel;
-
-      function read() {
-        ngModel.$setViewValue(element.html());
-        console.log("changes");
-      }
-
-      ngModel.$render = function() {
-        element.html(ngModel.$viewValue || "");
-        console.log("changes2");
-      };
-
-      element.bind("focus", function() {
-        //keep track of original value if they dont save
-        $scope.original_value = element.text();
-        var editz = "<i class='material-icons red-text' style='display: inline-block; float: right;' ng-click='cancel();'>cancel</i>" +
-            "<i class='material-icons green-check' style='display: inline-block; float: right;' ng-click='save();'>check</i>";
-        editz = angular.element(editz);
-        element.append($compile(editz)($scope));
-      });
-
-      element.bind("blur", function () {
-        console.log("cancelled changes");
-        element.children("i").detach();
-        $scope.element.html($scope.original_value);
-        ngModel.$setViewValue(element.html());
-        $scope.$apply(read);
-      });
-    }
-  };
-})
-*/
 ;
