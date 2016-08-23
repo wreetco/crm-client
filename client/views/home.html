@@ -18,7 +18,15 @@
         <h5 class="underblur" style="display: inline;">New</h5>
         <br style="line-height: 40px;"/>
         <ul class="collection latest nogut" ng-controller="ContactController">
-          <li class="collection-item" tooltipped data-position="bottom" data-delay="100" data-tooltip="Some preview info from contact" ng-repeat="c in contacts | orderBy:-created_date | limitTo:5" ng-click="$location.path('/contacts')">
+          <li class="collection-item" tooltipped data-position="bottom" data-html="true" data-delay="300" 
+          data-tooltip="
+            <div class='prevtip'>
+              <p>{{ ::c.x.first_name }} {{ ::c.x.last_name}} - {{ ::c.x.organization }}</p>
+              <p>{{ ::c.x.email_address }}</p>
+              <p>{{ ::c.x.phone_num }}</p>
+            </div>
+          "
+          ng-repeat="c in contacts | orderBy:-created_date | limitTo:5" ng-click="$location.path('/contacts')">
             {{ ::c.x.first_name }} {{ ::c.x.last_name }}
           </li>
         </ul>

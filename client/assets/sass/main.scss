@@ -475,6 +475,17 @@
     }
     // end charts
 
+    // tooldibs
+    .prevtip {
+      //border: 1px solid red;
+      text-align: left;
+    }
+    
+    .prevtip p {
+      //border: 1px solid pink;
+      margin: .5em;
+    }
+
     // Modals
     .modal {
       background-color: $primary-color;
