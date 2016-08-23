@@ -26,7 +26,7 @@
         <i class="material-icons left">date_range</i>Created:
       </div>
       <div class="col s4">
-          {{ current_contact.created_date | date:'medium'}}
+        {{ current_contact.created_date | date:'medium'}}
       </div>
     </div>
 
@@ -43,19 +43,19 @@
         <i class="material-icons left">date_range</i>Modified:
       </div>
       <div class="col s4">
-          {{ current_contact.updated_at | date:'medium' }}
+        {{ current_contact.updated_at | date:'medium' }}
       </div>
     </div>
     <!--<div ng-if="current_contact._id" class="row">
-      <div class="col s2 input-field">
-        <i class="material-icons left">account_balance</i>Organization:
-      </div>
-      <div class="col s4 wedit" ng-model="current_contact.x.organization" contenteditable>
-        <p>
-          {{ current_contact.x.organization }}
-        </p>
-      </div>
-    </div>-->
+<div class="col s2 input-field">
+<i class="material-icons left">account_balance</i>Organization:
+</div>
+<div class="col s4 wedit" ng-model="current_contact.x.organization" contenteditable>
+<p>
+{{ current_contact.x.organization }}
+</p>
+</div>
+</div>-->
 
     <div class="row">
       <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
@@ -64,7 +64,7 @@
         </h4>
         <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
           <div class="col s12 m4">
-            <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]">
+            <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="current_contact.x[field.type]">
             <label for="{{ field._id }}">
               {{ field.name }}
             </label>
@@ -78,8 +78,14 @@
               <label for="new_field_name[{{ $index }}]">Field Name</label>
             </div>
             <div class="col s6 m3 input-field">
-              <input type="text" id="new_field_type[{{ $index }}]" ng-model="current_contact.new_field[$index].type">
-              <label for="new_field_type[{{ $index }}]">Type</label>
+              <select class="" id="new_field_type[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].type">
+                <option value="">-- Select --</option>
+                <option value="string">String</option>
+                <option value="date">Date</option>
+                <option value="int">Number</option>
+              </select>
+              <!--<input type="text" id="new_field_type[{{ $index }}]" ng-model="current_contact.new_field[$index].type">
+<label for="new_field_type[{{ $index }}]">Type</label>-->
             </div>
             <div class="col s1">
               <i class="material-icons green-check" style="font-size: 2em;" ng-click="newField($index, section, 'Contacts')">check</i>
@@ -149,5 +155,4 @@
   function closeTag(tid){
     document.getElementById(tid).parentNode.removeChild(document.getElementById(tid));
   };
-
 </script>
