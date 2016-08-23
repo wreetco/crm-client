@@ -99,6 +99,7 @@ angular.module('application.directives', [])
 				$scope.el.empty(); // fuck the el down
 				$timeout(function() {
 					$scope.el.append($scope.original_value);
+					$scope.obj = $scope.original_value;
 					$scope.el.bind('click', function() {$scope.clickHandler($scope.el)});
 				}, 0);
 			};
