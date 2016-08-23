@@ -64,8 +64,8 @@
         </h4>
         <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
           <div class="col s12 m4">
-            <input id="{{ field._id }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="current_contact.x[field.type]">
-            <label for="{{ field._id }}">
+            <input id="input-{{ field.db_name }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="{{ field.type }}">
+            <label for="{{ field.db_name }}">
               {{ field.name }}
             </label>
           </div>
