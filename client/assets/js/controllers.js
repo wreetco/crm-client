@@ -675,6 +675,7 @@ angular.module('application.controllers', ['nvd3'])
     });
     $('#new_section_text').val("");
     $scope.current_contact.new_section = false;
+    $scope.$apply();
   }; // end newDataSection method
 
   $scope.$watch('current_contact', function() {
