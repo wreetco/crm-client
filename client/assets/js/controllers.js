@@ -269,20 +269,19 @@ angular.module('application.controllers', ['nvd3'])
 
     for (var key in r.x) {
       if($('#input-' + key).attr("crm-type") === "string"){
-        console.log("string breh");
         $scope.contact.record[key] = r.x[key];
       }
       else if($('#input-' + key).attr("crm-type") === "int"){
-        console.log("int son");
         $scope.contact.record[key] = parseInt(r.x[key]);
       }
       else if($('#input-' + key).attr("crm-type") === "date"){
-        console.log("das is date");
         $scope.contact.record[key] = Date.parse(r.x[key]);
       }
       else {
-        console.log("none of the types");
-        $scope.contact.record[key] = r.x[key];
+        // should never get here
+        //$scope.contact.record[key] = r.x[key];
+        console.log("Error with field type on: " + key);
+        return;
       }
     }
     console.log($scope.all_fields);
