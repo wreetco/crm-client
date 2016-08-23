@@ -279,9 +279,8 @@ angular.module('application.controllers', ['nvd3'])
       }
       else {
         // should never get here
-        //$scope.contact.record[key] = r.x[key];
+        $scope.contact.record[key] = r.x[key];
         console.log("Error with field type on: " + key);
-        return;
       }
     }
     console.log($scope.all_fields);
@@ -828,7 +827,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     }
   };
-  
+
   $scope.recentContacts = function() {
     // by now localstorage should have it
     // first we need to key out the dates
@@ -858,7 +857,7 @@ angular.module('application.controllers', ['nvd3'])
     console.log($scope.new_contacts_data);
   };
   if (!$scope.new_contacts_data) $scope.recentContacts();
-  
+
   $scope.popularTags = function() {
     var contacts = JSON.parse(localStorage.contacts);
     if (!contacts) return -1;
