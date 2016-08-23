@@ -884,7 +884,7 @@ angular.module('application.controllers', ['nvd3'])
   };
 }])
 
-.controller('StatisticsController', ['$scope', function($scope) {
+.controller('StatisticsController', ['$scope', '$timeout', '$location', function($scope, $timeout, $location) {
   //This defines the graph on the stats page
   $scope.new_contacts_opts = {
     chart: {
@@ -983,10 +983,23 @@ angular.module('application.controllers', ['nvd3'])
 
   $scope.tag_chart_opts = {
     chart: {
+      tooltip: {
+        enabled: false
+      },
       type: 'pieChart',
       height: 350,
       x: function(d){return d.key;},
       y: function(d){return d.y;},
+      pie: {
+        dispatch: {
+          elementClick: function(e) {
+            // let's go to that tag
+            $timeout(function() {
+              $location.path('/contacts/' + e.data.key);
+            });
+          }
+        },
+      },
       showLabels: true,
       duration: 500,
       labelThreshold: 0.01,
