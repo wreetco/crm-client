@@ -13,7 +13,7 @@ header, .main, footer {
 
 @media only screen and (max-width : 965px) {
   header, .main, footer {
-
+    margin-left: 0;
   }
 }
 

@@ -39,7 +39,7 @@ var js_paths_main = [
 
 var css_paths = [
   'client/assets/css/main.css',
-  'client/bower_components/nvd3/build/nv.d3.css',
+  'client/bower_components/nvd3/build/nv.d3.css'
 ];
 
 var sass_paths = [

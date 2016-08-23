@@ -1,12 +1,13 @@
 <!doctype html>
 <div class="" id="contact-info-card" style="margin-left: 1.5em;">
   <div class="row">
-    <h3 ng-if="current_contact._id">
+    <h3 ng-if="current_contact._id" style="display: inline-block; margin-left: -5px;">
       <span class="wedit" w-editable style="display: inline;">
         {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
       </span>
+      - <!-- good hyphen -->
       <span class="wedit org-name" w-editable="current_contact.x.organization">
-        - &nbsp;&nbsp;{{ current_contact.x.organization }}
+        {{ current_contact.x.organization }}
       </span>
     </h3>
     <h3 ng-if="!(current_contact._id)">
@@ -17,8 +18,8 @@
       <div class="col s2">
         <i class="material-icons left">phone</i>Phone:
       </div>
-      <div class="col s4 wedit" ng-model="current_contact.x.phone_num" contenteditable>
-        <p>
+      <div class="col s4 wedit" ng-model="current_contact.x.phone_num">
+        <p w-editable="current_contact.x.phone_num">
           {{ current_contact.x.phone_num | tel }}
         </p>
       </div>
@@ -34,8 +35,8 @@
       <div class="col s2">
         <i class="material-icons left">email</i>Email:
       </div>
-      <div class="col s4 wedit" ng-model="current_contact.x.email_address" contenteditable>
-        <p>
+      <div class="col s4 wedit">
+        <p w-editable="current_contact.x.email_address">
           {{ current_contact.x.email_address }}
         </p>
       </div>

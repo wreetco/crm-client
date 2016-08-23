@@ -62,8 +62,12 @@
       color: $primary-text !important;
     }
 
-    .nvd3 .tick {
+    #activity .nv-legend {
       opacity: 0 !important;
+    }
+    
+    .nvd3 .tick {
+      opacity: .75 !important;
     }
 
     //////////////////////////////////////////////////////////////////
@@ -336,13 +340,31 @@
 
     .wedit {
       display: block;
-      padding: 5px 10px;
+      padding: 5px;
       transition: box-shadow 0.3s ease-in-out;
     }
 
     .wedit:hover {
       box-shadow: 0px 0px 3px 1px rgba($primary-text, .25);
       cursor: pointer;
+    }
+    
+    .wedit p {
+      position: relative;
+      margin: 0 !important;
+    }
+    
+    .wedit p div {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transition: 0.3s linear all;
+    }
+    
+    .wedit p input {
+      margin: 0 !important;
+      padding: 0 !important;
+      height: 2em !important;
     }
 
     .file-field input[type=file] {
@@ -472,7 +494,7 @@
       display: inline;
       font-size: .66em;
       position: relative;
-      left: -10px;
+      top: 0em;
     }
 
     // Tables
