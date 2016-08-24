@@ -90,7 +90,8 @@
             <div class="col s6 m3 input-field">
               <select class="" id="new_field_order[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].order">
                 <option value="">- Order -</option>
-                <option value="tez">tez</option>
+                <option value="{{ $index + 1 }}" ng-repeat="n in section.fields">{{ $index + 1 }}</option>
+                <option value="{{ section.fields.length + 1 }}">{{ section.fields.length + 1 }}</option>
               </select>
             </div>
             
