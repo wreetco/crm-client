@@ -268,19 +268,22 @@ angular.module('application.controllers', ['nvd3'])
     }
 
     for (var key in r.x) {
-      if($('#' + key).attr("crm-type") === "string"){
+      if($('#input-' + key).attr("crm-type") === "string"){
         $scope.contact.record[key] = r.x[key];
       }
-      else if($('#' + key).attr("crm-type") === "int"){
+      else if($('#input-' + key).attr("crm-type") === "int"){
         $scope.contact.record[key] = parseInt(r.x[key]);
       }
-      else if($('#' + key).attr("crm-type") === "date"){
+      else if($('#input-' + key).attr("crm-type") === "date"){
         $scope.contact.record[key] = Date.parse(r.x[key]);
       }
       else {
+        // should never get here
         $scope.contact.record[key] = r.x[key];
+        console.log("Error with field type on: " + key);
       }
     }
+    console.log($scope.all_fields);
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
       var str = $( this ).text();
@@ -354,111 +357,6 @@ angular.module('application.controllers', ['nvd3'])
       }
     });
   };
-
-  /*
-  // Add Field
-  ///////////////////////////////////////////////////////////////
-  $scope.addField = function(section, c){
-    $scope.new_field = {
-      field: {
-        db_name: '',
-        name: '',
-        section: '',
-        tab: "Contacts",
-        type: '',
-      },
-      manager: '',
-    };
-    $scope.updated_record = {
-      record: {
-        tags: [],
-        id: '',
-      },
-      manager: '',
-    };
-
-    $scope.contact = c || null;
-
-    //input field id's$scope.edit_field.field
-    $scope.input_field_value = "#new-field-value-" + section;
-    $scope.input_field_label = "#new-field-label-" + section;
-    //some variablol's
-    $scope.field_value = $($scope.input_field_value).val();
-    $scope.field_label = $($scope.input_field_label).val();
-    $scope.section_name = section || "_contacts";
-    $scope.db_name = $scope.field_label.replace(/\s+/g, '_');
-    //build the new field
-    $scope.new_field = {
-      field: {
-        db_name: $scope.db_name,
-        name: $scope.field_label,
-        section: $scope.section_name,
-        tab: "Contacts",
-        type: "string",
-      },
-      manager: $scope.contact.manager,
-    };
-    //ensure we made a field
-    if($scope.db_name === "" || $scope.field_label === ""){
-      //something is wrong
-      console.log("Field wasn't created");
-    }
-    else {
-      // now lets setup the record that will be updated
-      // Ensure we actually got a contact
-      if($scope.contact === null){
-        console.log("No contact passed");
-        return;
-      }
-      else {
-        //lets build the updated record, post the new field, and then post the record
-        $scope.updated_record = {
-          record: {
-            tags: [],
-            id: $scope.contact._id,
-          },
-          manager: $scope.contact.manager,
-        };
-        for (var key in $scope.contact.x) {
-          $scope.updated_record.record[key] = $scope.contact.x[key];
-        }
-        $scope.updated_record.record[$scope.field_label] = $scope.field_value;
-        $('.chip').each(function(i) {
-          var str = $( this ).text();
-          var lastIndex = str.lastIndexOf(" ");
-          str = str.substring(0, lastIndex);
-          $scope.updated_record.record.tags.push(str);
-        });
-        //field and updated record are ready
-        //lets post the field
-        console.log($scope.new_field);
-        $scope.postField(JSON.stringify($scope.new_field), function(res) {
-          if(!(res instanceof Error)){
-            console.log(res);
-            $scope.saveRecord($scope.updated_record, function(res) {
-              if(!(res instanceof Error)){
-                Materialize.toast('Field Added', 5000);
-                console.log(res);
-              }
-              else {
-                Materialize.toast('There Was A Problem', 5000);
-                console.log(res);
-              }
-            });
-          }
-          else {
-            Materialize.toast('There Was A Problem', 5000);
-            console.log(res);
-          }
-        });
-        //and now the updated contact with the new field value
-        console.log($scope.updated_record);
-      }
-      //clear shit out
-      $scope.new_field = null;
-    }
-  };
-  */
 
   // Delete Field
   ////////////////////////////////////////////////////////////////
@@ -672,6 +570,7 @@ angular.module('application.controllers', ['nvd3'])
     });
     $('#new_section_text').val("");
     $scope.current_contact.new_section = false;
+    $scope.$apply();
   }; // end newDataSection method
 
   $scope.$watch('current_contact', function() {
@@ -691,16 +590,19 @@ angular.module('application.controllers', ['nvd3'])
       },
       manager: $scope.current_contact.manager
     };
+    // now call our method to send it off to the db
     $scope.postField(req, function(res) {
       if (res._id) {
         console.log(res);
+        $scope.$apply();
+        Materialize.toast('Successfully Added New Field', 5000);
         // dope
       } else {
         // problem
         console.log(res);
+        Materialize.toast('There was a problem', 5000);
       }
     });
-    // now call our method to send it off to the db
   };
 
   ///////////////////////////////////////////////////////////////
@@ -925,7 +827,7 @@ angular.module('application.controllers', ['nvd3'])
       }
     }
   };
-  
+
   $scope.recentContacts = function() {
     // by now localstorage should have it
     // first we need to key out the dates
@@ -955,7 +857,7 @@ angular.module('application.controllers', ['nvd3'])
     console.log($scope.new_contacts_data);
   };
   if (!$scope.new_contacts_data) $scope.recentContacts();
-  
+
   $scope.popularTags = function() {
     var contacts = JSON.parse(localStorage.contacts);
     if (!contacts) return -1;
