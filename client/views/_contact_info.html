@@ -1,7 +1,7 @@
 <!doctype html>
 <div class="" id="contact-info-card" style="margin-left: 1.5em;">
   <div class="row">
-    <h3 ng-if="current_contact._id" style="display: inline-block; margin-left: -5px;">
+    <h4 ng-if="current_contact._id" style="display: inline-block; margin-left: -5px;">
       <span class="wedit" w-editable style="display: inline;">
         {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
       </span>
@@ -9,10 +9,10 @@
       <span class="wedit org-name" w-editable="current_contact.x.organization">
         {{ current_contact.x.organization }}
       </span>
-    </h3>
-    <h3 ng-if="!(current_contact._id)">
+    </h4>
+    <h4 ng-if="!(current_contact._id)">
       Post Contact
-    </h3>
+    </h4>
 
     <div ng-if="current_contact._id" class="row">
       <div class="col m2 s6">
@@ -62,9 +62,9 @@
 
     <div class="row">
       <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
-        <h4 ng-if="section.name != '_contacts'">
+        <h5 ng-if="section.name != '_contacts'">
           {{ section.name }}
-        </h4>
+        </h5>
         <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
           <div class="col s12 m4">
             <input id="input-{{ field.db_name }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="{{ field.type }}">
@@ -120,7 +120,7 @@
           <i class="material-icons red-text" style="cursor: pointer; position: absolute; top: 1em; right: 0;" ng-click="current_contact.new_section = false;">cancel</i>
         </div>
       </div>
-      <div class="col s12">
+      <div class="col s12 nogut">
         <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
           <i class="material-icons left">list</i>New Section
         </button>
@@ -129,7 +129,7 @@
 
     <!-- tags -->
     <div class="row" style="margin-top: 2em;">
-      <div class="col s12" style="float: left;">
+      <div class="col s12 nogut" style="float: left;">
         <div id="chip-section">
           <input placeholder="+" type="text" id="new-tag" style="margin-top: 10px; margin-left: 20px; width: 128px; display: inline-block;" />
         </div>

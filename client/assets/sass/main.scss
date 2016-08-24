@@ -40,7 +40,7 @@
     }
 
     #org_name {
-      font-size: 1.33em;
+      font-size: 1.5em;
       font-weight: bold;
       text-align: center;
     }
@@ -505,7 +505,7 @@
       display: inline;
       font-size: .66em;
       position: relative;
-      top: 0em;
+      top: -3px;
     }
 
     // Tables
@@ -576,13 +576,27 @@
       background-color: $primary-color;
     }
 
+    #contact-info-card h4 {
+      font-size: 2.33em;
+    }
+    
+     #contact-info-card h5 {
+      font-size: 2em; 
+     }
+
     #contact-info-card input[type="text"] {
-      font-size: 1.5em;
-      transition: all 0.2s ease !important;
+      font-size: 1.25em;
+      transition: all 0.15s ease !important;
     }
 
     #contact-info-card input[type=text]:focus:not([readonly]) {
       font-size: 1em;
+    }
+    
+    #contact-info-card label {
+      position: relative;
+      font-size: 0.9em;
+      top: -1em !important;
     }
 
     //table rows
