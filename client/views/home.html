@@ -23,7 +23,7 @@
             <div class='prevtip'>
               <p>{{ ::c.x.first_name }} {{ ::c.x.last_name}} - {{ ::c.x.organization }}</p>
               <p>{{ ::c.x.email_address }}</p>
-              <p>{{ ::c.x.phone_num }}</p>
+              <p>{{ ::c.x.phone_num | tel }}</p>
             </div>
           "
           ng-repeat="c in contacts | orderBy:-created_date | limitTo:5" ng-click="$location.path('/contacts')">

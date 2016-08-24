@@ -80,14 +80,14 @@
             </div>
             <div class="col s6 m3 input-field">
               <select class="" id="new_field_type[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].type">
-                <option value="">-- Select --</option>
+                <option value="">- Type -</option>
                 <option value="string">String</option>
                 <option value="date">Date</option>
                 <option value="int">Number</option>
               </select>
             </div>
-            <div class="col s1">
-              <i class="material-icons green-check" style="cursor: pointer; font-size: 2em;" ng-click="newField($index, section, 'Contacts')">check</i>
+            <div class="col s2">
+              <i class="material-icons green-check" style="cursor: pointer; font-size: 2em; margin-top: 1em;" ng-click="newField($index, section, 'Contacts')">check</i>
               <i class="material-icons red-text" style="cursor: pointer; font-size: 2em;" ng-click="current_contact.new_field[$index] = null;">cancel</i>
             </div>
           </div>
