@@ -671,28 +671,30 @@ angular.module('application.controllers', ['nvd3'])
   $scope.saveTheme = function(){
 
     $scope.current_session = JSON.parse($window.sessionStorage.session);
-    console.log($scope.current_session);
-    if(!$('#settings-color-theme input:checked').val()){
+    if($('#theme-toggle').is(':checked') === true){
+      console.log("dark theme");
       $scope.theme = 'dark-theme';
+      $scope.settings = {
+        settings: {
+          theme: $scope.theme,
+        }
+      };
     }
     else {
-      $scope.theme = $('#settings-color-theme input:checked').val();
+      $scope.theme = 'light-theme';
+      console.log("light theme");
       //lets update the database
       $scope.settings = {
         settings: {
           theme: $scope.theme,
         }
       };
-      $scope.updateSettingsWrap($scope.settings, function(res){
-        console.log("its happening");
-        console.log(res);
-        var sess = Session.getSession();
-        console.log(sess);
-      });
-
+    }
+    $scope.updateSettingsWrap($scope.settings, function(res){
+      var sess = Session.getSession();
       $("#theme").removeClass();
       $("#theme").addClass($scope.theme);
-    }
+    });
   };
 
   $scope.saveCSVRecord = function(record, callback) {

@@ -65,7 +65,7 @@
     #activity .nv-legend {
       opacity: 0 !important;
     }
-    
+
     .nvd3 .tick {
       opacity: .75 !important;
     }
@@ -73,12 +73,12 @@
     //////////////////////////////////////////////////////////////////
     //Contacts/records page, bottom right buttons
     ////////////////////////////////////////////////////////////////
-    
+
     .repeated-contact.ng-enter,
     .repeated-contact.ng-leave {
       transition: 0.3s linear all;
     }
-    
+
     .repeated-contact.ng-enter,
     .repeated-contact.ng-leave.ng-leave-active {
       opacity: 0;
@@ -87,7 +87,7 @@
     .repeated-contact.ng-enter.ng-enter-active {
       opacity: 1;
     }
-    
+
     .main-anim.ng-enter {
       transition: 0.3s linear all; /* IE10+ and Future Browsers */
     }
@@ -96,17 +96,17 @@
       /* The animation preparation code */
       opacity: 0;
     }
-    
-    .main-anim.ng-enter.ng-enter-active { 
+
+    .main-anim.ng-enter.ng-enter-active {
       /* The animation code itself */
       opacity: 1;
     }
-    
+
     .main-anim {
       //border: 1px solid red;
       padding: 1em;
     }
-  
+
     .fixed-action-btn ul {
       background-color: transparent;
     }
@@ -126,7 +126,7 @@
       opacity: 0 !important;
     }
     // end anim
-    
+
     ////////////////////////////////////////////////
     //chips
     //////////////////////////////////////////////////
@@ -244,7 +244,12 @@
     .side-nav li > a > i, .side-nav li > a > i.material-icons {
       color: $accent;
     }
+    // Settings Page Icons
     ////////////////////////////////////
+    .collection .collection-item.avatar i.circle {
+      background-color: $accent;
+      color: $primary-text;
+    }
     // Form and Inputs
     ////////////////////////////////////
     input {
@@ -338,6 +343,22 @@
       border-bottom: $accent;
     }
 
+    .switch label .lever {
+      background-color: $secondary-text;
+    }
+
+    .switch label input[type=checkbox]:checked+.lever {
+      background-color: $secondary-text;
+    }
+
+    .switch label .lever:after {
+      background-color: $accent;
+    }
+
+    .switch label input[type=checkbox]:checked+.lever:after {
+      background-color: $accent;
+    }
+
     .wedit {
       display: block;
       padding: 5px;
@@ -348,19 +369,19 @@
       box-shadow: 0px 0px 3px 1px rgba($primary-text, .25);
       cursor: pointer;
     }
-    
+
     .wedit p {
       position: relative;
       margin: 0 !important;
     }
-    
+
     .wedit p div {
       position: absolute;
       top: 0;
       right: 0;
       transition: 0.3s linear all;
     }
-    
+
     .wedit p input {
       margin: 0 !important;
       padding: 0 !important;
@@ -480,7 +501,7 @@
       //border: 1px solid red;
       text-align: left;
     }
-    
+
     .prevtip p {
       //border: 1px solid pink;
       margin: .5em;
@@ -544,16 +565,16 @@
       margin: 0 !important;
       padding: 0 0 0 1em !important;
     }
-  
+
     ul.collection {
       border: none !important;
     }
-  
+
     .underblur {
       box-shadow: 0 5px 4px -5px $accent;
       padding: 0 10px 3px 10px;
     }
-  
+
     //cards
     .card {
       background-color: $primary-color;
@@ -563,7 +584,7 @@
     span.card-title {
       //font-weight: bold;
     }
-    
+
     li.collection-header {
       background-color: $primary-color !important;
     }
@@ -579,9 +600,9 @@
     #contact-info-card h4 {
       font-size: 2.33em;
     }
-    
+
      #contact-info-card h5 {
-      font-size: 2em; 
+      font-size: 2em;
      }
 
     #contact-info-card input[type="text"] {
@@ -592,7 +613,7 @@
     #contact-info-card input[type=text]:focus:not([readonly]) {
       font-size: 1em;
     }
-    
+
     #contact-info-card label {
       position: relative;
       font-size: 0.9em;
@@ -617,7 +638,7 @@
     .green-check {
       color: #92c13e;
     }
-    
+
   }
 }
 //White text on dark background -> primary 100% opacity, secondary 70%
