@@ -1,71 +1,65 @@
 <!DOCTYPE HTML>
-<div id="settings-page-collection">
-  <div class="row">
-    <!-- Color theme change section -->
-    <form class="col s12 m6">
-      <ul id="settings-color-theme" class="collection z-depth-1">
-        <li class="collection-item avatar">
-          <i class="material-icons circle green darken-2">bubble_chart</i>
-          <span class="collection-header">Color Theme</span>
-          <p>Change your color theme</p>
-          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
-        </li>
-        <li class="collection-item">
-          <input class="with-gap" type="radio" id="dark-theme" ng-model="theme" value="dark-theme" />
-          <label for="dark-theme">Dark</label>
-        </li>
-        <li class="collection-item">
-          <input class="with-gap" type="radio" id="light-theme" ng-model="theme" value="light-theme" />
-          <label for="light-theme">Light</label>
-        </li>
-        <li class="collection-item">
-          <input class="with-gap" type="radio" id="red-theme" ng-model="theme" value="red-theme" />
-          <label for="red-theme">Red</label>
-        </li>
-        <li class="collection-item">
-          <input class="with-gap" type="radio" id="blue-theme" ng-model="theme" value="blue-theme" />
-          <label for="blue-theme">Blue</label>
-        </li>
-        <li class="collection-item right-align">
-          <button class="btn" type="submit" name="action" ng-click="saveTheme();">
-            Save<i class="material-icons right">send</i>
-          </button>
-        </li>
-      </ul>
-    </form> <!-- End color theme form -->
-    <div class="col s12 m6 ">
-      <ul class="collection z-depth-1">
-        <li class="collection-item avatar">
-          <i class="material-icons circle red darken-2">close</i>
-          <span class="collection-header">Import Contacts</span>
-          <p>Upload a document with record data.</p>
-          <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
-        </li>
-        <li class="collection-item">
-          <blockquote>
-            File should be in CSV format, values can be wrapped in single, double, or no quotes.
-            The File should have a header with proper column headers. The column headers are simply the field labels, with any spaces replaced by an underscore.
-            (e.g. the field 'First Name' would need a header in the csv like 'first_name')
-          </blockquote>
-        </li>
-        <li class="collection-item">
-          <form action="#">
-            <div class="file-field file-path-wrapper" >
-              <div class="btn">
-                <span>CSV</span>
-                <input type="file" />
-              </div>
-              <div class="">
-                <input class="file-path validate" on-read-file="parseCSVInput(contents);" placeholder="Upload A CSV" type="file">
-              </div>
+<div class="row card nogut z-depth-1">
+  <!-- Color theme change section -->
+  <div class="col s12" >
+    <ul id="settings-color-theme" class="collection">
+      <li class="collection-item avatar">
+        <i class="material-icons circle" style="font-size: 2em;">palette</i>
+        <span class="collection-header">Color Theme</span>
+        <p>Change your color theme</p>
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+      </li>
+      <br>
+      <li class="collection-item">
+        <div class="switch">
+          <label>
+            Light
+            <input id="theme-toggle" type="checkbox" >
+            <span class="lever"></span>
+            Dark
+          </label>
+        </div>
+      </li>
+      <br>
+      <li class="collection-item left-align">
+        <button class="btn" type="submit" name="action" ng-click="saveTheme();">
+          Save<i class="material-icons right">send</i>
+        </button>
+      </li>
+    </ul>
+  </div> <!-- End color theme form -->
+  <div class="col s12">
+    <ul class="collection">
+      <li class="collection-item avatar">
+        <i class="material-icons circle" style="font-size: 2em;">contacts</i>
+        <span class="collection-header">Import Contacts</span>
+        <p>Upload a document with record data.</p>
+        <a href="#" class="secondary-content"><i class="mdi-action-grade"></i></a>
+      </li>
+      <li class="collection-item">
+        <blockquote>
+          File should be in CSV format, values can be wrapped in single, double, or no quotes.
+          The File should have a header with proper column headers. The column headers are simply the field labels, lowercase, and with any spaces replaced by an underscore.
+          (e.g. the field 'First Name' would need a header in the csv like 'first_name')
+        </blockquote>
+      </li>
+      <li class="collection-item">
+
+        <form action="#">
+          <div class="file-field" input-field>
+            <div class="btn" style="cursor: pointer;">
+              <span>CSV</span>
+              <input type="file">
             </div>
-          </form>
-        </li>
-        <li class="collection-item">
-          <br>
-        </li>
-      </ul>
-    </div>
+            <div class="file-path-wrapper">
+              <input class="file-path" on-read-file="parseCSVInput(contents);" placeholder="Upload A CSV" type="file">
+            </div>
+          </div>
+        </form>
+      </li>
+      <li class="collection-item">
+        <br>
+      </li>
+    </ul>
   </div>
 </div>
-<!-- end .settings-page-collection -->
