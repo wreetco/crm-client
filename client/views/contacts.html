@@ -6,7 +6,7 @@
     <label for="icon_prefix">Search</label>
   </div>
   <div class="col input-field s3 offset-s3">
-    <select ng-model="sortType">
+    <select material-select watch ng-model="sortType">
       <option value="">-- Select --</option>
       <option value="x.first_name">First Name</option>
       <option value="x.last_name">Last Name</option>
@@ -98,13 +98,6 @@
 <ng-include src="'views/_field_edit.html'"></ng-include>
 
 <script>
-  //This was in index.html but doesn't fire off unless you manually refresh the /contacts page
-  $('select').ready(function() {
-    setTimeout(function() {
-      $('select').material_select();
-    }, 100);
-  });
-
   (function(){
     var slide_triggers = document.getElementsByClassName("slideout-trigger");
     for (var i=0; i < slide_triggers.length; i++) {
