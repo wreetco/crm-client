@@ -15,37 +15,39 @@
     </h3>
 
     <div ng-if="current_contact._id" class="row">
-      <div class="col s2">
+      <div class="col m2 s6">
         <i class="material-icons left">phone</i>Phone:
       </div>
-      <div class="col s4 wedit" ng-model="current_contact.x.phone_num">
+      <div class="col m3 s6 wedit" ng-model="current_contact.x.phone_num">
         <p w-editable="current_contact.x.phone_num">
           {{ current_contact.x.phone_num | tel }}
         </p>
       </div>
-      <div class="col s2">
+      <div class="col m2 s6">
         <i class="material-icons left">date_range</i>Created:
       </div>
-      <div class="col s4">
+      <div class="col m3 s6">
         {{ current_contact.created_date | date:'medium'}}
       </div>
+      <div class="col m2 hide-on-small-only">&nbsp;</div>
     </div>
 
     <div ng-if="current_contact._id" class="row">
-      <div class="col s2">
+      <div class="col m2 s6">
         <i class="material-icons left">email</i>Email:
       </div>
-      <div class="col s4 wedit">
+      <div class="col m3 s6 wedit">
         <p w-editable="current_contact.x.email_address">
           {{ current_contact.x.email_address }}
         </p>
       </div>
-      <div class="col s2">
-        <i class="material-icons left">date_range</i>Modified:
+      <div class="col m2 s6">
+        <i class="material-icons left">date_range</i>Updated:
       </div>
-      <div class="col s4">
+      <div class="col m3 s6">
         {{ current_contact.updated_at | date:'medium' }}
       </div>
+      <div class="col m2 hide-on-small-only">&nbsp;</div>
     </div>
     <!--<div ng-if="current_contact._id" class="row">
 <div class="col s2 input-field">
