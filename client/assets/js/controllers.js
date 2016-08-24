@@ -188,6 +188,9 @@ angular.module('application.controllers', ['nvd3'])
   $scope.infoBar = function(c){
     //contact object
     $scope.current_contact = c || null;
+    //Join the first and last name for easy editing
+    $scope.current_contact.x.full_name = $scope.current_contact.x.first_name + ' ' + $scope.current_contact.x.last_name;
+    console.log($scope.current_contact.x.full_name);
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
@@ -283,7 +286,6 @@ angular.module('application.controllers', ['nvd3'])
         console.log("Error with field type on: " + key);
       }
     }
-    console.log($scope.all_fields);
     $scope.contact.record.id = r._id;
     $('.chip').each(function(i) {
       var str = $( this ).text();
@@ -293,6 +295,23 @@ angular.module('application.controllers', ['nvd3'])
     });
     $scope.contact.manager = r.manager;
     console.log($scope.contact);
+
+    //Everything is built at this point, except we need to remove the "full_name" object
+    // and put the first part of it in first name and last part in last name
+
+    //First lets remove leading and trailing whitespace
+    $scope.contact.record.full_name = $scope.contact.record.full_name.trim();
+    //Now lets split it on whitespace
+    $scope.split_result = $scope.contact.record.full_name.split(" ");
+    //First item in array goes to first name and last item in array goes to last name
+    // later on we can figure out what to do with the "middle names"
+    $scope.contact.record.first_name = $scope.split_result[0];
+    $scope.contact.record.last_name = $scope.split_result[$scope.split_result.length - 1];
+    //finally we will remove the full_name key from the object being sent to the API
+    delete $scope.contact.record.full_name;
+    console.log($scope.contact);
+
+    return;
     $scope.saveRecord($scope.contact);
     //
     $scope.contact = {

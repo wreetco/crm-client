@@ -1,148 +1,149 @@
 <!doctype html>
-<div class="" id="contact-info-card" style="margin-left: 1.5em;">
+<div class="row" id="contact-info-card" style="margin-left: 1.5em;">
+
   <div class="row">
-    <h4 ng-if="current_contact._id" style="display: inline-block; margin-left: -5px;">
-      <span class="wedit" w-editable style="display: inline;">
-        {{ current_contact.x.first_name }} {{ current_contact.x.last_name }}
-      </span>
-      - <!-- good hyphen -->
-      <span class="wedit org-name" w-editable="current_contact.x.organization">
-        {{ current_contact.x.organization }}
-      </span>
-    </h4>
-    <h4 ng-if="!(current_contact._id)">
-      Post Contact
-    </h4>
-
-    <div ng-if="current_contact._id" class="row">
-      <div class="col m2 s6">
-        <i class="material-icons left">phone</i>Phone:
-      </div>
-      <div class="col m3 s6 wedit" ng-model="current_contact.x.phone_num">
-        <p w-editable="current_contact.x.phone_num">
-          {{ current_contact.x.phone_num | tel }}
+    <div class="wedit" style="margin-left: -5px" ng-model="current_contact.x.full_name">
+      <h4>
+        <p w-editable="current_contact.x.full_name">
+          {{ current_contact.x.full_name }}
         </p>
-      </div>
-      <div class="col m2 s6">
-        <i class="material-icons left">date_range</i>Created:
-      </div>
-      <div class="col m3 s6">
-        {{ current_contact.created_date | date:'medium'}}
-      </div>
-      <div class="col m2 hide-on-small-only">&nbsp;</div>
+      </h4>
     </div>
-
-    <div ng-if="current_contact._id" class="row">
-      <div class="col m2 s6">
-        <i class="material-icons left">email</i>Email:
-      </div>
-      <div class="col m3 s6 wedit">
-        <p w-editable="current_contact.x.email_address">
-          {{ current_contact.x.email_address }}
+    <div class="wedit" ng-model="current_contact.x.organization">
+      <h6>
+        <p w-editable="current_contact.x.organization">
+          {{ current_contact.x.organization }}
         </p>
-      </div>
-      <div class="col m2 s6">
-        <i class="material-icons left">date_range</i>Updated:
-      </div>
-      <div class="col m3 s6">
-        {{ current_contact.updated_at | date:'medium' }}
-      </div>
-      <div class="col m2 hide-on-small-only">&nbsp;</div>
+      </h6>
     </div>
-    <!--<div ng-if="current_contact._id" class="row">
-<div class="col s2 input-field">
-<i class="material-icons left">account_balance</i>Organization:
-</div>
-<div class="col s4 wedit" ng-model="current_contact.x.organization" contenteditable>
-<p>
-{{ current_contact.x.organization }}
-</p>
-</div>
-</div>-->
-
-    <div class="row">
-      <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
-        <h5 ng-if="section.name != '_contacts'">
-          {{ section.name }}
-        </h5>
-        <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
-          <div class="col s12 m4">
-            <input id="input-{{ field.db_name }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="{{ field.type }}">
-            <label for="{{ field.db_name }}">
-              {{ field.name }}
-            </label>
-          </div>
-        </div>
-        <!-- add field button -->
-        <div class="row nogut">
-          <div class="col s12 w-anim" ng-show="current_contact.new_field[$index]" id="new_field">
-            <div class="col s6 m3 input-field">
-              <input type="text" id="new_field_name[{{ $index }}]" ng-model="current_contact.new_field[$index].name">
-              <label for="new_field_name[{{ $index }}]">Field Name</label>
-            </div>
-            <div class="col s6 m3 input-field">
-              <select class="" id="new_field_type[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].type">
-                <option value="">- Type -</option>
-                <option value="string">String</option>
-                <option value="date">Date</option>
-                <option value="int">Number</option>
-              </select>
-            </div>
-            
-            <div class="col s6 m3 input-field">
-              <select class="" id="new_field_order[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].order">
-                <option value="">- Order -</option>
-                <option value="{{ $index + 1 }}" ng-repeat="n in section.fields">{{ $index + 1 }}</option>
-                <option value="{{ section.fields.length + 1 }}">{{ section.fields.length + 1 }}</option>
-              </select>
-            </div>
-            
-            <div class="col s2">
-              <i class="material-icons green-check" style="cursor: pointer; font-size: 1.5em; margin-top: 1.5em;" ng-click="newField($index, section, 'Contacts')">check</i>
-              <i class="material-icons red-text" style="cursor: pointer; font-size: 1.5em;" ng-click="current_contact.new_field[$index] = null;">cancel</i>
-            </div>
-          </div>
-          <div class="col s12">
-            <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_field[$index] = {};">
-              <i class="material-icons left">text_fields</i>New Field
-            </button>
-          </div>
-        </div><!-- end add field -->
-      </div><!-- end repeat of section -->
+    <div class="col s12">
+      <h4 ng-if="!(current_contact._id)">
+        Post Contact
+      </h4>
     </div>
+  </div>
 
-    <div class="row nogut">
-      <div class="col s12 w-anim" ng-show="current_contact.new_section" id="new_section">
-        <div class="col s12 m6 input-field">
-          <input type="text" id="new_section_text">
-          <label for="new_section_text">Section Name</label>
-          <i class="material-icons green-check" style="cursor: pointer; position: absolute; top: 1em; right: 1em;" ng-click="newDataSection()">check</i>
-          <i class="material-icons red-text" style="cursor: pointer; position: absolute; top: 1em; right: 0;" ng-click="current_contact.new_section = false;">cancel</i>
+  <div ng-if="current_contact._id" class="row">
+    <div class="col m2 s6">
+      <i class="material-icons left">phone</i>Phone:
+    </div>
+    <div class="col m3 s6 wedit" ng-model="current_contact.x.phone_num">
+      <p w-editable="current_contact.x.phone_num">
+        {{ current_contact.x.phone_num | tel }}
+      </p>
+    </div>
+    <div class="col m2 s6">
+      <i class="material-icons left">date_range</i>Created:
+    </div>
+    <div class="col m3 s6">
+      {{ current_contact.created_date | date:'medium'}}
+    </div>
+    <div class="col m2 hide-on-small-only">&nbsp;</div>
+  </div>
+
+  <div ng-if="current_contact._id" class="row">
+    <div class="col m2 s6">
+      <i class="material-icons left">email</i>Email:
+    </div>
+    <div class="col m3 s6 wedit">
+      <p w-editable="current_contact.x.email_address">
+        {{ current_contact.x.email_address }}
+      </p>
+    </div>
+    <div class="col m2 s6">
+      <i class="material-icons left">date_range</i>Updated:
+    </div>
+    <div class="col m3 s6">
+      {{ current_contact.updated_at | date:'medium' }}
+    </div>
+    <div class="col m2 hide-on-small-only">&nbsp;</div>
+  </div>
+
+  <!-- fields -->
+  <div class="row">
+    <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
+      <h5 ng-if="section.name != '_contacts'">
+        {{ section.name }}
+      </h5>
+      <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
+        <div class="col s12 m4">
+          <input id="input-{{ field.db_name }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="{{ field.type }}">
+          <label for="{{ field.db_name }}">
+            {{ field.name }}
+          </label>
         </div>
       </div>
-      <div class="col s12 nogut">
-        <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
-          <i class="material-icons left">list</i>New Section
-        </button>
-      </div>
-    </div>
+      <!-- add field button -->
+      <div class="row nogut">
+        <div class="col s12 w-anim" ng-show="current_contact.new_field[$index]" id="new_field">
+          <div class="col s6 m3 input-field">
+            <input type="text" id="new_field_name[{{ $index }}]" ng-model="current_contact.new_field[$index].name">
+            <label for="new_field_name[{{ $index }}]">Field Name</label>
+          </div>
+          <div class="col s6 m3 input-field">
+            <select class="" id="new_field_type[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].type">
+              <option value="">- Type -</option>
+              <option value="string">String</option>
+              <option value="date">Date</option>
+              <option value="int">Number</option>
+            </select>
+          </div>
 
-    <!-- tags -->
-    <div class="row" style="margin-top: 2em;">
-      <div class="col s12 nogut" style="float: left;">
-        <div id="chip-section">
-          <input placeholder="+" type="text" id="new-tag" style="margin-top: 10px; margin-left: 20px; width: 128px; display: inline-block;" />
+          <div class="col s6 m3 input-field">
+            <select class="" id="new_field_order[{{ $index }}]" material-select watch ng-model="current_contact.new_field[$index].order">
+              <option value="">- Order -</option>
+              <option value="{{ $index + 1 }}" ng-repeat="n in section.fields">{{ $index + 1 }}</option>
+              <option value="{{ section.fields.length + 1 }}">{{ section.fields.length + 1 }}</option>
+            </select>
+          </div>
+
+          <div class="col s2">
+            <i class="material-icons green-check" style="cursor: pointer; font-size: 1.5em; margin-top: 1.5em;" ng-click="newField($index, section, 'Contacts')">check</i>
+            <i class="material-icons red-text" style="cursor: pointer; font-size: 1.5em;" ng-click="current_contact.new_field[$index] = null;">cancel</i>
+          </div>
         </div>
+        <div class="col s12">
+          <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_field[$index] = {};">
+            <i class="material-icons left">text_fields</i>New Field
+          </button>
+        </div>
+      </div><!-- end add field -->
+    </div><!-- end repeat of section -->
+  </div>
+
+  <!-- New Section -->
+  <div class="row nogut">
+    <div class="col s12 w-anim" ng-show="current_contact.new_section" id="new_section">
+      <div class="col s12 m6 input-field">
+        <input type="text" id="new_section_text">
+        <label for="new_section_text">Section Name</label>
+        <i class="material-icons green-check" style="cursor: pointer; position: absolute; top: 1em; right: 1em;" ng-click="newDataSection()">check</i>
+        <i class="material-icons red-text" style="cursor: pointer; position: absolute; top: 1em; right: 0;" ng-click="current_contact.new_section = false;">cancel</i>
       </div>
     </div>
+    <div class="col s12 nogut">
+      <button class="btn-small btn" style="display: block;" ng-click="current_contact.new_section = true;">
+        <i class="material-icons left">list</i>New Section
+      </button>
+    </div>
+  </div>
 
-    <div class="row" style="margin-bottom:0;">
-      <div class="col s12 m12">
-        <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
+  <!-- tags -->
+  <div class="row" style="margin-top: 2em;">
+    <div class="col s12 nogut" style="float: left;">
+      <div id="chip-section">
+        <input placeholder="+" type="text" id="new-tag" style="margin-top: 10px; margin-left: 20px; width: 128px; display: inline-block;" />
       </div>
-      <div class="col s12 m12">
-        <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
-      </div>
+    </div>
+  </div>
+
+  <!-- save buttons -->
+  <div class="row" style="margin-bottom:0;">
+    <div class="col s12 m12">
+      <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="current_contact._id" ng-click="updateRecord(current_contact);">Save Changes</button>
+    </div>
+    <div class="col s12 m12">
+      <button class="btn-large" style="margin: 0 auto; display: inherit;" ng-if="!(current_contact._id)" ng-click="postRecord(current_contact);">Post Contact</button>
     </div>
   </div>
 </div>
