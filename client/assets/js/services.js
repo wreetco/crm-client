@@ -85,7 +85,7 @@ angular.module('application.services', [])
       var collected = [];
       for (var i = 0; i < contacts.length; i++) {
         contacts[i].tags.map(function(tag) {
-          if (collected.indexOf(tag.name) === -1) { 
+          if (collected.indexOf(tag.name) === -1) {
             tags.push(tag);
             collected.push(tag.name);
           }

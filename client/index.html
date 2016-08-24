@@ -51,8 +51,10 @@ All of our required JS has been concat'd and minified.
               </a>
               <div class="collapsible-body" id="contact-collapse-body">
                 <ul ng-controller="ContactController" class="collection">
-                  <li class="collection-item"><a class="activatable" ng-href="/#!/contacts">All</a></li>
-                  <li ng-repeat="tag in tags" class="collection-item">
+                  <li class="collection-item" onclick="setActive(this);">
+                    <a class="activatable" ng-href="/#!/contacts">All</a>
+                  </li>
+                  <li ng-repeat="tag in tags" class="collection-item" onclick="setActive(this);">
                     <a ng-href="#!/contacts/{{ tag.name }}" class="activatable">
                       {{ tag.name }}
                     </a>
@@ -123,6 +125,19 @@ All of our required JS has been concat'd and minified.
         $(document.getElementById("contact-collapse-body")).css("display", "none");
       }
     };
+
+
+    // Sidebar activation stuff
+    function setActive(el) {
+      console.log(el);
+      $(".activeTab").remove();
+      var activeTab = $("<span></span>");
+      //activeTab.addClass("material-icons");
+      activeTab.addClass("right");
+      activeTab.addClass("activeTab");
+      activeTab.html("<i class=\"material-icons\" style=\"vertical-align: middle;\">chevron_right</i>");
+      $(el).children('a').append(activeTab);
+    }
   </script>
 
 </html>
