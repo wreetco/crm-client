@@ -61,7 +61,7 @@
 
   <!-- fields -->
   <div class="row">
-    <div ng-repeat="section in current_fields | orderBy:'-name' : true" ng-if="section.name != '_contacts' || !current_contact._id">
+    <div ng-repeat="section in current_fields | orderBy:'-name' : true">
       <h5 ng-if="section.name != '_contacts'">
         {{ section.name }}
       </h5>

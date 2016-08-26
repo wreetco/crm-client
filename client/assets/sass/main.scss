@@ -438,6 +438,9 @@
     [type=checkbox]+label:before, [type=checkbox]:not(.filled-in)+label:after {
       border: 2px solid $primary-text;
     }
+    .select-wrapper span.caret {
+      color: $accent;
+    }
     // End Form and Inputs
     .btn {
       background-color: $accent;
