@@ -503,6 +503,17 @@
     svg {
       //background-color: $primary-color-light;
     }
+
+    .nvtooltip {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+
+    .nvtooltip > table {
+      width: 90%;
+    }
+
+
     // end charts
 
     // tooldibs
