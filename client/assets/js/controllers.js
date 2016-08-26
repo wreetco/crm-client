@@ -891,6 +891,8 @@ angular.module('application.controllers', ['nvd3'])
   };
   $scope.popularTags();
 
+  $scope.colors = ["#f44336", "#3f51b5", "#e91e63", "#9c27b0", "#4caf50", "#ffeb3b", "#ff9800"];
+
   $scope.tag_chart_opts = {
     chart: {
       tooltip: {
@@ -900,6 +902,9 @@ angular.module('application.controllers', ['nvd3'])
       height: 350,
       x: function(d){return d.key;},
       y: function(d){return d.y;},
+      color: function(d,i){
+        return (d.data && d.data.color) || $scope.colors[i % $scope.colors.length]
+      },
       pie: {
         dispatch: {
           elementClick: function(e) {
