@@ -421,23 +421,29 @@
     .collection .collection-item label {
       color: $secondary-text;
     }
+
     [type=radio]:not(:checked)+label:before {
       border: 2px solid $accent;
     }
+
     [type=radio].with-gap:checked+label:after {
       border: 2px solid $accent;
       background-color: $accent;
     }
+
     [type=radio].with-gap:checked+label:after, [type=radio].with-gap:checked+label:before, [type=radio]:checked+label:after {
       border: 2px solid $accent;
     }
+
     [type="checkbox"]:checked + label::before {
       border-right: 2px solid $accent;
       border-bottom: 2px solid $accent;
     }
+
     [type=checkbox]+label:before, [type=checkbox]:not(.filled-in)+label:after {
       border: 2px solid $primary-text;
     }
+
     .select-wrapper span.caret {
       color: $accent;
     }
@@ -640,6 +646,10 @@
     //green from logo for checks
     .green-check {
       color: #92c13e;
+    }
+
+    .green-icon {
+      background-color: #92c13e;
     }
 
   }
