@@ -66,7 +66,12 @@
         {{ section.name }}
       </h5>
       <div ng-repeat="field in section.fields | orderBy:'-order' : true ">
-        <div class="col s12 m4">
+        <div class="col s12 m4" ng-if="field.type == 'date'">
+          <input input-date type="text" id="inputCreated" ng-model="currentTime" name="inputCreated">
+          <label for="inputCreated">Input date</label>
+          <br>
+        </div>
+        <div class="col s12 m4" ng-if="field.type == 'string' || field.type == 'int'">
           <input id="input-{{ field.db_name }}" type="text" class="field-selector" ng-model="current_contact.x[field.db_name]" crm-type="{{ field.type }}">
           <label for="{{ field.db_name }}">
             {{ field.name }}

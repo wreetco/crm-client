@@ -516,6 +516,87 @@
     }
     // end charts
 
+    // Date Picker
+    .picker {
+      background-color: $accent;
+      color: $primary-text;
+    }
+
+    .picker__box {
+      background-color: $primary-color;
+    }
+
+    .picker__date-display {
+      background-color: $primary-color-light;
+      color: $primary-text;
+    }
+
+    .picker__day {
+      color: $secondary-text;
+    }
+
+    .picker__day--infocus:hover {
+      color: $accent;
+    }
+
+    .picker__month {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+
+    .picker__year {
+      background-color: $primary-color;
+      color: $primary-text;
+    }
+
+    .picker__weekday-display {
+      background-color: $primary-color-dark;
+      color: $secondary-text;
+    }
+
+    .picker__weekday {
+      color: $primary-text;
+    }
+
+    .picker__footer {
+      background-color: $primary-color-dark;
+      color: $primary-text;
+    }
+    .picker--focused .picker__day--selected, .picker__day--selected {
+      background-color: $accent;
+    }
+
+    .picker__day--selected:hover {
+      background-color: $accent;
+      color: $primary-text;
+    }
+
+    .picker__today {
+      color: $accent;
+    }
+
+    .picker__clear {
+      color: $primary-text;
+    }
+
+    .picker__close {
+      color: $accent;
+    }
+
+    .picker__nav--prev {
+    }
+
+    .picker__nav--next {
+    }
+
+    .picker__nav--next:hover {
+      background-color: $primary-color;
+    }
+
+    .picker__nav--prev:hover {
+      background-color: $primary-color;
+    }
+
     // Tooltips - not dibs
     .backdrop {
       background-color: $primary-color;

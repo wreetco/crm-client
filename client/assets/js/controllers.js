@@ -173,11 +173,13 @@ angular.module('application.controllers', ['nvd3'])
   //  displaying contact info and the editing features
   ///////////////////////////////////////////////////////////////
   $scope.infoBar = function(c){
+
+    var currentTime = new Date();
+    $scope.currentTime = currentTime;
     //contact object
     $scope.current_contact = c || null;
     //Join the first and last name for easy editing
     $scope.current_contact.x.full_name = $scope.current_contact.x.first_name + ' ' + $scope.current_contact.x.last_name;
-    console.log($scope.current_contact.x.full_name);
     //interface object
     $scope.current_interface = JSON.parse($window.localStorage.interface);
     //fields obj
@@ -862,7 +864,6 @@ angular.module('application.controllers', ['nvd3'])
       values: data,
       key: "New Contacts"
     }];
-    console.log($scope.new_contacts_data);
   };
   if (!$scope.new_contacts_data) $scope.recentContacts();
 
