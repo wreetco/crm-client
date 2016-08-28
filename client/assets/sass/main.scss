@@ -505,17 +505,27 @@
     }
 
     .nvtooltip {
-      background-color: $primary-color-light;
+      background-color: $primary-color;
       color: $primary-text;
+      font-family: roboto;
+      font-size: 1rem;
     }
 
     .nvtooltip > table {
       width: 90%;
     }
-
-
     // end charts
 
+    // Tooltips - not dibs
+    .backdrop {
+      background-color: $primary-color;
+    }
+    .material-tooltip{
+      background-color: $primary-color;
+      border: 1px solid rgba(0,0,0,.5);
+      color: $primary-text;
+      border-radius: 4px;
+     }
     // tooldibs
     .prevtip {
       //border: 1px solid red;

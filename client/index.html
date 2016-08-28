@@ -42,10 +42,10 @@ All of our required JS has been concat'd and minified.
             <i class="material-icons small" style="position: relative;">keyboard_arrow_down</i>
           </p>
         </li>
-        <li class="no-padding" onclick="activeSidebar(this, true);">
+        <li class="no-padding">
           <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
             <li>
-              <a class="collapsible-header" id="contact-collapse" >
+              <a class="collapsible-header" id="contact-collapse" onclick="activeSidebar(this, true);">
                 <i class="material-icons">person_pin</i>
                 Contacts
               </a>
@@ -113,6 +113,7 @@ All of our required JS has been concat'd and minified.
         collapseCheck();
       }
       //Give the new active sidebar the class to give it coloring
+      removeChevron();
       $(".active-sidebar").removeClass("active-sidebar");
       $(el).addClass("active-sidebar");
     };
@@ -126,13 +127,15 @@ All of our required JS has been concat'd and minified.
       }
     };
 
+    function removeChevron(){
+      $(".activeTab").remove();
+    };
 
     // Sidebar activation stuff
     function setActive(el) {
       console.log(el);
-      $(".activeTab").remove();
+      removeChevron();
       var activeTab = $("<span></span>");
-      //activeTab.addClass("material-icons");
       activeTab.addClass("right");
       activeTab.addClass("activeTab");
       activeTab.html("<i class=\"material-icons\" style=\"vertical-align: middle;\">chevron_right</i>");
